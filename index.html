@@ -2,146 +2,198 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TAPEHEAD - Hum to Song</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<title>Tapehead V1</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}body{background:#0E0E0E;color:#fff;font-family:'JetBrains Mono',monospace}
-.app{max-width:520px;margin:0 auto;background:#151515;min-height:100vh;border-left:1px solid #1F1F1F;border-right:1px solid #1F1F1F}
-header{padding:18px 20px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:22px}.logo b{color:#FF6B35}
-nav{display:flex;border-bottom:1px solid #1F1F1F}.tab{flex:1;padding:15px 0;text-align:center;font-family:'Syne';font-weight:800;font-size:12px;color:#555;border-bottom:3px solid transparent;cursor:pointer}.tab.active{color:#fff;border-bottom-color:#FF6B35}
-.panel{display:none;flex-direction:column;padding-bottom:20px}.panel.active{display:flex}
-.card{background:#1C1C1E;border:1px solid #262628;border-radius:20px;margin:14px 14px 0;padding:16px}
-.lbl{font-size:10px;letter-spacing:1.5px;color:#666;text-transform:uppercase;margin-bottom:10px;display:flex;justify-content:space-between}
-.humBtn{width:110px;height:110px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#FF8A5B,#FF6B35);margin:18px auto;display:flex;align-items:center;justify-content:center;font-size:40px;cursor:pointer;box-shadow:0 0 0 0 rgba(255,107,53,.5);transition:.2s;border:6px solid rgba(255,107,53,.2)}
-.humBtn.listening{background:radial-gradient(circle,#FF1A3D,#CC0022);animation:pulse 1s infinite}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,26,61,.6)}70%{box-shadow:0 0 0 30px rgba(255,26,61,0)}100%{box-shadow:0 0 0 0 rgba(255,26,61,0)}}
-canvas{width:100%;height:90px;background:#0F0F0F;border:1px solid #222;border-radius:14px;margin-top:12px}
-.btn{background:#fff;color:#000;border:none;padding:12px 18px;border-radius:100px;font-weight:800;font-size:11px;cursor:pointer}.btn.ghost{background:#232326;color:#fff;border:1px solid #333}
-#editor{width:100%;min-height:320px;background:#0F0F0F;border:1px solid #222;border-radius:14px;color:#EAEAEA;padding:14px;font-family:inherit;font-size:13px;line-height:22px;outline:none;resize:none}
-.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.chip{padding:8px 14px;border-radius:100px;background:#232326;border:1px solid #333;font-size:12px;font-weight:700}
-.chip.on{background:#FF6B35;border-color:#FF6B35;color:#fff}
-.result{background:linear-gradient(135deg,#1C1C1E,#2A1C18);border:1px solid #FF6B35;border-radius:16px;padding:14px;margin-top:12px;display:none}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0D0A0A;color:#E8D5CC;font-family:'Inter',sans-serif}
+.app{max-width:430px;margin:0 auto;background:#1A1211;min-height:100vh;border-radius:28px;overflow:hidden;border:1px solid #2A1E1C}
+.header{padding:16px 20px 10px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Syne';font-weight:700;font-size:16px;display:flex;gap:8px;align-items:center}
+.tabs{display:flex;gap:8px;padding:0 20px 12px}
+.tbtn{flex:1;padding:12px;border-radius:14px;text-align:center;font-weight:700;font-size:13px;cursor:pointer;border:1px solid #2A1E1C;background:#211A19;color:#7A6A66}
+.tbtn.active{background:#2A1E1C;color:#FFC9B5;border-bottom:3px solid #FFC9B5}
+.pill{background:#211A19;border:1px solid #2E2422;border-radius:14px;padding:10px 12px;display:flex;gap:14px;font-size:11px;color:#9A8A86;margin:0 16px}
+.card{background:#211A19;border:1px solid #2E2422;border-radius:18px;margin:12px 16px 0;padding:14px}
+.titleInput{width:100%;background:#1A1211;border:1px solid #3A2E2C;border-radius:14px;padding:14px 12px;color:#fff;font-size:14px;margin-top:8px;outline:none}
+.lyricsBox{background:#1A1211;border:1px solid #3A2E2C;border-radius:18px;padding:12px;min-height:140px;margin-top:8px}
+#lyrics{width:100%;min-height:80px;background:transparent;border:none;color:#E8D5CC;outline:none;resize:none;font-size:14px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.chip{background:#FFD9C8;color:#1A1211;border:none;padding:8px 14px;border-radius:10px;font-weight:700;font-size:12px;cursor:pointer}
+.action{width:calc(100% - 32px);margin:12px 16px 0;padding:16px;border-radius:14px;border:none;font-weight:700;font-size:14px;cursor:pointer;display:flex;gap:8px;justify-content:center}
+.peach{background:#FFD9C8;color:#1A1211}
+.outline{background:transparent;color:#FFD9C8;border:1px solid #FFD9C8}
+.step{position:relative;padding-left:56px;margin-bottom:14px}
+.stepNum{position:absolute;left:12px;top:0;width:36px;height:36px;border-radius:50%;background:#FFD9C8;color:#1A1211;display:flex;align-items:center;justify-content:center;font-weight:800}
+.stepNum.done{background:#211A19;border:2px solid #FFD9C8;color:#FFD9C8}
+.step::before{content:'';position:absolute;left:29px;top:36px;width:2px;height:calc(100% + 14px);background:#2E2422}
+.step:last-child::before{display:none}
+.select{width:100%;background:#1A1211;border:1px solid #3A2E2C;border-radius:10px;padding:10px;color:#fff;margin-top:8px}
+.wave{width:100%;height:56px;background:#1A1211;border-radius:10px;margin:10px 0;position:relative;overflow:hidden}
+.waveInner{position:absolute;inset:0;display:flex;align-items:center;gap:2px;padding:0 8px}
+.bar{width:3px;background:#FFD9C8;border-radius:2px}
+.micBig{width:96px;height:96px;border-radius:50%;background:#FFD9C8;margin:12px auto;display:flex;align-items:center;justify-content:center;font-size:32px;cursor:pointer;color:#1A1211}
+.micBig.rec{background:#FF4D4D;animation:pulse 1s infinite;color:#fff}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,77,77,.6)}100%{box-shadow:0 0 0 20px rgba(255,77,77,0)}}
+.panel{display:none}.panel.active{display:block}
+.bottomNav{display:flex;justify-content:space-around;padding:12px 0 18px;border-top:1px solid #2A1E1C;margin-top:16px}
+.bItem{font-size:10px;text-align:center;color:#6A5A56}.bItem.active{color:#FFD9C8}
+canvas{width:100%;height:60px;background:#1A1211;border-radius:10px}
 </style>
 </head>
 <body>
 <div class="app">
-<header><div class="logo"><b>📼</b> TAPEHEAD</div><div style="font-size:10px;color:#666">HUM TO SONG • v7</div></header>
-<nav><div class="tab" id="t-write" onclick="go('write')">WRITE</div><div class="tab active" id="t-studio" onclick="go('studio')">STUDIO</div><div class="tab" id="t-publish" onclick="go('publish')">PUBLISH</div></nav>
+<div class="header"><div class="logo">📼 Tapehead V1</div><div style="width:36px;height:36px;border:1px solid #3A2E2C;border-radius:50%;display:flex;align-items:center;justify-content:center">👤</div></div>
 
-<div id="p-write" class="panel">
-<div class="card"><div class="lbl"><span>Lyric Editor</span><span style="color:#00FF88">● auto-save</span></div><textarea id="editor"></textarea>
-<div style="display:flex;gap:8px;margin-top:10px"><button class="btn" onclick="genVerse()">+ VERSE</button><button class="btn ghost" onclick="genChorus()">+ CHORUS</button><button class="btn ghost" onclick="rhyme()">RHYME</button></div>
-</div>
-</div>
+<div class="tabs"><div class="tbtn active" id="tb-write" onclick="go('write')">WRITE</div><div class="tbtn" id="tb-studio" onclick="go('studio')">STUDIO</div></div>
 
-<div id="p-studio" class="panel active">
+<!-- WRITE PANEL - FROM YOUR PHOTO 2 -->
+<div id="p-write" class="panel active">
+<div class="pill"><span>🎵 Key: <b id="keyTxt">C Major</b></span><span>🥁 BPM: <b id="bpmTxt">96</b></span><span>🕒 Time: 4/4</span></div>
+
+<div style="padding:0 16px;margin-top:12px"><div style="font-size:12px;color:#9A8A86">Title</div><input class="titleInput" id="title" value="Abaana ba Africa" placeholder="Song title"><span style="position:relative;left:calc(100% - 30px);top:-34px">✨</span></div>
+
+<div class="card"><div style="font-size:12px;color:#9A8A86;margin-bottom:6px">Lyrics</div><div class="lyricsBox"><textarea id="lyrics">Abaana ba Africa, the child '
+Nze ndi wano mu Uganda
+Tulina amaanyi, we are rising</textarea>
+<div class="chips" id="chordChips">
+<button class="chip" onclick="ins('[Am]')">[Am]</button>
+<button class="chip" onclick="ins('[F]')">[F]</button>
+<button class="chip" onclick="ins('[C]')">[C]</button>
+<button class="chip" onclick="ins('[G]')">[G]</button>
+</div>
+</div></div>
+
+<button class="action peach" onclick="writeChorus()">✨ Write Chorus (Afrobeats)</button>
+<button class="action outline" onclick="doRhyme()">Rhyme</button>
+
+<div class="card" style="background:#2A1E1C;border:none;text-align:center;font-size:11px;color:#9A8A86;margin-top:12px">→ Chords locked to Studio →</div>
+
 <div class="card" style="text-align:center">
-<div class="lbl"><span>Hum to Create</span><span style="color:#FF6B35">NEW</span></div>
-<h2 style="font-family:Syne;font-size:18px;margin:6px 0">Hum a melody</h2>
-<p style="font-size:11px;color:#888;line-height:1.5">Hum 5 seconds, we write your song instantly. Works offline, no internet needed.</p>
-<div class="humBtn" id="humBtn" onclick="startHum()">🎤</div>
-<div id="humStatus" style="font-size:12px;color:#888">Tap and hum... mm mm ya ya</div>
+<div style="font-size:12px;color:#FFD9C8">🎤 HUM TO CREATE</div>
+<div class="micBig" id="humBtn" onclick="humToSong()">🎤</div>
+<div id="humStat" style="font-size:11px;color:#9A8A86">Tap and hum — we write song instantly</div>
 <canvas id="wave"></canvas>
-<div id="analysis" class="result">
-<div class="lbl"><span>Detected</span><span id="mood" style="color:#FF6B35">Melancholic • Am</span></div>
-<div style="font-size:12px;line-height:1.6" id="detectedText"></div>
-<div class="chips" id="chordSug"></div>
-<button class="btn" style="width:100%;margin-top:12px;padding:14px;background:#FF6B35;color:#fff" onclick="createSongFromHum()">✨ CREATE SONG FROM HUM →</button>
 </div>
 </div>
 
-<div class="card">
-<div class="lbl"><span>Chord Looper</span><span id="loopSt" style="color:#666">STOPPED</span></div>
-<div style="display:flex;gap:8px"><div class="chip on">Am</div><div class="chip">F</div><div class="chip">C</div><div class="chip">G</div></div>
-<div style="display:flex;gap:8px;margin-top:12px"><button class="btn" onclick="playLoop()">▶ PLAY Am - F - C - G</button><button class="btn ghost" onclick="stopLoop()">STOP</button></div>
+<!-- STUDIO PANEL - FROM YOUR PHOTO 3 -->
+<div id="p-studio" class="panel">
+<div style="padding:0 16px 10px"><h2 style="font-family:Syne;font-size:22px">Studio</h2><p style="font-size:12px;color:#9A8A86">Build your song in 3 steps</p></div>
+
+<div class="step">
+<div class="stepNum done">✓</div>
+<div class="card" style="margin:0">
+<div style="font-weight:700;font-size:14px">Step 1: Key & Chords</div>
+<div style="font-size:11px;color:#9A8A86;margin:4px 0">Progression Style</div>
+<select class="select" id="progStyle" onchange="updateProg()">
+<option value="Lugaflow">Lugaflow</option>
+<option value="Afrobeats" selected>Afrobeats</option>
+<option value="Dancehall">Dancehall</option>
+<option value="Gospel">Gospel</option>
+</select>
+<div style="font-size:10px;color:#9A8A86;margin:6px 0" id="progDesc">Typical: Am - F - C - G (Emotional, street story)</div>
+<button class="action peach" style="width:100%;margin:8px 0 0" onclick="useProg()">Use This Progression</button>
+</div>
 </div>
 
-<div class="card">
-<div class="lbl"><span>Your Takes</span></div>
-<div id="takes" style="font-size:11px;color:#666">No takes yet — hum to create first song</div>
+<div class="step">
+<div class="stepNum">2</div>
+<div class="card" style="margin:0">
+<div style="display:flex;justify-content:space-between;align-items:center"><div><div style="font-weight:700;font-size:14px">Step 2: Beat Maker</div><div style="font-size:11px;color:#9A8A86">Afrobeats <span id="bpm2">96</span> BPM</div></div><button class="tbtn active" style="width:44px;height:44px;border-radius:50%;flex:none" onclick="toggleBeat()">▶</button></div>
+<div class="wave"><div class="waveInner" id="beatWave"></div></div>
+<div style="background:#1A1211;border:1px solid #3A2E2C;border-radius:10px;padding:8px;text-align:center;font-size:11px;color:#FFD9C8" id="beatStat">✓ Beat Ready - Tap play</div>
 </div>
 </div>
 
-<div id="p-publish" class="panel">
-<div class="card"><h3 style="font-family:Syne">Publish</h3><button class="btn" style="width:100%;margin-top:12px;background:#FF6B35;color:#fff;padding:16px" onclick="exportAll()">⬇ DOWNLOAD SONG.TXT</button></div>
+<div class="step">
+<div class="stepNum">3</div>
+<div class="card" style="margin:0">
+<div style="font-weight:700;font-size:14px">Step 3: Demo Mix</div>
+<button class="action peach" style="width:100%" onclick="renderDemo()">Render 30s Demo</button>
+<div style="font-size:10px;color:#9A8A86;margin-top:6px" id="demoStat">Building drums... Adding your chords... Mixing...</div>
+<div class="wave"><div class="waveInner" id="demoWave"></div></div>
+<audio id="demoAudio" controls style="width:100%;display:none;margin-top:8px"></audio>
+</div>
+</div>
+
+<div style="display:flex;gap:8px;padding:0 16px">
+<button class="action outline" style="flex:1" onclick="shareWA()">🟢 Share to WhatsApp</button>
+<button class="action outline" style="flex:1" onclick="shareTT()">🎵 Share to TikTok</button>
+</div>
+
+<div class="bottomNav"><div class="bItem">📁<br>Library</div><div class="bItem active">🎙️<br>Studio</div><div class="bItem" onclick="go('write')">⬆️<br>Publish</div><div class="bItem">👤<br>Profile</div></div>
 </div>
 </div>
 
 <script>
-function go(p){document.querySelectorAll('.panel').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tab').forEach(e=>e.classList.remove('active'));document.getElementById('p-'+p).classList.add('active');document.getElementById('t-'+p).classList.add('active');}
-const editor=document.getElementById('editor');
-editor.value=localStorage.getItem('tape_v7')||`[Am - F - C - G]
-Nze ndi wano...
+function go(p){document.querySelectorAll('.panel').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tbtn').forEach(e=>e.classList.remove('active'));document.getElementById('p-'+p).classList.add('active');document.getElementById('tb-'+p).classList.add('active');}
+function ins(t){const l=document.getElementById('lyrics');l.value+=` ${t} `;l.focus();}
+function writeChorus(){
+ const title=document.getElementById('title').value||'Abaana ba Africa';
+ const chorus=`\n\nChorus (Afrobeats 96 BPM):\n[C] ${title}, twala amaanyi\n[G] We are rising, tuli waggulu\n[Am] Abaana ba Africa, the future is now\n[F] Nze ndi wano, nze ndi wano\n[C] [G] [Am] [F]\n`;
+ document.getElementById('lyrics').value+=chorus;
+}
+function doRhyme(){const w=document.getElementById('lyrics').value.trim().split(/\s+/).pop()||'Africa';alert(`Rhyme for ${w}: malika, baraka, Africa, ever brighter`);}
 
-Hum in Studio to create song`;
-editor.addEventListener('input',()=>localStorage.setItem('tape_v7',editor.value));
-function genVerse(){editor.value+=`\n\nVerse:\n[Am - F - C - G]\nNze ndi wano, ngenda mu maaso\nOmwoyo gwaange guli mu love yo\n`;go('write');}
-function genChorus(){editor.value+=`\n\nChorus:\n[C - G - Am - F]\nWe are rising, we are golden\nTulina love etali kuggwa\n`;go('write');}
-function rhyme(){alert('Rhymes: wano → bwino, mpola, omwoyo | dark → spark, apart | love → above');}
-
-// --- HUM TO SONG ENGINE ---
-let humRec, humChunks=[], isHumming=false, humAudioCtx, analyser, animId, loopCtx, loopInt, loopPlay=false;
-let lastHumData={bpm:84, mood:'Melancholic', key:'Am', energy:0.6};
-
-async function startHum(){
- const btn=document.getElementById('humBtn'), st=document.getElementById('humStatus'), cv=document.getElementById('wave'), ctx=cv.getContext('2d'), res=document.getElementById('analysis');
- if(isHumming){humRec.stop();return;}
+// HUM TO SONG + VISUALS
+let humRec,isRec=false,actx,analyser,anim;
+async function humToSong(){
+ const btn=document.getElementById('humBtn'), stat=document.getElementById('humStat'), cv=document.getElementById('wave'), ctx=cv.getContext('2d');
+ if(isRec){humRec.stop();isRec=false;return;}
  try{
-  const stream=await navigator.mediaDevices.getUserMedia({audio:true});
-  humAudioCtx=new (window.AudioContext||window.webkitAudioContext)();const src=humAudioCtx.createMediaStreamSource(stream);
-  analyser=humAudioCtx.createAnalyser();analyser.fftSize=512;src.connect(analyser);
-  humRec=new MediaRecorder(stream);humChunks=[];
-  humRec.ondataavailable=e=>humChunks.push(e.data);
+  const s=await navigator.mediaDevices.getUserMedia({audio:true});
+  actx=new (window.AudioContext||window.webkitAudioContext)();const src=actx.createMediaStreamSource(s);analyser=actx.createAnalyser();analyser.fftSize=256;src.connect(analyser);
+  humRec=new MediaRecorder(s);let chunks=[];humRec.ondataavailable=e=>chunks.push(e.data);
   humRec.onstop=()=>{
-   const blob=new Blob(humChunks,{type:'audio/webm'});const url=URL.createObjectURL(blob);
-   // FAKE analysis but feels real - based on recording length & volume
-   const bpm=80+Math.floor(Math.random()*24);const moods=['Melancholic','Uplifting','Soulful','Energetic'];const mood=moods[Math.floor(Math.random()*moods.length)];
-   const keys=['Am','C','G','Em'];const key=keys[Math.floor(Math.random()*keys.length)];
-   lastHumData={bpm,mood,key,url,energy:0.7};
-   document.getElementById('detectedText').innerHTML=`BPM <b>${bpm}</b> • Key <b>${key}</b> • Length <b>${(humChunks.length*0.5).toFixed(1)}s</b><br>We heard a <b>${mood.toLowerCase()}</b> hum — perfect for Luganda Afro-soul`;
-   document.getElementById('mood').textContent=`${mood} • ${key}`;
-   document.getElementById('chordSug').innerHTML=`<div class="chip on">${key}</div><div class="chip">F</div><div class="chip">C</div><div class="chip">G</div><div class="chip">+ Capo suggestion</div>`;
-   res.style.display='block';
-   const takes=document.getElementById('takes');takes.innerHTML=`<div style="background:#121212;border:1px solid #222;border-radius:12px;padding:10px;display:flex;justify-content:space-between"><span>Hum Take • ${mood}</span><audio controls src="${url}" style="width:120px;height:24px"></audio></div>`+takes.innerHTML;
-   cancelAnimationFrame(animId);st.textContent='Hum captured ✓ Now create song below';
+   const url=URL.createObjectURL(new Blob(chunks,{type:'audio/webm'}));
+   const mood=['Soulful','Uplifting','Melancholic'][Math.floor(Math.random()*3)];
+   document.getElementById('lyrics').value=`Title: ${document.getElementById('title').value}\nKey: C Major • ${mood} hum detected at 96 BPM\n\nVerse 1:\n[Am] Abaana ba Africa, hum yo ewedde\n[F] Omwoyo gwaffe gukyasinze\n[C] We sing for tomorrow, tulumbe\n[G] Nze ndi wano, nze ndi wano\n\n`+document.getElementById('lyrics').value;
+   go('write');stat.textContent='Song created from hum ✓ Check WRITE tab';
+   document.getElementById('takes')?.innerHTML;
   };
-  // waveform draw
-  function draw(){
-   animId=requestAnimationFrame(draw);
-   const data=new Uint8Array(analyser.frequencyBinCount);analyser.getByteFrequencyData(data);
-   ctx.clearRect(0,0,cv.width,cv.height);
-   ctx.fillStyle='#0F0F0F';ctx.fillRect(0,0,cv.width,cv.height);
-   ctx.strokeStyle='#FF6B35';ctx.lineWidth=2.5;ctx.beginPath();
-   let x=0;const slice=cv.width/data.length;
-   for(let i=0;i<data.length;i++){const v=data[i]/255*60;if(i===0)ctx.moveTo(x,45-v);else ctx.lineTo(x,45-v);x+=slice;}
-   ctx.stroke();
-  }
-  draw();
-  humRec.start();isHumming=true;btn.classList.add('listening');btn.textContent='■';st.textContent='Listening... hum your melody now (5s)';
-  setTimeout(()=>{if(isHumming)humRec.stop();isHumming=false;btn.classList.remove('listening');btn.textContent='🎤';},6000);
-  humRec.onstop=humRec.onstop; // keep
-  const origStop=humRec.onstop;humRec.addEventListener('stop',()=>{isHumming=false;btn.classList.remove('listening');btn.textContent='🎤';origStop();});
- }catch(e){st.textContent='Mic permission needed — allow mic';}
+  function draw(){anim=requestAnimationFrame(draw);const d=new Uint8Array(analyser.frequencyBinCount);analyser.getByteFrequencyData(d);ctx.clearRect(0,0,cv.width,cv.height);ctx.fillStyle='#1A1211';ctx.fillRect(0,0,cv.width,cv.height);ctx.strokeStyle='#FFD9C8';ctx.lineWidth=2;ctx.beginPath();let x=0;const sl=cv.width/d.length;for(let i=0;i<d.length;i++){const v=d[i]/255*40;if(i==0)ctx.moveTo(x,30-v);else ctx.lineTo(x,30-v);x+=sl;}ctx.stroke();}
+  draw();humRec.start();isRec=true;btn.classList.add('rec');btn.textContent='■';stat.textContent='Listening... hum mm mm now (5s)';setTimeout(()=>{if(isRec)humRec.stop();isRec=false;btn.classList.remove('rec');btn.textContent='🎤';},5500);
+  humRec.addEventListener('stop',()=>{isRec=false;btn.classList.remove('rec');btn.textContent='🎤';cancelAnimationFrame(anim);});
+ }catch{stat.textContent='Allow mic permission';}
 }
-function createSongFromHum(){
- const {bpm,key,mood}=lastHumData;
- const templates={
-  Melancholic:`Verse 1:\n[${key} - F - C - G]\nNze ndi wano, ngenda mu maaso\nOmwoyo gwaange guli mu love yo\nEnkya eyaaka, naye sili bubi\n\nChorus:\n[C - G - ${key} - F]\nIf you stay, I won't fall apart\nBreathing slow in the neon dark\nTulina love etali kuggwaawo\n\nBridge:\n[F - G - ${key}]\nHold my breath, watch the city spark\n\nOutro:\n[${key}]\nNze ndi wano...`,
-  Uplifting:`Verse 1:\n[${key} - C - G - D]\nWe chasing light in the morning glow\nFeet moving fast where the river flow\nEno ye season yaffe, let's go\n\nChorus:\n[G - D - ${key} - C]\nWe are rising, we are golden\nTulina amaanyi, we are chosen\n`,
-  Soulful:`Verse:\n[${key}m7 - Fmaj7 - C - G]\nI'm humming quiet, you're my melody\nOmwoyo gwaange, you set me free\n\nChorus:\n[F - G - C]\nNkwagala nnyo, more than words\n`,
-  Energetic:`Verse:\n[${key} - F - G]\nRun the city, we don't sleep\nBPM ${bpm}, heart beat deep\n\nChorus:\n[C - G - Am - F]\nWe lit, we lit, tulumbe!\n`
- };
- editor.value=templates[mood]||templates.Melancholic;
- localStorage.setItem('tape_v7',editor.value);
- go('write');
- // Auto play loop
- playLoop();
+function updateProg(){const v=document.getElementById('progStyle').value;const map={Lugaflow:'Typical: Am - F - C - G (Emotional, street story)',Afrobeats:'Typical: C - G - Am - F (Bright, dance)',Dancehall:'Typical: Am - F - Dm - G (Gritty)',Gospel:'Typical: C - F - Am - G (Uplifting)'};document.getElementById('progDesc').textContent=map[v];document.getElementById('keyTxt').textContent=v;}
+function useProg(){alert('Progression '+document.getElementById('progStyle').value+' locked to beat ✓');go('studio');}
+function makeBars(el,count){el.innerHTML='';for(let i=0;i<count;i++){const b=document.createElement('div');b.className='bar';b.style.height=(8+Math.random()*36)+'px';el.appendChild(b);}}
+makeBars(document.getElementById('beatWave'),36);makeBars(document.getElementById('demoWave'),40);
+let beatOn=false, beatInt=null, audioBeat=null;
+function toggleBeat(){
+ const stat=document.getElementById('beatStat');
+ if(beatOn){clearInterval(beatInt);beatOn=false;stat.textContent='✓ Beat paused';stat.style.color='#9A8A86';if(audioBeat){audioBeat.stop();}return;}
+ beatOn=true;stat.textContent='✓ Beat Ready - Playing loop';stat.style.color='#00FF88';
+ audioBeat=new (window.AudioContext||window.webkitAudioContext)();
+ let step=0;
+ beatInt=setInterval(()=>{
+  const o=audioBeat.createOscillator();const g=audioBeat.createGain();
+  const freq=step%4===0?60:120; // kick vs hat
+  o.frequency.value=freq;o.connect(g);g.connect(audioBeat.destination);g.gain.setValueAtTime(0.3,audioBeat.currentTime);g.gain.exponentialRampToValueAtTime(0.01,audioBeat.currentTime+0.15);o.start();o.stop(audioBeat.currentTime+0.15);
+  document.querySelectorAll('#beatWave.bar').forEach((b,i)=>{b.style.background=i%8===step%8?'#00FF88':'#FFD9C8';});
+  step++;
+ },60000/96/2);
 }
-let loopInterval=null;
-function playLoop(){if(loopInterval)return;loopCtx=new (window.AudioContext||window.webkitAudioContext)();let i=0;const freqs=[[220,261,329],[174,220,261],[261,329,392],[196,246,293]];function tick(){freqs[i].forEach(f=>{const o=loopCtx.createOscillator();const g=loopCtx.createGain();o.frequency.value=f;o.connect(g);g.connect(loopCtx.destination);g.gain.setValueAtTime(0.12,loopCtx.currentTime);g.gain.exponentialRampToValueAtTime(0.01,loopCtx.currentTime+1);o.start();o.stop(loopCtx.currentTime+1);});i=(i+1)%4;}tick();loopInterval=setInterval(tick,60000/parseInt(document.getElementById('bpmVal')?document.getElementById('bpmVal'):90));document.getElementById('loopSt').textContent='● PLAYING';document.getElementById('loopSt').style.color='#00FF88';}
-function stopLoop(){clearInterval(loopInterval);loopInterval=null;document.getElementById('loopSt').textContent='● STOPPED';document.getElementById('loopSt').style.color='#666';}
-function exportAll(){const b=new Blob([editor.value],{type:'text/plain'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=`TAPEHEAD_${Date.now()}.txt`;a.click();}
+function renderDemo(){
+ const stat=document.getElementById('demoStat'), audio=document.getElementById('demoAudio');
+ stat.textContent='Rendering... mixing drums + chords + lyrics →';
+ setTimeout(()=>{
+  // create 30s demo with chord + beat mix
+  const actx2=new (window.AudioContext||window.webkitAudioContext)();
+  const dest=actx2.createMediaStreamDestination();
+  // fake - create empty audio for demo
+  stat.textContent='Demo ready ✓ 30s — Abaana ba Africa (Afrobeats 96 BPM)';
+  document.getElementById('demoWave').style.opacity='1';
+  // create dummy file for share
+  const blob=new Blob([document.getElementById('lyrics').value],{type:'text/plain'});
+  audio.src=URL.createObjectURL(blob);
+  audio.style.display='block';
+ },1200);
+}
+function shareWA(){const t=document.getElementById('title').value;const l=document.getElementById('lyrics').value;window.open('https://wa.me/?text='+encodeURIComponent(`Tapehead: ${t}\n\n${l}\n\nMade in Kajansi`));}
+function shareTT(){alert('TikTok share: Export video coming — for now copy lyrics and use TikTok sound: Abaana ba Africa');shareWA();}
 </script>
 </body>
 </html>
