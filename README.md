@@ -1,4 +1,4 @@
-# Tapehead Studio 🇺🇬
+# Tapehead Studio
 The Best Afro-Fusion Songwriter — Write, Studio, Publish
 
 Live: https://YOURNAME.github.io/tapehead-studio/
