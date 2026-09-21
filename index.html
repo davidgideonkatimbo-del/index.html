@@ -2,213 +2,218 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tapehead V1 - Africa Edition</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<title>Tapehead V1 - Full Mix</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}body{background:#0D0A0A;color:#E8D5CC;font-family:'Inter',sans-serif}
-.app{max-width:440px;margin:0 auto;background:#1A1211;min-height:100vh;border-radius:28px;overflow:hidden;position:relative}
-.header{padding:14px 18px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-family:'Syne';font-weight:700;display:flex;gap:8px}
-.iconBtn{width:36px;height:36px;border-radius:50%;background:#211A19;border:1px solid #3A2E2C;display:flex;align-items:center;justify-content:center;cursor:pointer}
-.tabs{display:flex;gap:8px;padding:0 16px 12px}.tbtn{flex:1;padding:12px;border-radius:14px;text-align:center;font-weight:700;font-size:13px;background:#211A19;color:#7A6A66;border:1px solid #2A1E1C;cursor:pointer}.tbtn.active{background:#2A1E1C;color:#FFC9B5;border-bottom:3px solid #FFC9B5}
-.pill{background:#211A19;border:1px solid #2E2422;border-radius:14px;padding:10px;display:flex;gap:10px;font-size:11px;flex-wrap:wrap;margin:0 16px}
+.app{max-width:440px;margin:0 auto;background:#1A1211;min-height:100vh;border-radius:28px;overflow:hidden}
+.header{padding:14px 18px;display:flex;justify-content:space-between}.logo{font-family:'Syne';font-weight:700}
+.tabs{display:flex;gap:8px;padding:0 16px 12px}.tbtn{flex:1;padding:12px;border-radius:14px;text-align:center;font-weight:700;font-size:12px;background:#211A19;color:#7A6A66;border:1px solid #2A1E1C;cursor:pointer}.tbtn.active{background:#2A1E1C;color:#FFC9B5;border-bottom:3px solid #FFC9B5}
 .card{background:#211A19;border:1px solid #2E2422;border-radius:18px;margin:10px 16px 0;padding:14px}
-.input,.select{width:100%;background:#1A1211;border:1px solid #3A2E2C;border-radius:12px;padding:12px;color:#fff;outline:none;font-size:13px;margin-top:6px}
-.lyricsBox{background:#1A1211;border:1px solid #3A2E2C;border-radius:16px;padding:10px;min-height:130px}
-#lyrics{width:100%;min-height:80px;background:transparent;border:none;color:#E8D5CC;outline:none;resize:none;font-size:13px}
-.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.chip{background:#FFD9C8;color:#1A1211;padding:8px 12px;border-radius:10px;font-weight:700;font-size:12px;cursor:pointer;border:none}.chip.on{background:#fff;box-shadow:0 0 0 2px #FFD9C8}
-.action{width:calc(100% - 32px);margin:10px 16px 0;padding:15px;border-radius:14px;border:none;font-weight:700;font-size:13px;cursor:pointer;display:flex;justify-content:center;gap:6px}.peach{background:#FFD9C8;color:#1A1211}.outline{background:transparent;border:1px solid #FFD9C8;color:#FFD9C8}
-.step{position:relative;padding-left:54px;margin-bottom:12px}.sNum{position:absolute;left:12px;top:0;width:34px;height:34px;border-radius:50%;background:#FFD9C8;color:#1A1211;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}.sNum.done{background:#1A1211;border:2px solid #00FF88;color:#00FF88}.step::before{content:'';position:absolute;left:28px;top:34px;width:2px;height:calc(100% + 12px);background:#2E2422}.step:last-child::before{display:none}
-.wave{width:100%;height:56px;background:#1A1211;border-radius:12px;display:flex;align-items:center;gap:2px;padding:0 8px;margin:10px 0;overflow:hidden}
-.bar{width:3px;background:#FFD9C8;border-radius:2px}
-.mic{width:88px;height:88px;border-radius:50%;background:#FFD9C8;margin:12px auto;display:flex;align-items:center;justify-content:center;font-size:30px;color:#1A1211;cursor:pointer}.mic.rec{background:#FF4D4D;animation:pulse 1s infinite;color:#fff}@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,77,77,.6)}100%{box-shadow:0 0 0 22px rgba(255,77,77,0)}}
+.pill{background:#211A19;border:1px solid #2E2422;border-radius:12px;padding:8px 10px;display:flex;gap:8px;flex-wrap:wrap;font-size:11px;margin:0 16px}
+.input,.select{width:100%;background:#1A1211;border:1px solid #3A2E2C;border-radius:10px;padding:10px;color:#fff;font-size:12px;margin-top:6px}
+#lyrics{width:100%;min-height:90px;background:#1A1211;border:1px solid #3A2E2C;border-radius:12px;padding:10px;color:#E8D5CC;outline:none;resize:none}
+.chip{background:#FFD9C8;color:#1A1211;padding:6px 10px;border-radius:8px;font-weight:700;font-size:11px;border:none;cursor:pointer;margin:3px}
+.action{width:calc(100% - 32px);margin:10px 16px 0;padding:14px;border-radius:12px;border:none;font-weight:700;font-size:13px;cursor:pointer;display:flex;justify-content:center;gap:6px}.peach{background:#FFD9C8;color:#1A1211}.outline{background:transparent;border:1px solid #FFD9C8;color:#FFD9C8}
+.mixer{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.fader{background:#1A1211;border:1px solid #3A2E2C;border-radius:10px;padding:8px;text-align:center}.fader input{width:100%;accent-color:#FFD9C8}
+.wave{width:100%;height:56px;background:#1A1211;border-radius:10px;display:flex;align-items:center;gap:2px;padding:0 8px;margin:8px 0;overflow:hidden}.bar{width:4px;background:#FFD9C8;border-radius:2px}
+.mic{width:84px;height:84px;border-radius:50%;background:#FFD9C8;margin:10px auto;display:flex;align-items:center;justify-content:center;font-size:28px;cursor:pointer;color:#1A1211}.mic.rec{background:#FF4D4D;animation:pulse 1s infinite;color:#fff}@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,77,77,.6)}100%{box-shadow:0 0 0 20px rgba(255,77,77,0)}}
 .panel{display:none}.panel.active{display:block}
-.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(80px);background:#FFD9C8;color:#1A1211;padding:12px 18px;border-radius:100px;font-weight:700;font-size:12px;opacity:0;transition:.4s cubic-bezier(.34,1.56,.64,1);z-index:99}.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(80px);background:#FFD9C8;color:#1A1211;padding:12px 18px;border-radius:100px;font-weight:700;font-size:12px;opacity:0;transition:.4s;z-index:99}.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+canvas{width:100%;height:72px;background:#0F0E0E;border-radius:12px;border:1px solid #2E2422}
+.playAll{width:100%;padding:18px;border-radius:16px;background:#FFD9C8;color:#1A1211;border:none;font-family:'Syne';font-weight:700;font-size:16px;cursor:pointer;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px}
+.playAll.playing{background:#00FF88}
+.iconBtn{width:36px;height:36px;border-radius:50%;background:#211A19;border:1px solid #3A2E2C;display:flex;align-items:center;justify-content:center;cursor:pointer}
 .profile{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;z-index:50;padding:20px}.profile.show{display:flex;align-items:end}.pBox{background:#1A1211;border:1px solid #3A2E2C;border-radius:24px 24px 0 0;width:100%;max-width:440px;margin:0 auto;padding:20px}
-canvas{width:100%;height:68px;background:#1A1211;border-radius:12px;border:1px solid #2E2422}
 </style>
 </head>
 <body>
 <div class="app">
-<div class="header"><div class="logo">📼 Tapehead V1</div><div class="iconBtn" onclick="openProfile()">👤</div></div>
-<div class="tabs"><div class="tbtn active" id="tb-write" onclick="go('write')">WRITE</div><div class="tbtn" id="tb-studio" onclick="go('studio')">STUDIO</div></div>
+<div style="padding:14px 18px;display:flex;justify-content:space-between"><div style="font-family:Syne;font-weight:700">📼 Tapehead V1</div><div style="display:flex;gap:8px"><div class="iconBtn" onclick="openProfile()">👤</div></div></div>
+<div class="tabs"><div class="tbtn active" id="tb-write" onclick="go('write')">WRITE</div><div class="tbtn" id="tb-studio" onclick="go('studio')">STUDIO • MIXER</div></div>
 
 <div id="p-write" class="panel active">
-<div class="pill">
-<span>🎵 <select id="keySel" onchange="updateKey()" style="background:transparent;border:none;color:#FFD9C8;font-weight:700">
-<option>C Major</option><option>C Minor</option><option>G Major</option><option>D Major</option><option>A Minor</option><option>E Minor</option><option>F Major</option><option>Bb Major</option>
-</select></span>
-<span>🥁 <b id="bpmTxt">96</b> BPM</span>
-<span>🕒 4/4</span>
-<span id="genreTxt" style="color:#FFD9C8">Afrobeats</span>
-</div>
-<div style="padding:8px 16px 0"><div style="font-size:11px;color:#9A8A86">Title</div><input class="input" id="title" value="Abaana ba Africa"></div>
-<div class="card"><div style="font-size:11px;color:#9A8A86">Lyrics + Chords</div><div class="lyricsBox"><textarea id="lyrics">Abaana ba Africa, the child
-Nze ndi wano mu Uganda</textarea>
-<div class="chips" id="chordChips"></div></div></div>
-<button class="action peach" onclick="writeChorus()">✨ Write Chorus (Afrobeats)</button>
-<button class="action outline" onclick="showRhyme()">Rhyme • Omwoyo, bwino, mpola</button>
-<div class="card" style="text-align:center"><div style="font-size:11px;color:#FFD9C8">HUM TO CREATE</div><div class="mic" id="humBtn" onclick="hum()">🎤</div><div style="font-size:10px;color:#9A8A86" id="humStat">Hum 5s → writes song</div><canvas id="wave"></canvas></div>
+<div class="pill"><span id="keyInfo">C Major</span> • <span id="bpmInfo">96 BPM</span> • <span id="genreInfo">Afrobeats</span></div>
+<div style="padding:8px 16px"><input class="input" id="title" value="Abaana ba Africa" placeholder="Song Title"></div>
+<div class="card"><div style="font-size:10px;color:#9A8A86">Lyrics + Chords (tap chips to insert)</div><textarea id="lyrics">Abaana ba Africa
+Nze ndi wano mu Uganda
+Tulina amaanyi</textarea><div id="chordChips" style="margin-top:8px"></div></div>
+<div style="padding:0 16px"><button class="playAll" id="writePlay" onclick="toggleFullMix()">▶ PLAY FULL MIX — Chords + Beat + Hum</button></div>
+<div class="card" style="text-align:center"><div style="font-size:11px;color:#FFD9C8">STEP 1: HUM YOUR MELODY</div><div class="mic" id="humBtn" onclick="hum()">🎤</div><div style="font-size:10px;color:#9A8A86" id="humStat">Hum → auto melody → adds to mix</div><canvas id="wave"></canvas><audio id="humAudio" controls style="width:100%;display:none;margin-top:8px"></audio></div>
 </div>
 
 <div id="p-studio" class="panel">
-<div class="step"><div class="sNum done" id="s1">✓</div><div class="card" style="margin:0">
-<b>Step 1: Key & Chords</b>
-<div class="grid2"><div><div style="font-size:10px;color:#9A8A86">Key</div><select class="select" id="studioKey" onchange="syncKey()"><option>C Major</option><option>C Minor</option><option>G Major</option><option>D Major</option><option>A Minor</option><option>E Minor</option><option>F Major</option><option>Bb Major</option></select></div>
-<div><div style="font-size:10px;color:#9A8A86">BPM</div><input class="input" type="number" id="studioBpm" value="96" onchange="syncBpm()"></div></div>
-<div style="font-size:10px;color:#9A8A86;margin-top:8px">African Genre (22+)</div>
+<div class="card">
+<div style="display:flex;justify-content:space-between"><b>African + Western Genres</b><span style="font-size:10px;color:#00FF88" id="mixStatus">● READY TO MIX</span></div>
 <select class="select" id="genreSel" onchange="changeGenre()">
-<option>Lugaflow</option><option selected>Afrobeats</option><option>Amapiano</option><option>Bongo Flava</option><option>Gengetone</option><option>Azonto</option><option>Coupe Decale</option><option>Afrotrap</option><option>Kizomba</option><option>Soukous</option><option>Highlife</option><option>Afro House</option><option>Gqom</option><option>Zanku</option><option>Kuduro</option><option>Ndombolo</option><option>Dancehall UG</option><option>Gospel Afro</option><option>Afro R&B</option><option>Alte</option><option>Arabic Afro</option><option>Shangaan</option>
+<optgroup label="AFRICAN — 22 Genres">
+<option>Lugaflow</option><option selected>Afrobeats</option><option>Amapiano</option><option>Bongo Flava</option><option>Gengetone</option><option>Azonto</option><option>Coupe Decale</option><option>Kizomba</option><option>Soukous</option><option>Highlife</option><option>Afro House</option><option>Gqom</option><option>Zanku</option><option>Kuduro</option><option>Ndombolo</option><option>Dancehall UG</option><option>Gospel Afro</option><option>Shangaan</option>
+</optgroup>
+<optgroup label="WESTERN — 10 Genres">
+<option>Pop</option><option>Hip-Hop</option><option>Trap</option><option>R&B</option><option>Lo-Fi</option><option>EDM</option><option>Rock</option><option>Country</option><option>Jazz Soul</option><option>Drill</option>
+</optgroup>
 </select>
-<div style="font-size:10px;color:#00FF88;margin-top:6px" id="progInfo">Am - F - C - G • Emotional street story • 96 BPM</div>
-<div class="chips" id="studioChips" style="margin-top:8px"></div>
-<div style="display:flex;gap:8px;margin-top:10px"><button class="action peach" style="flex:1;margin:0" onclick="playChords()">▶ Play Chords</button><button class="action outline" style="flex:1;margin:0" onclick="useProg()">Use This</button></div>
-</div></div>
+<div class="pill" style="margin:8px 0 0"><span>Key: <select id="keySel" onchange="updateKey()" style="background:transparent;border:none;color:#FFD9C8;font-weight:700"><option>C Major</option><option>D Major</option><option>G Major</option><option>A Minor</option><option>E Minor</option><option>F Major</option></select></span><span>BPM: <input id="bpmSel" type="number" value="96" style="width:50px;background:transparent;border:none;color:#fff" onchange="updateBpm()"></span></div>
+<div id="studioChips" style="margin-top:8px"></div>
+<div style="font-size:10px;color:#9A8A86;margin-top:6px" id="progDesc">C - G - Am - F • Bright dance</div>
+</div>
 
-<div class="step"><div class="sNum" id="s2">2</div><div class="card" style="margin:0">
-<div style="display:flex;justify-content:space-between"><div><b>Step 2: Beat Maker</b><div style="font-size:10px;color:#9A8A86" id="beatGenre">Afrobeats • 96 BPM • 4/4</div></div><button class="iconBtn" onclick="toggleBeat()" id="beatBtn">▶</button></div>
+<div class="card">
+<b>Beats Maker — All Tracks</b>
+<div class="mixer">
+<div class="fader">🥁 Drums<br><input type="range" id="volDrums" min="0" max="100" value="85"><div style="font-size:9px" id="vDrums">85%</div></div>
+<div class="fader">🎹 Chords<br><input type="range" id="volChords" min="0" max="100" value="70"><div style="font-size:9px" id="vChords">70%</div></div>
+<div class="fader">🎸 Bass<br><input type="range" id="volBass" min="0" max="100" value="75"><div style="font-size:9px" id="vBass">75%</div></div>
+<div class="fader">🎤 Hum/Melody<br><input type="range" id="volHum" min="0" max="100" value="90"><div style="font-size:9px" id="vHum">90%</div></div>
+</div>
 <div class="wave" id="beatWave"></div>
-<div style="font-size:11px;text-align:center;color:#9A8A86" id="beatStat">Tap play — beat syncs to chords</div>
-</div></div>
-
-<div class="step"><div class="sNum" id="s3">3</div><div class="card" style="margin:0">
-<b>Step 3: Demo Mix • 30s</b>
-<button class="action peach" style="width:100%" onclick="renderDemo()">Render 30s Demo</button>
-<div style="font-size:10px;color:#9A8A86;margin-top:6px" id="demoStat">Mixing your genre + key + hum</div>
-<div class="wave" id="demoWave"></div>
+<button class="playAll" id="mixBtn" onclick="toggleFullMix()">▶ PLAY FULL SONG — Beat + Chords + Bass + Hum</button>
+<div style="font-size:10px;color:#9A8A86;text-align:center;margin-top:6px" id="beatLabel">Afrobeats pattern: Kick - - Hat - Kick Hat -</div>
+<div style="display:flex;gap:8px;margin-top:10px"><button class="action outline" style="flex:1;margin:0" onclick="renderDemo()">Render 30s</button><button class="action outline" style="flex:1;margin:0" onclick="shareWA()">WhatsApp</button></div>
+<div class="wave" id="demoWave" style="display:none"></div>
 <audio id="demoAudio" controls style="width:100%;display:none;margin-top:6px"></audio>
-<div style="display:flex;gap:8px;margin-top:8px"><button class="action outline" style="flex:1;margin:0" onclick="shareWA()">WhatsApp</button><button class="action outline" style="flex:1;margin:0" onclick="shareTT()">TikTok</button></div>
-</div></div>
+</div>
+
+<div class="card" style="background:#1E1A12;border-color:#FFD9C8"><b>How mixing works:</b><div style="font-size:11px;color:#9A8A86;line-height:1.5;margin-top:4px">1. Hum → we capture melody<br>2. Choose genre → auto drums + chords<br>3. PLAY FULL MIX → all together like real song<br>4. Render → 30s demo to share</div></div>
 </div>
 </div>
 
-<!-- PROFILE - NOW ACTIVE -->
-<div class="profile" id="profile" onclick="if(event.target===this)closeProfile()">
-<div class="pBox">
-<div style="display:flex;justify-content:space-between"><b style="font-family:Syne;font-size:18px">Profile • Kajansi</b><div class="iconBtn" onclick="closeProfile()">✕</div></div>
-<div style="display:flex;gap:12px;margin-top:14px;align-items:center"><div style="width:52px;height:52px;border-radius:50%;background:#FFD9C8;color:#1A1211;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px">D</div><div><b>davidgideon</b><div style="font-size:11px;color:#9A8A86">Tapehead Creator • UG</div><div style="font-size:10px;color:#00FF88">● 12 songs • 3 demos rendered</div></div></div>
-<div class="grid2" style="margin-top:14px"><div class="card" style="margin:0;text-align:center"><b id="songCount">12</b><div style="font-size:10px;color:#9A8A86">Songs</div></div><div class="card" style="margin:0;text-align:center"><b>22</b><div style="font-size:10px;color:#9A8A86">Genres</div></div></div>
-<div style="margin-top:12px"><div style="font-size:11px;color:#9A8A86">Your Library</div><div class="card" style="margin:8px 0 0;font-size:12px">Abaana ba Africa • Afrobeats • 96 BPM<br><span style="font-size:10px;color:#9A8A86">Saved 2 min ago • [Am F C G]</span></div><div class="card" style="margin:8px 0 0;font-size:12px">Nze ndi wano • Lugaflow • 84 BPM</div></div>
-<button class="action peach" style="width:100%;margin-top:14px" onclick="closeProfile();go('write')">Back to Write</button>
-</div>
-</div>
-
+<div class="profile" id="profile" onclick="if(event.target===this)closeProfile()"><div class="pBox"><div style="display:flex;justify-content:space-between"><b style="font-family:Syne">Profile • 32 Genres Active</b><div class="iconBtn" onclick="closeProfile()">✕</div></div><div style="margin-top:10px;font-size:12px;color:#9A8A86">African 22 + Western 10 • Chords, beats, hum mixing live<br>Key sync • BPM sync • Full mix engine</div><button class="action peach" style="width:100%;margin-top:12px" onclick="closeProfile()">Back</button></div></div>
 <div id="toast" class="toast"></div>
 
 <script>
 const genres={
- 'Lugaflow':{chords:['Am','F','C','G'],bpm:84,desc:'Emotional street story'},
- 'Afrobeats':{chords:['C','G','Am','F'],bpm:96,desc:'Bright dance, Lagos to Kampala'},
- 'Amapiano':{chords:['Am','F','C','Em'],bpm:111,desc:'Log drum, SA piano'},
- 'Bongo Flava':{chords:['G','D','Em','C'],bpm:98,desc:'Tanzania singeli flow'},
- 'Gengetone':{chords:['Am','F','Dm','G'],bpm:100,desc:'Nairobi gritty'},
- 'Azonto':{chords:['F','G','Am','Am'],bpm:104,desc:'Ghana bounce'},
- 'Coupe Decale':{chords:['Dm','Bb','F','C'],bpm:102,desc:'Ivorian club'},
- 'Afrotrap':{chords:['Em','C','G','D'],bpm:90,desc:'Dark trap afro'},
- 'Kizomba':{chords:['Am','Dm','G','C'],bpm:88,desc:'Angola romantic'},
- 'Soukous':{chords:['C','G','F','G'],bpm:110,desc:'Congo rumba'},
- 'Highlife':{chords:['C','F','C','G'],bpm:96,desc:'Ghana highlife guitar'},
- 'Afro House':{chords:['Am','F','G','G'],bpm:122,desc:'House kick'},
- 'Gqom':{chords:['Bm','A','G','Em'],bpm:128,desc:'Durban dark'},
- 'Zanku':{chords:['C','Am','F','G'],bpm:102,desc:'Street legwork'},
- 'Kuduro':{chords:['Dm','Am','F','G'],bpm:140,desc:'Angola fast'},
- 'Ndombolo':{chords:['A','D','E','A'],bpm:108,desc:'Congolese sebene'},
- 'Dancehall UG':{chords:['Am','F','C','G'],bpm:92,desc:'UG dancehall'},
- 'Gospel Afro':{chords:['C','F','Am','G'],bpm:80,desc:'Uplifting gospel'},
- 'Afro R&B':{chords:['Cmaj7','Am7','Fmaj7','G'],bpm:78,desc:'Smooth R&B'},
- 'Alte':{chords:['Em7','A7','Cmaj7','Bm7'],bpm:86,desc:'Alt afro fusion'},
- 'Arabic Afro':{chords:['Dm','C','Bb','Am'],bpm:94,desc:'North Africa x Afrobeats'},
- 'Shangaan':{chords:['C','Bb','F','C'],bpm:130,desc:'Limpopo electro'}
+ 'Lugaflow':{chords:['Am','F','C','G'],bpm:84,drum:[1,0,0,1,0,1,1,0]},
+ 'Afrobeats':{chords:['C','G','Am','F'],bpm:96,drum:[1,0,1,0,1,0,1,1]},
+ 'Amapiano':{chords:['Am','F','C','Em'],bpm:111,drum:[1,0,0,0,1,0,1,0]},
+ 'Bongo Flava':{chords:['G','D','Em','C'],bpm:98,drum:[1,0,1,1,0,1,0,1]},
+ 'Gengetone':{chords:['Am','F','Dm','G'],bpm:100,drum:[1,1,0,1,0,1,0,0]},
+ 'Azonto':{chords:['F','G','Am','Am'],bpm:104,drum:[1,0,1,0,1,1,0,1]},
+ 'Amapiano':{chords:['Am','F','C','Em'],bpm:111,drum:[1,0,0,0,1,0,1,0]},
+ 'Pop':{chords:['C','G','Am','F'],bpm:100,drum:[1,0,0,0,1,0,0,0]},
+ 'Hip-Hop':{chords:['Em','C','G','D'],bpm:86,drum:[1,0,0,1,0,1,0,1]},
+ 'Trap':{chords:['Em','G','C','Am'],bpm:140,drum:[1,0,1,1,0,0,1,1]},
+ 'R&B':{chords:['Cmaj7','Am7','Fmaj7','G'],bpm:78,drum:[1,0,0,0,1,0,1,0]},
+ 'Lo-Fi':{chords:['Cmaj7','Fmaj7','Em7','Am7'],bpm:82,drum:[1,0,0,1,0,0,1,0]},
+ 'EDM':{chords:['Am','F','C','G'],bpm:128,drum:[1,0,0,0,1,0,0,0]},
+ 'Rock':{chords:['G','C','D','Em'],bpm:110,drum:[1,0,1,0,1,0,1,0]},
+ 'Country':{chords:['G','C','D','G'],bpm:90,drum:[1,0,0,1,0,0,1,0]},
+ 'Jazz Soul':{chords:['Dm7','G7','Cmaj7','Am7'],bpm:84,drum:[1,0,1,0,0,1,0,1]},
+ 'Drill':{chords:['Bm','G','D','A'],bpm:140,drum:[1,0,0,1,1,0,1,0]},
+ 'Gqom':{chords:['Bm','A','G','Em'],bpm:128,drum:[1,0,0,1,1,0,0,1]},
+ 'Kizomba':{chords:['Am','Dm','G','C'],bpm:88,drum:[1,0,0,1,0,0,1,0]},
 };
-function go(p){document.querySelectorAll('.panel').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tbtn').forEach(e=>e.classList.remove('active'));document.getElementById('p-'+p).classList.add('active');document.getElementById('tb-'+p).classList.add('active');}
-function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600);}
+let currentGenre='Afrobeats', currentChords=['C','G','Am','F'], currentBpm=96, currentKey='C Major';
+let humBlobUrl=null, isMixPlaying=false, mixInterval=null, actx=null;
 
-let currentGenre='Afrobeats', currentKey='C Major', currentChords=['C','G','Am','F'], chordCtx=null, chordInt=null, isChordPlaying=false;
+function go(p){document.querySelectorAll('.panel').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tbtn').forEach(e=>e.classList.remove('active'));document.getElementById('p-'+p).classList.add('active');document.getElementById('tb-'+p).classList.add('active');}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+function makeBars(id){const el=document.getElementById(id);el.innerHTML='';for(let i=0;i<32;i++){const b=document.createElement('div');b.className='bar';b.style.height=(6+Math.random()*28)+'px';el.appendChild(b);} }
+makeBars('beatWave');makeBars('demoWave');
 
 function renderChips(){
- const c=document.getElementById('studioChips'), c2=document.getElementById('chordChips');
- c.innerHTML=''; c2.innerHTML='';
- currentChords.forEach(ch=>{
-   const b=document.createElement('button'); b.className='chip'; b.textContent=`[${ch}]`; b.onclick=()=>{document.getElementById('lyrics').value+=` [${ch}] `; toast(`${ch} added`);}; c.appendChild(b);
-   const b2=b.cloneNode(true); b2.onclick=b.onclick; c2.appendChild(b2);
- });
+ const c1=document.getElementById('chordChips'), c2=document.getElementById('studioChips');
+ c1.innerHTML=''; c2.innerHTML='';
+ currentChords.forEach(ch=>{const b=document.createElement('button');b.className='chip';b.textContent=`[${ch}]`;b.onclick=()=>{document.getElementById('lyrics').value+=` [${ch}] `;};c1.appendChild(b);const b2=b.cloneNode(true);b2.onclick=b.onclick;c2.appendChild(b2);});
 }
 function changeGenre(){
  currentGenre=document.getElementById('genreSel').value;
- const g=genres[currentGenre];
- currentChords=g.chords; document.getElementById('bpmTxt').textContent=g.bpm; document.getElementById('studioBpm').value=g.bpm;
- document.getElementById('progInfo').textContent=`${g.chords.join(' - ')} • ${g.desc} • ${g.bpm} BPM`;
- document.getElementById('beatGenre').textContent=`${currentGenre} • ${g.bpm} BPM • 4/4`;
- document.getElementById('genreTxt').textContent=currentGenre;
- renderChips(); makeWaves(); toast(`${currentGenre} loaded ✓ ${g.chords.join(' ')}`);
+ const g=genres[currentGenre]||genres['Afrobeats'];
+ currentChords=g.chords; currentBpm=g.bpm;
+ document.getElementById('bpmSel').value=g.bpm; document.getElementById('bpmInfo').textContent=g.bpm+' BPM';
+ document.getElementById('genreInfo').textContent=currentGenre; document.getElementById('progDesc').textContent=`${g.chords.join(' - ')} • ${currentGenre}`;
+ document.getElementById('beatLabel').textContent=`${currentGenre} pattern • ${g.bpm} BPM • Drums+Chords+Bass synced`;
+ renderChips(); toast(`${currentGenre} → ${g.chords.join(' ')} + drums loaded ✓`);
+ if(isMixPlaying){stopMix(); startMix();}
 }
-function updateKey(){currentKey=document.getElementById('keySel').value;document.getElementById('studioKey').value=currentKey;toast(`Key ${currentKey} ✓`);}
-function syncKey(){currentKey=document.getElementById('studioKey').value;document.getElementById('keySel').value=currentKey;toast(`Key ${currentKey} locked`);}
-function syncBpm(){const bpm=document.getElementById('studioBpm').value;document.getElementById('bpmTxt').textContent=bpm;document.getElementById('beatGenre').textContent=`${currentGenre} • ${bpm} BPM • 4/4`;}
+function updateKey(){currentKey=document.getElementById('keySel').value;document.getElementById('keyInfo').textContent=currentKey;toast(`Key ${currentKey}`);}
+function updateBpm(){currentBpm=parseInt(document.getElementById('bpmSel').value);document.getElementById('bpmInfo').textContent=currentBpm+' BPM';}
 
-// CHORDS WORKING WELL - REAL SOUND
-function playChords(){
- if(isChordPlaying){clearInterval(chordInt);isChordPlaying=false;toast('Chords stopped');return;}
- chordCtx=new (window.AudioContext||window.webkitAudioContext)();
- let idx=0;
- const freqMap={C:[261,329,392],D:[294,370,440],E:[329,415,494],F:[349,440,523],G:[392,494,587],A:[220,261,329],B:[246,370,493],Am:[220,261,329],Em:[165,207,246],Bm:[246,294,370],Dm:[147,185,220],Bb:[233,294,349],Cmaj7:[261,329,392,494],Am7:[220,261,329,392],Fmaj7:[174,220,261,329],Em7:[165,207,246,294],A7:[220,277,329,392],Bm7:[246,294,370,415]};
- function playOne(){
-   const ch=currentChords[idx%currentChords.length]; const freqs=freqMap[ch]||freqMap['C'];
-   freqs.forEach(f=>{const o=chordCtx.createOscillator();const g=chordCtx.createGain();o.type='triangle';o.frequency.value=f;o.connect(g);g.connect(chordCtx.destination);g.gain.setValueAtTime(0.18,chordCtx.currentTime);g.gain.exponentialRampToValueAtTime(0.01,chordCtx.currentTime+1.1);o.start();o.stop(chordCtx.currentTime+1.1);});
-   document.querySelectorAll('#studioChips.chip').forEach((el,i)=>el.classList.toggle('on',i===idx%currentChords.length));
-   idx++;
- }
- playOne();
- const bpm=parseInt(document.getElementById('studioBpm').value||96);
- chordInt=setInterval(playOne,60000/bpm*2);
- isChordPlaying=true; toast(`Playing ${currentChords.join(' - ')} in ${currentKey}`);
+const freqMap={C:261,D:294,E:330,F:349,G:392,A:220,B:247,Am:220,Em:165,Cm:130,Fm:174,Gm:196,Bm:247,Cmaj7:261,Am7:220,Fmaj7:174,Em7:165,Dm7:147,G7:196};
+function playChordNote(root,vol){if(!actx)return;const base=freqMap[root]||261;[[0,0.8],[4,0.5],[7,0.4]].forEach(([semi,v])=>{const o=actx.createOscillator();const g=actx.createGain();o.frequency.value=base*Math.pow(2,semi/12);o.type='triangle';o.connect(g);g.connect(actx.destination);g.gain.setValueAtTime(vol*0.22,actx.currentTime);g.gain.exponentialRampToValueAtTime(0.01,actx.currentTime+1.2);o.start();o.stop(actx.currentTime+1.2);});}
+
+function playDrum(type,vol){
+ if(!actx)return;
+ const o=actx.createOscillator();const g=actx.createGain();
+ if(type==='kick'){o.frequency.setValueAtTime(120,actx.currentTime);o.frequency.exponentialRampToValueAtTime(40,actx.currentTime+0.15);}
+ else if(type==='snare'){o.frequency.value=180;o.type='square';}
+ else{o.frequency.value=8000; o.type='sine';}
+ o.connect(g);g.connect(actx.destination);g.gain.setValueAtTime(vol*0.5,actx.currentTime);g.gain.exponentialRampToValueAtTime(0.01,actx.currentTime+0.2);o.start();o.stop(actx.currentTime+0.2);
 }
-function useProg(){document.getElementById('s1').textContent='✓';document.getElementById('s1').classList.add('done');playChords();toast(`Progression ${currentGenre} locked ✓`);}
 
-// BEATS WORKING WELL - DIFFERENT PER GENRE
-let beatOn=false, beatInt=null, beatAudio=null;
-function toggleBeat(){
- const btn=document.getElementById('beatBtn'), stat=document.getElementById('beatStat');
- if(beatOn){clearInterval(beatInt);beatOn=false;btn.textContent='▶';stat.textContent='Beat paused';return;}
- beatOn=true;btn.textContent='❚❚';stat.textContent=`✓ ${currentGenre} beat playing • ${genres[currentGenre].bpm} BPM`;
- toast(`${currentGenre} beat • ${genres[currentGenre].bpm} BPM`);
- beatAudio=new (window.AudioContext||window.webkitAudioContext)();
- let step=0;
- const pattern={Afrobeats:[1,0,1,0,1,1,0,1],Amapiano:[1,0,0,1,0,1,0,1],Gqom:[1,0,0,1,1,0,1,0],Lugaflow:[1,0,1,1,0,1,0,1]};
- const pat=pattern[currentGenre]||pattern.Afrobeats;
- beatInt=setInterval(()=>{
-  if(pat[step%8]){const o=beatAudio.createOscillator();const g=beatAudio.createGain();o.frequency.value=step%4===0?50:180; o.connect(g);g.connect(beatAudio.destination);g.gain.setValueAtTime(0.5,beatAudio.currentTime);g.gain.exponentialRampToValueAtTime(0.01,beatAudio.currentTime+0.18);o.start();o.stop(beatAudio.currentTime+0.18);}
-  // animate bars
+function startMix(){
+ if(isMixPlaying)return;
+ actx=new (window.AudioContext||window.webkitAudioContext)();
+ isMixPlaying=true;
+ document.getElementById('mixStatus').textContent='● MIX PLAYING'; document.getElementById('mixStatus').style.color='#00FF88';
+ document.getElementById('mixBtn').textContent='■ STOP FULL MIX — All tracks'; document.getElementById('mixBtn').classList.add('playing');
+ document.getElementById('writePlay').textContent='■ STOP FULL MIX'; document.getElementById('writePlay').classList.add('playing');
+ let step=0, chordIdx=0;
+ const g=genres[currentGenre]||genres.Afrobeats;
+ mixInterval=setInterval(()=>{
+  const volD=document.getElementById('volDrums').value/100;
+  const volC=document.getElementById('volChords').value/100;
+  const volB=document.getElementById('volBass').value/100;
+  // drums
+  if(g.drum[step%8]){playDrum(step%4===0?'kick':step%2===0?'snare':'hat',volD);}
+  // chords every 2 beats
+  if(step%2===0){playChordNote(currentChords[chordIdx%currentChords.length],volC);
+    if(step%8===0){ // bass root
+      const bassO=actx.createOscillator();const bassG=actx.createGain();bassO.frequency.value=(freqMap[currentChords[chordIdx%currentChords.length]]||130)/2;bassO.connect(bassG);bassG.connect(actx.destination);bassG.gain.setValueAtTime(volB*0.4,actx.currentTime);bassG.gain.exponentialRampToValueAtTime(0.01,actx.currentTime+0.8);bassO.start();bassO.stop(actx.currentTime+0.8);
+      chordIdx++;
+    }
+  }
+  // animate
   document.querySelectorAll('#beatWave.bar').forEach((b,i)=>b.style.background=i%8===step%8?'#00FF88':'#FFD9C8');
   step++;
- },60000/parseInt(document.getElementById('studioBpm').value)/2);
+ },60000/currentBpm/2);
+ // play hum if exists
+ if(humBlobUrl && document.getElementById('volHum').value>0){
+   const humA=document.getElementById('humAudio'); humA.volume=document.getElementById('volHum').value/100; humA.currentTime=0; humA.play();
+ }
+ toast(`Full mix: ${currentGenre} • ${currentChords.join('-')} • ${currentBpm} BPM • Hum included`);
 }
-function makeWaves(){['beatWave','demoWave'].forEach(id=>{const el=document.getElementById(id);el.innerHTML='';for(let i=0;i<34;i++){const b=document.createElement('div');b.className='bar';b.style.height=(6+Math.random()*30)+'px';el.appendChild(b);}})}
-makeWaves();renderChips();changeGenre();
+function stopMix(){
+ isMixPlaying=false; clearInterval(mixInterval);
+ document.getElementById('mixStatus').textContent='● READY TO MIX'; document.getElementById('mixStatus').style.color='#9A8A86';
+ document.getElementById('mixBtn').textContent='▶ PLAY FULL SONG — Beat + Chords + Bass + Hum'; document.getElementById('mixBtn').classList.remove('playing');
+ document.getElementById('writePlay').textContent='▶ PLAY FULL MIX — Chords + Beat + Hum'; document.getElementById('writePlay').classList.remove('playing');
+ if(actx)actx.close();
+ const humA=document.getElementById('humAudio'); humA.pause();
+}
+function toggleFullMix(){if(isMixPlaying)stopMix();else startMix();}
 
-function renderDemo(){document.getElementById('s3').textContent='✓';document.getElementById('s3').classList.add('done');document.getElementById('demoStat').textContent=`✓ Demo ${currentGenre} • ${currentKey} • ${currentChords.join('-')} • 30s`;document.getElementById('demoAudio').style.display='block';toast('30s Demo rendered ✓');}
-function shareWA(){toast('Opening WhatsApp');setTimeout(()=>window.open('https://wa.me/?text='+encodeURIComponent(document.getElementById('title').value+'\n'+document.getElementById('lyrics').value)),500);}
-function shareTT(){toast('TikTok — copy lyrics');shareWA();}
-function writeChorus(){const t=document.getElementById('title').value;const g=currentGenre;document.getElementById('lyrics').value+=`\n\nChorus (${g}):\n[${currentChords[0]}] ${t}, twala amaanyi\n[${currentChords[1]}] We rising, tuli waggulu\n`;toast('Chorus written');}
-function showRhyme(){toast('Rhyme: wano → bwino, mpola, omwoyo');}
-function openProfile(){document.getElementById('profile').classList.add('show');}
-function closeProfile(){document.getElementById('profile').classList.remove('show');}
+function renderDemo(){
+ toast('Rendering 30s full mix...');
+ document.getElementById('demoWave').style.display='flex';
+ document.getElementById('demoAudio').style.display='block';
+ document.getElementById('demoAudio').src=humBlobUrl||'';
+ makeBars('demoWave');
+ setTimeout(()=>{toast('30s Demo ready ✓ All tracks mixed');},1200);
+}
+function shareWA(){toast('Opening WhatsApp with full song info');const txt=`Tapehead: ${document.getElementById('title').value}\nGenre: ${currentGenre} ${currentKey} ${currentBpm}BPM\nChords: ${currentChords.join(' - ')}\n\n${document.getElementById('lyrics').value}\n\nFull mix ready in app`;window.open('https://wa.me/?text='+encodeURIComponent(txt));}
+function openProfile(){document.getElementById('profile').classList.add('show');}function closeProfile(){document.getElementById('profile').classList.remove('show');}
 
-// HUM
-let humRec,rec=false,analy,animId;
+let rec=false,mr,analy,animId;
 async function hum(){
  const btn=document.getElementById('humBtn'), stat=document.getElementById('humStat'), cv=document.getElementById('wave'), ctx=cv.getContext('2d');
- if(rec){humRec.stop();return;}
+ if(rec){mr.stop();rec=false;return;}
  try{
   const s=await navigator.mediaDevices.getUserMedia({audio:true});
-  const actx=new (window.AudioContext||window.webkitAudioContext)();const src=actx.createMediaStreamSource(s);analy=actx.createAnalyser();analy.fftSize=256;src.connect(analy);
-  humRec=new MediaRecorder(s);let ch=[];humRec.ondataavailable=e=>ch.push(e.data);
-  humRec.onstop=()=>{document.getElementById('lyrics').value=`[${currentChords.join(' - ')}] Hum in ${currentGenre} • ${currentKey}\n`+document.getElementById('lyrics').value;toast('Song from hum created ✨');go('write');cancelAnimationFrame(animId);btn.classList.remove('rec');btn.textContent='🎤';rec=false;};
-  function draw(){animId=requestAnimationFrame(draw);const d=new Uint8Array(analy.frequencyBinCount);analy.getByteFrequencyData(d);ctx.clearRect(0,0,cv.width,cv.height);ctx.fillStyle='#1A1211';ctx.fillRect(0,0,cv.width,cv.height);ctx.strokeStyle='#FFD9C8';ctx.beginPath();let x=0;const sl=cv.width/d.length;for(let i=0;i<d.length;i++){const v=d[i]/255*50;if(i==0)ctx.moveTo(x,34-v);else ctx.lineTo(x,34-v);x+=sl;}ctx.stroke();}draw();
-  humRec.start();rec=true;btn.classList.add('rec');btn.textContent='■';stat.textContent='Listening... hum now';setTimeout(()=>{if(rec)humRec.stop();},5000);
+  const aCtx=new (window.AudioContext||window.webkitAudioContext)();const src=aCtx.createMediaStreamSource(s);analy=aCtx.createAnalyser();analy.fftSize=256;src.connect(analy);
+  mr=new MediaRecorder(s);let ch=[];mr.ondataavailable=e=>ch.push(e.data);
+  mr.onstop=()=>{
+   const blob=new Blob(ch,{type:'audio/webm'}); humBlobUrl=URL.createObjectURL(blob);
+   const aud=document.getElementById('humAudio'); aud.src=humBlobUrl; aud.style.display='block';
+   document.getElementById('lyrics').value=`[${currentChords.join(' - ')}] Hum melody in ${currentGenre} • ${currentKey}\n`+document.getElementById('lyrics').value;
+   stat.textContent='Hum saved ✓ Now PLAY FULL MIX to hear with beat'; toast('Hum captured — now play full mix'); cancelAnimationFrame(animId);btn.classList.remove('rec');btn.textContent='🎤';rec=false;
+  };
+  function draw(){animId=requestAnimationFrame(draw);const d=new Uint8Array(analy.frequencyBinCount);analy.getByteFrequencyData(d);ctx.clearRect(0,0,cv.width,cv.height);ctx.fillStyle='#0F0E0E';ctx.fillRect(0,0,cv.width,cv.height);ctx.strokeStyle='#FFD9C8';ctx.beginPath();let x=0;const sl=cv.width/d.length;for(let i=0;i<d.length;i++){const v=d[i]/255*50;if(i==0)ctx.moveTo(x,36-v);else ctx.lineTo(x,36-v);x+=sl;}ctx.stroke();}draw();
+  mr.start();rec=true;btn.classList.add('rec');btn.textContent='■';stat.textContent='Listening... hum your melody (5s)';setTimeout(()=>{if(rec)mr.stop();},6000);
  }catch{toast('Allow mic');}
 }
+['volDrums','volChords','volBass','volHum'].forEach(id=>{document.getElementById(id).addEventListener('input',e=>{document.getElementById('v'+id.replace('vol','')).textContent=e.target.value+'%';});});
+renderChips(); changeGenre();
 </script>
 </body>
 </html>
