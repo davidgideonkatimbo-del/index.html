@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Tapehead Studio — Premium Kits</title>
+<title>Tapehead — Premium Unique Kits</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&family=Inter:wght@400;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#17130F;--card:#2A221B;--line:#3A332C;--line2:#4A443C;--peach:#FFD9C2;--peachDark:#E8B3A0;--text:#F2E6D8;--muted:#B9A99C;--amber:#E8B34A;--rust:#C4623B}
@@ -11,53 +11,54 @@
 .h{height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:#1E1A16;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
 .tabsWrap{padding:10px 14px;background:#1E1A16;border-bottom:1px solid var(--line)}.tabs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;background:#12100E;border:1px solid var(--line);border-radius:12px;padding:4px}.tb{height:34px;border-radius:8px;display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);cursor:pointer}.tb.on{background:var(--peach);color:#000;font-weight:600}
 .pn{display:none}.pn.on{display:block}.card{margin:12px 14px 0;background:linear-gradient(180deg,#2A221B,#231E19);border:1px solid var(--line);border-radius:14px;padding:12px}
-.kbOuter{background:#1A1713;border:1px solid #2F2A24;border-radius:12px;padding:8px;margin-top:10px}.kb{position:relative;display:flex;gap:2px;height:84px}.wk{flex:1;background:#26211C;border:1px solid #3D362E;border-radius:0 0 10px 10px;display:flex;align-items:end;justify-content:center;padding-bottom:8px;font-size:12px;color:#D6C9BA}.wk.on{background:var(--peachDark);color:#000;font-weight:700}.bk{position:absolute;top:0;width:28px;height:50px;background:linear-gradient(180deg,#0B0A09,#1A1816);border-radius:0 0 6px 6px;z-index:3}.bk.on{background:linear-gradient(180deg,#4A241A,#C4623B)}
-.chordGrid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:7px;margin-top:10px}.chordGrid2{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-top:7px}.cBtn{background:#252019;border:1px solid #3A332C;border-radius:10px;padding:10px 4px;text-align:center}.cBtn.on{background:var(--peach)}.cBtn.rom{font-family:'JetBrains Mono',monospace;font-size:9px;color:#8A7F76}.cBtn.nam{font-family:'Fraunces',serif;font-size:18px;font-weight:800}.cBtn.on.rom,.cBtn.on.nam{color:#000}
-/* MIXER FIT */
+.kbOuter{background:#1A1713;border:1px solid #2F2A24;border-radius:12px;padding:8px;margin-top:10px}.kb{position:relative;display:flex;gap:2px;height:84px}.wk{flex:1;background:#26211C;border:1px solid #3D362E;border-radius:0 0 10px 10px;display:flex;align-items:end;justify-content:center;padding-bottom:8px;font-size:12px;color:#D6C9BA;cursor:pointer}.wk.on{background:var(--peachDark);color:#000;font-weight:700}.bk{position:absolute;top:0;width:28px;height:50px;background:linear-gradient(180deg,#0B0A09,#1A1816);border-radius:0 0 6px 6px;z-index:3}.bk.on{background:linear-gradient(180deg,#4A241A,#C4623B)}
+.chordGrid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:7px;margin-top:10px}.chordGrid2{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-top:7px}.cBtn{background:#252019;border:1px solid #3A332C;border-radius:10px;padding:10px 4px;text-align:center;cursor:pointer}.cBtn.on{background:var(--peach)}.cBtn.rom{font-family:'JetBrains Mono',monospace;font-size:9px;color:#8A7F76}.cBtn.nam{font-family:'Fraunces',serif;font-size:18px;font-weight:800}.cBtn.on.rom,.cBtn.on.nam{color:#000}
 .mixer{background:#0E0C0A;border:1px solid var(--line);border-radius:12px;margin-top:10px;overflow:hidden}
 .mixHead{padding:10px 12px;display:flex;align-items:center;justify-content:space-between;background:#1E1A16;border-bottom:1px solid var(--line)}
 .transport{display:flex;align-items:center;gap:10px;padding:10px 12px}
-.playBig{width:42px;height:42px;border-radius:50%;background:var(--peach);border:none;color:#000;font-weight:800}
-.genreScroll{display:flex;gap:6px;overflow-x:auto;padding:8px 12px;scrollbar-width:none}.genreScroll::-webkit-scrollbar{display:none}
-.pat{flex:0 0 auto;padding:6px 11px;border-radius:100px;border:1px solid var(--line2);background:#1A1713;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:8px}.pat.on{background:var(--peach);color:#000}
-.trackRow{display:grid;grid-template-columns:72px 1fr;border-top:1px solid #1E1A16}
+.playBig{width:42px;height:42px;border-radius:50%;background:var(--peach);border:none;color:#000;font-weight:800;cursor:pointer}
+.patRow{display:flex;gap:6px;overflow-x:auto;padding:8px 12px;scrollbar-width:none}.patRow::-webkit-scrollbar{display:none}
+.pat{flex:0 0 auto;padding:6px 11px;border-radius:100px;border:1px solid var(--line2);background:#1A1713;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:8px;cursor:pointer}.pat.on{background:var(--peach);color:#000}
+.trackRow{display:grid;grid-template-columns:78px 1fr;border-top:1px solid #1E1A16}
 .trackMeta{background:#15120F;padding:6px;display:flex;flex-direction:column;align-items:center;gap:4px;border-right:1px solid var(--line)}
-.tName{font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--muted);text-align:center;line-height:1.2;min-height:18px}
-.msRow{display:flex;gap:4px}.ms{width:20px;height:16px;font-size:7px;border-radius:4px;border:1px solid var(--line2);background:#0E0C0A;color:var(--muted)}.ms.mOn{background:var(--amber);color:#000}.ms.sOn{background:var(--peach);color:#000}
-.vol{width:52px;height:3px;accent-color:var(--peach)}
-.steps{display:grid;grid-template-columns:repeat(16,1fr);gap:3px;padding:8px;overflow-x:auto}
-.st{min-width:18px;height:28px;border-radius:5px;background:#1A1713;border:1px solid #2A231D}.st.on{background:var(--peach)}.st.onB{background:var(--rust)}.st.hit{outline:1px solid #fff}
-.wave{height:38px;background:#15120F;border-top:1px solid var(--line)}.wave canvas{width:100%;height:100%}
+.tName{font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--muted);text-align:center;line-height:1.2;min-height:22px}
+.msRow{display:flex;gap:4px}.ms{width:20px;height:16px;font-size:7px;border-radius:4px;border:1px solid var(--line2);background:#0E0C0A;color:var(--muted);cursor:pointer}.ms.mOn{background:var(--amber);color:#000}.ms.sOn{background:var(--peach);color:#000}
+.vol{width:56px;height:3px;accent-color:var(--peach)}
+.steps{display:grid;grid-template-columns:repeat(16,1fr);gap:3px;padding:8px}
+.st{min-width:18px;height:28px;border-radius:5px;background:#1A1713;border:1px solid #2A231D;cursor:pointer}.st.on{background:var(--peach)}.st.onB{background:var(--rust)}.st.hit{outline:1px solid #fff;outline-offset:1px}
+.wave{height:36px;background:#15120F;border-top:1px solid var(--line)}.wave canvas{width:100%;height:100%}
 .select{width:100%;background:#12100E;border:1px solid var(--line2);border-radius:10px;padding:10px;color:var(--text)}
-.btnPeach{width:100%;height:40px;border-radius:10px;background:var(--peach);border:none;font-weight:700;margin-top:10px}
+.autoToggle{display:flex;align-items:center;gap:8px;margin-top:10px;background:#12100E;border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+.switch{width:36px;height:20px;background:#2A231D;border-radius:100px;position:relative;cursor:pointer}.switch.on{background:var(--peach)}.knob{width:16px;height:16px;background:#fff;border-radius:50%;position:absolute;top:2px;left:2px;transition:.2s}.switch.on.knob{left:18px;background:#000}
+.chipBar{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}.chip{background:#12100E;border:1px solid var(--line2);padding:5px 9px;border-radius:100px;font-size:10px;color:var(--peach)}
 .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(80px);background:var(--peach);color:#000;padding:9px 14px;border-radius:100px;font-size:11px;opacity:0;transition:.3s}.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 </style>
 </head>
 <body>
 <div class="app">
-<div class="h"><div style="font-family:Fraunces;font-weight:800">Tapehead Studio</div><div style="font-family:'JetBrains Mono';font-size:8px;color:var(--amber)">PREMIUM KITS</div></div>
+<div class="h"><div style="font-family:Fraunces;font-weight:800">Tapehead Studio</div><div style="font-family:'JetBrains Mono';font-size:7px;color:var(--amber)">PREMIUM UNIQUE</div></div>
 <div class="tabsWrap"><div class="tabs"><div class="tb" onclick="go('write')" id="tb-write">Write</div><div class="tb on" onclick="go('studio')" id="tb-studio">Studio</div><div class="tb" onclick="go('lyrics')" id="tb-lyrics">Lyrics</div></div></div>
 
 <div id="p-studio" class="pn on">
 <div class="card">
 <div class="kbOuter"><div class="kb" id="kb"></div></div>
 <div class="chordGrid" id="g1"></div><div class="chordGrid2" id="g2"></div>
-<div id="theory" style="font-size:11px;color:var(--muted);margin-top:8px;background:#12100E;padding:8px;border-radius:8px"><b style="color:var(--peach)">I / C:</b> Home base</div>
-<div style="font-family:'JetBrains Mono';font-size:8px;color:var(--muted);margin:10px 0 6px">GENRE — 8 AFRICAN + 8 WESTERN</div>
-<select class="select" id="genreSel" onchange="setGenre(this.value)"></select>
+<div id="theory" style="font-size:11px;color:var(--muted);margin-top:8px;background:#12100E;padding:8px;border-radius:8px"></div>
+<div class="autoToggle"><div class="switch on" id="autoSw" onclick="toggleAuto()"><div class="knob"></div></div><div><div style="font-family:Fraunces;font-size:12px;font-weight:800">Auto Move from Home Base</div><div style="font-family:'JetBrains Mono';font-size:7px;color:var(--muted)">Bass & keys walk I→IV→V→vi every bar — unique per genre</div></div></div>
+<div class="chipBar" id="progChips"></div>
+<select class="select" id="genreSel" onchange="setGenre(this.value)" style="margin-top:10px"></select>
 </div>
 
 <div class="card" style="padding:0;overflow:hidden">
-<div class="mixHead"><b id="kitName" style="font-family:Fraunces;font-size:14px">Afrobeats Kit</b><span id="kitDesc" style="font-family:'JetBrains Mono';font-size:7px;color:var(--muted)">WARM LOG • SHAKER</span></div>
+<div class="mixHead"><b id="kitName" style="font-family:Fraunces;font-size:14px">Afrobeats Kit</b><span id="kitDesc" style="font-family:'JetBrains Mono';font-size:7px;color:var(--muted)">UNIQUE KIT</span></div>
 <div class="transport">
 <button class="playBig" id="playBtn" onclick="toggle()">▶</button>
-<div><div id="bpmLabel" style="font-weight:700;font-size:13px">96 BPM</div><div id="instLabel" style="font-family:'JetBrains Mono';font-size:7px;color:var(--muted)">KICK • SNARE • HAT • PERC • BASS • KEYS</div></div>
+<div><div id="bpmLabel" style="font-weight:700;font-size:13px">96 BPM • I / C</div><div id="instLabel" style="font-family:'JetBrains Mono';font-size:7px;color:var(--muted)">UNIQUE INSTRUMENTS</div></div>
 <div style="margin-left:auto;display:flex;align-items:center;gap:6px"><span style="font-size:10px;color:var(--muted)">BPM</span><input id="bpm" type="number" value="96" style="width:58px;background:#12100E;border:1px solid var(--line2);border-radius:8px;padding:6px;color:#fff;text-align:center" onchange="setBpm()"></div>
 </div>
-<div class="genreScroll" id="genreScroll"></div>
+<div class="patRow" id="genreScroll"></div>
 <div id="tracks"></div>
-<div class="wave"><canvas id="wave" width="400" height="38"></canvas></div>
-<div style="padding:10px 12px;display:flex;gap:8px"><button class="btnPeach" style="margin:0" onclick="toast('Rendering premium mix...');toggle()">Render Demo</button></div>
+<div class="wave"><canvas id="wave" width="400" height="36"></canvas></div>
 </div>
 </div>
 
@@ -66,159 +67,136 @@
 </div>
 <div class="toast" id="toast"></div>
 <script>
-// GENRE KITS — UNIQUE SOUND DESIGN
+// PREMIUM UNIQUE KITS — each genre has its OWN instruments
 const KITS={
-'Afrobeats':{bpm:96,desc:'WARM LOG • SHAKER',cat:'afr',kick:{f0:160,f1:45,dec:0.35,click:0.6,type:'soft'},snare:{tone:190,hp:1800,type:'rim'},hat:{f:9000,dec:0.05},bass:{f:55,type:'log',slide:0.15},lead:{type:'rhodes',cut:2800}},
-'Lugaflow':{bpm:84,desc:'BOOM BAP • 808',cat:'afr',kick:{f0:120,f1:35,dec:0.5,click:0.8,type:'boomy'},snare:{tone:200,hp:1500,type:'crack'},hat:{f:8500,dec:0.04},bass:{f:48,type:'808',slide:0.3},lead:{type:'rhodes',cut:2200}},
-'Bongo Flava':{bpm:98,desc:'BONGO • GUITAR',cat:'afr',kick:{f0:140,f1:50,dec:0.3,click:0.5,type:'tight'},snare:{tone:220,hp:2000,type:'pop'},hat:{f:8000,dec:0.06},bass:{f:62,type:'round',slide:0.1},lead:{type:'pluck',cut:3500}},
-'Amapiano':{bpm:112,desc:'DEEP LOG • SHUFFLE',cat:'afr',kick:{f0:100,f1:38,dec:0.6,click:0.4,type:'deep'},snare:{tone:180,hp:1200,type:'soft'},hat:{f:9500,dec:0.03},bass:{f:52,type:'amalog',slide:0.4},lead:{type:'pad',cut:1800}},
-'Highlife':{bpm:100,desc:'CONGA • HORNS',cat:'afr',kick:{f0:150,f1:55,dec:0.28,click:0.7,type:'punch'},snare:{tone:240,hp:2500,type:'snap'},hat:{f:7500,dec:0.07},bass:{f:65,type:'finger',slide:0.05},lead:{type:'horns',cut:4000}},
-'Afro-Dancehall':{bpm:95,desc:'DANCEHALL RIM',cat:'afr',kick:{f0:130,f1:42,dec:0.4,click:0.9,type:'dance'},snare:{tone:210,hp:1800,type:'rimshot'},hat:{f:8800,dec:0.04},bass:{f:58,type:'rub',slide:0.2},lead:{type:'pluck',cut:3200}},
-'Gengetone':{bpm:100,desc:'HEAVY 808 • CHANT',cat:'afr',kick:{f0:90,f1:30,dec:0.7,click:1.0,type:'dist'},snare:{tone:170,hp:1400,type:'heavy'},hat:{f:9200,dec:0.03},bass:{f:45,type:'dist808',slide:0.5},lead:{type:'chant',cut:2500}},
-'Gqom':{bpm:128,desc:'DARK DISTORTED',cat:'afr',kick:{f0:80,f1:28,dec:0.8,click:1.2,type:'gqom'},snare:{tone:160,hp:1000,type:'dark'},hat:{f:10000,dec:0.02},bass:{f:42,type:'dark',slide:0.6},lead:{type:'darkpad',cut:1200}},
-'Pop':{bpm:100,desc:'PUNCHY • SUPERSAW',cat:'west',kick:{f0:150,f1:48,dec:0.32,click:0.8,type:'pop'},snare:{tone:200,hp:1800,type:'pop'},hat:{f:8200,dec:0.05},bass:{f:60,type:'pop',slide:0.1},lead:{type:'supersaw',cut:5000}},
-'Hip-Hop':{bpm:88,desc:'VINYL BOOM',cat:'west',kick:{f0:110,f1:36,dec:0.45,click:0.7,type:'vinyl'},snare:{tone:190,hp:1600,type:'boom'},hat:{f:7800,dec:0.06},bass:{f:50,type:'808',slide:0.25},lead:{type:'rhodes',cut:2000}},
-'Trap':{bpm:140,desc:'TRIPLET 808 SLIDE',cat:'west',kick:{f0:95,f1:32,dec:0.55,click:0.9,type:'trap'},snare:{tone:185,hp:1500,type:'trap'},hat:{f:9800,dec:0.025},bass:{f:44,type:'slide808',slide:0.7},lead:{type:'bell',cut:6000}},
-'R&B':{bpm:72,desc:'SILKY • WARM',cat:'west',kick:{f0:130,f1:52,dec:0.35,click:0.4,type:'silk'},snare:{tone:220,hp:2200,type:'brush'},hat:{f:7000,dec:0.08},bass:{f:58,type:'silk',slide:0.08},lead:{type:'rhodes',cut:1800}},
-'House':{bpm:124,desc:'FOUR-FLOOR',cat:'west',kick:{f0:140,f1:40,dec:0.38,click:1.0,type:'four'},snare:{tone:200,hp:1700,type:'clap'},hat:{f:9000,dec:0.03},bass:{f:55,type:'house',slide:0.12},lead:{type:'stab',cut:3500}},
-'Gospel Worship Ballad':{bpm:70,desc:'PIANO • SWELL',cat:'west',kick:{f0:120,f1:50,dec:0.4,click:0.3,type:'soft'},snare:{tone:210,hp:2000,type:'brush'},hat:{f:6500,dec:0.09},bass:{f:60,type:'warm',slide:0.05},lead:{type:'piano',cut:3000}},
-'Lo-Fi':{bpm:80,desc:'VINYL CRACKLE',cat:'west',kick:{f0:100,f1:45,dec:0.4,click:0.3,type:'lofi'},snare:{tone:195,hp:1400,type:'lofi'},hat:{f:6000,dec:0.1},bass:{f:57,type:'lofi',slide:0.1},lead:{type:'keys',cut:1500}},
-'EDM':{bpm:128,desc:'FESTIVAL BIG',cat:'west',kick:{f0:160,f1:38,dec:0.42,click:1.1,type:'big'},snare:{tone:205,hp:1900,type:'big'},hat:{f:9500,dec:0.03},bass:{f:53,type:'sawbass',slide:0.15},lead:{type:'supersaw',cut:6500}},
+'Afrobeats':{bpm:96,desc:'Log Drum • Shaker • Rhodes',tracks:['Kick','Snare','Shaker','LogDrum','Bass','Rhodes'],prog:['I','V','vi','IV']},
+'Lugaflow':{bpm:84,desc:'Boom Bap • 808 • Vocal Chop',tracks:['BoomKick','Snare','HiHat','808','Bass','Chop'],prog:['vi','IV','I','V']},
+'Bongo Flava':{bpm:98,desc:'Bongo • Guitar Skank • Keys',tracks:['Kick','Rim','Bongo','Guitar','Bass','Keys'],prog:['I','V','vi','IV']},
+'Amapiano':{bpm:112,desc:'Deep Log • Shuffle • Pad',tracks:['DeepKick','LogBass','Shaker','Perc','Bass','Pad'],prog:['vi','IV','I','iii']},
+'Highlife':{bpm:100,desc:'Conga • Highlife Guitar • Horns',tracks:['Kick','Snare','Conga','Guitar','Bass','Horns'],prog:['I','IV','V','I']},
+'Afro-Dancehall':{bpm:95,desc:'Dancehall Kick • Rim • Pluck',tracks:['DanceKick','Rim','HiHat','Perc','Bass','Pluck'],prog:['vi','V','IV','V']},
+'Gengetone':{bpm:100,desc:'Heavy 808 • Chant • Dist',tracks:['DistKick','Snare','Clap','Chant','Bass','Vocal'],prog:['vi','VII','VI','V']},
+'Gqom':{bpm:128,desc:'Gqom Hard Kick • Dark Pad',tracks:['GqomKick','Log','Clap','Shaker','Bass','DarkPad'],prog:['vi','IV','iii','ii']},
+'Pop':{bpm:100,desc:'Punch • Supersaw • Clap',tracks:['PopKick','Snare','HiHat','Clap','Bass','Supersaw'],prog:['I','V','vi','IV']},
+'Hip-Hop':{bpm:88,desc:'Vinyl Boom • Rhodes • 808',tracks:['VinylKick','Snare','HiHat','Vinyl','Bass','Rhodes'],prog:['vi','IV','I','V']},
+'Trap':{bpm:140,desc:'Trap 808 Slide • Bell • Hat Rolls',tracks:['TrapKick','Snare','HatRoll','808Slide','Bass','Bell'],prog:['vi','III','VII','iv']},
+'R&B':{bpm:72,desc:'Brush • Silky Bass • NO HARD DRUMS',tracks:['SoftKick','Brush','Shaker','Guitar','Bass','Rhodes'],prog:['I','iii','vi','ii']},
+'House':{bpm:124,desc:'Four-on-Floor • Stab • Off-Hat',tracks:['FourKick','Clap','OffHat','Perc','Bass','Stab'],prog:['vi','IV','I','V']},
+'Gospel Worship Ballad':{bpm:70,desc:'NO TRAP DRUMS • Piano • Choir • Organ',tracks:['SoftKick','Brush','Shaker','UprightBass','Piano','ChoirPad'],prog:['I','V','vi','IV']},
+'Lo-Fi':{bpm:80,desc:'NO HARD KICK • Vinyl Crackle • Keys',tracks:['LoFiKick','Rim','Vinyl','SoftHat','Bass','Keys'],prog:['I','iii','IV','vi']},
+'EDM':{bpm:128,desc:'Big Kick • Supersaw • Anthem',tracks:['BigKick','Snare','HiHat','Clap','Bass','Supersaw'],prog:['I','V','vi','IV']},
 };
 
 const DIATONIC=[
-{roman:'I',name:'C',notes:['C','E','G'],bass:'C2',midi:36},
-{roman:'ii',name:'Dm',notes:['D','F','A'],bass:'D2',midi:38},
-{roman:'iii',name:'Em',notes:['E','G','B'],bass:'E2',midi:40},
-{roman:'IV',name:'F',notes:['F','A','C'],bass:'F2',midi:41},
-{roman:'V',name:'G',notes:['G','B','D'],bass:'G2',midi:43},
-{roman:'vi',name:'Am',notes:['A','C','E'],bass:'A2',midi:45},
-{roman:'vii°',name:'Bdim',notes:['B','D','F'],bass:'B2',midi:47},
+{roman:'I',name:'C',notes:['C','E','G'],bass:'C2'},
+{roman:'ii',name:'Dm',notes:['D','F','A'],bass:'D2'},
+{roman:'iii',name:'Em',notes:['E','G','B'],bass:'E2'},
+{roman:'IV',name:'F',notes:['F','A','C'],bass:'F2'},
+{roman:'V',name:'G',notes:['G','B','D'],bass:'G2'},
+{roman:'vi',name:'Am',notes:['A','C','E'],bass:'A2'},
+{roman:'vii°',name:'Bdim',notes:['B','D','F'],bass:'B2'},
 ];
-let curGenre='Afrobeats',curKit=KITS[curGenre],curBpm=96,activeChord=0,aCtx,master,noiseBuf,isPlaying=false,timer=null,stepPos=0;
-let pattern={},volumes={Kick:0.9,Snare:0.65,Hat:0.35,Perc:0.5,Bass:0.85,Lead:0.6},mutes={},solos={};
-const TRACKS=['Kick','Snare','Hat','Perc','Bass','Lead'];
+let curGenre='Afrobeats',curKit=KITS[curGenre],curBpm=96,activeIdx=0,autoMove=true,aCtx,master,noiseBuf,isPlaying=false,timer=null,stepPos=0,barCount=0;
+let pattern={},volumes={},mutes={},solos={},progSeq=[];
 
 function go(p){document.querySelectorAll('.pn').forEach(e=>e.classList.remove('on'));document.querySelectorAll('.tb').forEach(e=>e.classList.remove('on'));document.getElementById('p-'+p).classList.add('on');document.getElementById('tb-'+p).classList.add('on')}
-function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000)}
-function init(){if(aCtx)return;aCtx=new (window.AudioContext||window.webkitAudioContext)();noiseBuf=aCtx.createBuffer(1,aCtx.sampleRate,aCtx.sampleRate);const d=noiseBuf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;master=aCtx.createGain();master.gain.value=0.9;const comp=aCtx.createDynamicsCompressor();master.connect(comp);comp.connect(aCtx.destination)}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
+function init(){if(aCtx)return;aCtx=new (window.AudioContext||window.webkitAudioContext)();noiseBuf=aCtx.createBuffer(1,aCtx.sampleRate,aCtx.sampleRate);const d=noiseBuf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;master=aCtx.createGain();master.gain.value=0.92;const comp=aCtx.createDynamicsCompressor();master.connect(comp);comp.connect(aCtx.destination)}
 
-// PREMIUM SOUND ENGINE — unique per genre
-function playKick(){
- const k=curKit.kick;const t=aCtx.currentTime;
- const o=aCtx.createOscillator(),g=aCtx.createGain();
- o.type='sine';o.frequency.setValueAtTime(k.f0,t);o.frequency.exponentialRampToValueAtTime(k.f1,t+0.1);
- // click layer for premium attack
- const click=aCtx.createOscillator(),cg=aCtx.createGain();click.type='square';click.frequency.value=k.f0*2;cg.gain.setValueAtTime(0.15*k.click,t);cg.gain.exponentialRampToValueAtTime(0.001,t+0.02);
- // distortion for Gqom/Gengetone/Trap
- let node=g;
- if(k.type==='dist'||k.type==='gqom'||k.type==='dark'){const ws=aCtx.createWaveShaper();ws.curve=makeDistCurve(40);o.connect(ws);ws.connect(g);click.connect(cg);cg.connect(g);}else{o.connect(g);click.connect(cg);cg.connect(g);}
- g.connect(master);g.gain.setValueAtTime(volumes.Kick,t);g.gain.exponentialRampToValueAtTime(0.001,t+k.dec);
- o.start(t);o.stop(t+k.dec+0.05);click.start(t);click.stop(t+0.03);
-}
-function makeDistCurve(k){const n=1024,c=new Float32Array(n);for(let i=0;i<n;i++){const x=i*2/n-1;c[i]=(3+k)*x*20*(Math.PI/180)/(Math.PI+k*Math.abs(x))}return c}
-function playSnare(){
- const s=curKit.snare;const t=aCtx.currentTime;
- const n=aCtx.createBufferSource();n.buffer=noiseBuf;const f=aCtx.createBiquadFilter(),g=aCtx.createGain();
- f.type=s.type==='brush'||s.type==='lofi'?'lowpass':'highpass';f.frequency.value=s.hp;
- const o=aCtx.createOscillator();o.type='triangle';o.frequency.value=s.tone;
- o.connect(g);g.connect(master);n.connect(f);f.connect(g);
- const v=volumes.Snare*(s.type==='dark'?0.9:0.7);
- g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(0.001,t+(s.type==='heavy'?0.3:0.18));
- o.start(t);o.stop(t+0.2);n.start(t);n.stop(t+0.2);
-}
-function playHat(){
- const h=curKit.hat;const t=aCtx.currentTime;const n=aCtx.createBufferSource();n.buffer=noiseBuf;
- const f=aCtx.createBiquadFilter(),g=aCtx.createGain();f.type='highpass';f.frequency.value=h.f;g.gain.setValueAtTime(volumes.Hat*0.5,t);g.gain.exponentialRampToValueAtTime(0.001,t+h.dec);
- n.connect(f);f.connect(g);g.connect(master);n.start(t);n.stop(t+h.dec+0.02);
-}
-function playPerc(){
- const t=aCtx.currentTime;if(mutes.Perc)return;
- // genre-specific perc: conga for Highlife, shaker for Afrobeats, log for Amapiano
- if(curGenre==='Highlife'||curGenre==='Bongo Flava'){const o=aCtx.createOscillator(),g=aCtx.createGain();o.type='sine';o.frequency.setValueAtTime(220,t);o.frequency.exponentialRampToValueAtTime(180,t+0.1);g.gain.setValueAtTime(volumes.Perc*0.6,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.15);o.connect(g);g.connect(master);o.start(t);o.stop(t+0.16);}
- else{const n=aCtx.createBufferSource();n.buffer=noiseBuf;const f=aCtx.createBiquadFilter(),g=aCtx.createGain();f.type='bandpass';f.frequency.value=curGenre==='Amapiano'?4000:2500;g.gain.setValueAtTime(volumes.Perc*0.4,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.12);n.connect(f);f.connect(g);g.connect(master);n.start(t);n.stop(t+0.13);}
-}
-function playBass(){
- const b=curKit.bass;const t=aCtx.currentTime;const d=DIATONIC[activeChord];
- const freqMap={C2:65.41,D2:73.42,E2:82.41,F2:87.31,G2:98,A2:110,B2:123.47};
- let base=freqMap[d.bass]||65.41; if(b.type.includes('808')||b.type==='amalog') base=base/2;
- const o=aCtx.createOscillator(),g=aCtx.createGain(),f=aCtx.createBiquadFilter();
- o.type=b.type==='sawbass'||b.type==='house'?'sawtooth':'sine';
- o.frequency.setValueAtTime(base,t);
- if(b.slide>0.2) o.frequency.exponentialRampToValueAtTime(base*0.92,t+0.25); // 808 slide
- f.type='lowpass';f.frequency.value=b.type==='dark'?120:b.type==='dist808'?200:300;
- o.connect(f);f.connect(g);g.connect(master);
- g.gain.setValueAtTime(volumes.Bass*0.85,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.6);
- o.start(t);o.stop(t+0.65);
-}
-function playLead(){
- const l=curKit.lead;const t=aCtx.currentTime;const d=DIATONIC[activeChord];
- const freq={C:261.63,D:293.66,E:329.63,F:349.23,G:392,A:220,B:246.94};
- d.notes.forEach((nn,i)=>{
-   const o=aCtx.createOscillator(),g=aCtx.createGain(),f=aCtx.createBiquadFilter();
-   o.type=l.type==='supersaw'||l.type==='stab'?'sawtooth':l.type==='bell'?'sine':l.type==='piano'?'triangle':'triangle';
-   o.frequency.value=(freq[nn]||261.63)*(l.type==='bell'?2:1);
-   f.type='lowpass';f.frequency.value=l.cut;
-   // premium: detune for supersaw
-   if(l.type==='supersaw'){o.detune.value=(i-1)*12;}
-   o.connect(f);f.connect(g);g.connect(master);
-   g.gain.setValueAtTime(0,t+i*0.02);g.gain.linearRampToValueAtTime(volumes.Lead*0.18,t+i*0.02+0.03);g.gain.exponentialRampToValueAtTime(0.001,t+0.9);
-   o.start(t+i*0.02);o.stop(t+1);
- });
+// PREMIUM UNIQUE SOUND ENGINE
+function makeDist(k){const n=1024,c=new Float32Array(n);for(let i=0;i<n;i++){const x=i*2/n-1;c[i]=(3+k)*x*20*(Math.PI/180)/(Math.PI+k*Math.abs(x))}return c}
+function playSound(track){
+ const t=aCtx.currentTime; if(mutes[track]) return; if(Object.values(solos).some(Boolean)&&!solos[track]) return;
+ const d=DIATONIC[activeIdx]; const freqMap={C2:65.41,D2:73.42,E2:82.41,F2:87.31,G2:98,A2:110,B2:123.47}; const noteFreq={C:261.63,D:293.66,E:329.63,F:349.23,G:392,A:220,B:246.94};
+ const vol=volumes[track]||0.7;
+ // KICKS — each unique
+ if(track.includes('Kick')){
+   const o=aCtx.createOscillator(),g=aCtx.createGain(); o.type='sine';
+   if(track==='AfrobeatsKick'||track==='Kick'){o.frequency.setValueAtTime(160,t);o.frequency.exponentialRampToValueAtTime(45,t+0.12);g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.35);}
+   else if(track==='BoomKick'){o.frequency.setValueAtTime(110,t);o.frequency.exponentialRampToValueAtTime(35,t+0.18);g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.5);}
+   else if(track==='DeepKick'||track==='GqomKick'||track==='DistKick'){o.frequency.setValueAtTime(track==='GqomKick'?75:90,t);o.frequency.exponentialRampToValueAtTime(28,t+0.2);const ws=aCtx.createWaveShaper();ws.curve=makeDist(50);o.connect(ws);ws.connect(g);g.connect(master);g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.7);o.start(t);o.stop(t+0.75);return;}
+   else if(track==='SoftKick'||track==='LoFiKick'){o.frequency.setValueAtTime(120,t);o.frequency.exponentialRampToValueAtTime(55,t+0.1);g.gain.setValueAtTime(vol*0.5,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.25);}
+   else if(track==='PopKick'||track==='BigKick'||track==='TrapKick'||track==='FourKick'){o.frequency.setValueAtTime(track==='BigKick'?160:140,t);o.frequency.exponentialRampToValueAtTime(38,t+0.12);g.gain.setValueAtTime(vol*1.1,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.4);}
+   else if(track==='VinylKick'){o.frequency.setValueAtTime(105,t);o.frequency.exponentialRampToValueAtTime(40,t+0.15);const f=aCtx.createBiquadFilter();f.type='lowpass';f.frequency.value=600;o.connect(f);f.connect(g);g.gain.setValueAtTime(vol*0.6,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.35);g.connect(master);o.start(t);o.stop(t+0.4);return;}
+   o.connect(g);g.connect(master);o.start(t);o.stop(t+0.5);return;
+ }
+ if(track==='Snare'||track==='Rim'||track==='Brush'||track==='Clap'||track==='Bongo'||track==='Conga'){
+   const n=aCtx.createBufferSource();n.buffer=noiseBuf;const f=aCtx.createBiquadFilter(),g=aCtx.createGain();
+   if(track==='Brush'){f.type='lowpass';f.frequency.value=1800;g.gain.setValueAtTime(vol*0.3,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.22);}
+   else if(track==='Bongo'||track==='Conga'){const o=aCtx.createOscillator();o.frequency.setValueAtTime(track==='Bongo'?280:180,t);g.gain.setValueAtTime(vol*0.6,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.14);o.connect(g);g.connect(master);o.start(t);o.stop(t+0.15);return;}
+   else{f.type='highpass';f.frequency.value=track==='Rim'?2000:1600;g.gain.setValueAtTime(vol*0.6,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.18);}
+   n.connect(f);f.connect(g);g.connect(master);n.start(t);n.stop(t+0.2);return;
+ }
+ if(track==='HiHat'||track==='OffHat'||track==='HatRoll'||track==='Shaker'||track==='SoftHat'){
+   const n=aCtx.createBufferSource();n.buffer=noiseBuf;const f=aCtx.createBiquadFilter(),g=aCtx.createGain();f.type='highpass';f.frequency.value=track==='SoftHat'?5000:track==='Shaker'?4000:9000;
+   g.gain.setValueAtTime(vol*0.35,t);g.gain.exponentialRampToValueAtTime(0.001,t+track==='HatRoll'?0.03:0.07);n.connect(f);f.connect(g);g.connect(master);n.start(t);n.stop(t+0.08);return;
+ }
+ if(track==='Bass'||track==='UprightBass'||track==='808'||track==='LogBass'||track==='808Slide'||track==='DarkPadBass'){
+   let base=freqMap[d.bass]||65; if(track.includes('808')||track==='LogBass') base/=2;
+   const o=aCtx.createOscillator(),g=aCtx.createGain(),f=aCtx.createBiquadFilter(); o.type=track==='UprightBass'?'triangle':track.includes('808')?'sine':'sine';
+   o.frequency.setValueAtTime(base,t); if(track==='808Slide') o.frequency.exponentialRampToValueAtTime(base*0.75,t+0.28);
+   f.type='lowpass';f.frequency.value=track==='UprightBass'?350:track==='DarkPadBass'?90:200;o.connect(f);f.connect(g);g.connect(master);
+   g.gain.setValueAtTime(vol*0.85,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.6);o.start(t);o.stop(t+0.65);return;
+ }
+ if(track==='LogDrum'||track==='Perc'||track==='Guitar'||track==='Pluck'||track==='Chant'){
+   const o=aCtx.createOscillator(),g=aCtx.createGain(); o.type='sine'; o.frequency.setValueAtTime(track==='LogDrum'?110:track==='Guitar'?196:track==='Pluck'?440:220,t);
+   g.gain.setValueAtTime(vol*0.5,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.3);o.connect(g);g.connect(master);o.start(t);o.stop(t+0.35);return;
+ }
+ // LEAD INSTRUMENTS — premium unique
+ const leadTracks=['Rhodes','Keys','Chop','Vocal','Horns','Pad','DarkPad','Supersaw','Stab','Piano','ChoirPad','Bell','Vinyl','Guitar','GuitarSkank'];
+ if(leadTracks.includes(track)||track==='Rhodes'||track==='Piano'||track==='ChoirPad'||track==='Supersaw'||track==='Keys'){
+   d.notes.forEach((nn,i)=>{
+     const o=aCtx.createOscillator(),g=aCtx.createGain(),f=aCtx.createBiquadFilter();
+     if(track==='Piano'){o.type='triangle';o.frequency.value=(noteFreq[nn]||261)*(1+i*0.01);f.frequency.value=3500;}
+     else if(track==='ChoirPad'){o.type='sine';o.frequency.value=(noteFreq[nn]||261)/2;f.frequency.value=1200; o.detune.value=i*7;}
+     else if(track==='Supersaw'){o.type='sawtooth';o.frequency.value=(noteFreq[nn]||261);o.detune.value=(i-1)*10;f.frequency.value=5000;}
+     else if(track==='Horns'){o.type='square';o.frequency.value=(noteFreq[nn]||261);f.frequency.value=4000;}
+     else{o.type='triangle';o.frequency.value=(noteFreq[nn]||261);f.frequency.value=2600;}
+     f.type='lowpass';o.connect(f);f.connect(g);g.connect(master);
+     g.gain.setValueAtTime(0,t+i*0.03);g.gain.linearRampToValueAtTime(vol*0.18,t+i*0.03+0.05);g.gain.exponentialRampToValueAtTime(0.001,t+1.0);o.start(t+i*0.03);o.stop(t+1.1);
+   });
+ }
 }
 
-// UI BUILD
 function buildKB(){
  const kb=document.getElementById('kb');kb.innerHTML='';
- ['C','D','E','F','G','A','B'].forEach(n=>{const d=document.createElement('div');d.className='wk';d.textContent=n;d.dataset.n=n;d.onclick=()=>{init();highlight([n]);playLeadSingle(n)};kb.appendChild(d)});
- [{n:'C#',l:'9.8%'},{n:'D#',l:'24.2%'},{n:'F#',l:'52.8%'},{n:'G#',l:'67.2%'},{n:'A#',l:'81.5%'}].forEach(b=>{const e=document.createElement('div');e.className='bk';e.style.left=b.l;e.dataset.n=b.n;e.onclick=()=>{init();playLeadSingle(b.n)};kb.appendChild(e)});
+ ['C','D','E','F','G','A','B'].forEach(n=>{const d=document.createElement('div');d.className='wk';d.textContent=n;d.dataset.n=n;d.onclick=()=>{activeIdx=['C','D','E','F','G','A','B'].indexOf(n);updateChordUI();init();playSound(curKit.tracks.slice(-1)[0])};kb.appendChild(d)});
+ [{n:'C#',l:'9.8%'},{n:'D#',l:'24.2%'},{n:'F#',l:'52.8%'},{n:'G#',l:'67.2%'},{n:'A#',l:'81.5%'}].forEach(b=>{const e=document.createElement('div');e.className='bk';e.style.left=b.l;e.dataset.n=b.n;kb.appendChild(e)});
 }
-function playLeadSingle(n){const f={C:261.63,'C#':277.18,D:293.66,'D#':311.13,E:329.63,F:349.23,'F#':369.99,G:392,'G#':415.3,A:440,'A#':466.16,B:493.88};const o=aCtx.createOscillator(),g=aCtx.createGain();o.frequency.value=f[n]||261;o.type='sine';o.connect(g);g.connect(master);g.gain.setValueAtTime(0.3,aCtx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,aCtx.currentTime+0.7);o.start();o.stop(aCtx.currentTime+0.75)}
-function highlight(ns){document.querySelectorAll('.wk,.bk').forEach(el=>el.classList.toggle('on',ns.includes(el.dataset.n.replace('#',''))||ns.includes(el.dataset.n)))}
+function highlight(ns){document.querySelectorAll('.wk,.bk').forEach(el=>el.classList.toggle('on',(ns.includes(el.dataset.n)||ns.includes(el.dataset.n.replace('#','')))))}
 function buildChords(){
  const g1=document.getElementById('g1'),g2=document.getElementById('g2');g1.innerHTML='';g2.innerHTML='';
- DIATONIC.slice(0,4).forEach((d,i)=>{const b=document.createElement('div');b.className='cBtn'+(i===0?' on':'');b.id='cb'+i;b.innerHTML=`<div class="rom">${d.roman}</div><div class="nam">${d.name}</div>`;b.onclick=()=>selChord(i);g1.appendChild(b)});
- DIATONIC.slice(4).forEach((d,i)=>{const idx=i+4;const b=document.createElement('div');b.className='cBtn';b.id='cb'+idx;b.innerHTML=`<div class="rom">${d.roman}</div><div class="nam">${d.name}</div>`;b.onclick=()=>selChord(idx);g2.appendChild(b)});
+ DIATONIC.slice(0,4).forEach((d,i)=>{const b=document.createElement('div');b.className='cBtn'+(i===0?' on':'');b.id='cb'+i;b.innerHTML=`<div class="rom">${d.roman}</div><div class="nam">${d.name}</div>`;b.onclick=()=>{activeIdx=i;updateChordUI();init();playSound(curKit.tracks.slice(-1)[0])};g1.appendChild(b)});
+ DIATONIC.slice(4).forEach((d,i)=>{const idx=i+4;const b=document.createElement('div');b.className='cBtn';b.id='cb'+idx;b.innerHTML=`<div class="rom">${d.roman}</div><div class="nam">${d.name}</div>`;b.onclick=()=>{activeIdx=idx;updateChordUI();init();playSound(curKit.tracks.slice(-1)[0])};g2.appendChild(b)});
 }
-function selChord(i){document.querySelectorAll('.cBtn').forEach(b=>b.classList.remove('on'));document.getElementById('cb'+i).classList.add('on');activeChord=i;const d=DIATONIC[i];document.getElementById('theory').innerHTML=`<b style="color:var(--peach)">${d.roman} / ${d.name}:</b> ${d.notes.join(' - ')} — bass ${d.bass}`;highlight(d.notes);init();playLead();}
 function buildGenreUI(){
  const sel=document.getElementById('genreSel');sel.innerHTML='';const sc=document.getElementById('genreScroll');sc.innerHTML='';
- Object.keys(KITS).forEach(name=>{const o=document.createElement('option');o.value=name;o.textContent=(KITS[name].cat==='afr'?'🌍 ':'🎧 ')+name;sel.appendChild(o);
+ Object.keys(KITS).forEach(name=>{const o=document.createElement('option');o.value=name;o.textContent=name;sel.appendChild(o);
  const b=document.createElement('button');b.className='pat'+(name===curGenre?' on':'');b.textContent=name;b.onclick=()=>setGenre(name);sc.appendChild(b);});
  sel.value=curGenre;
 }
 function setGenre(name){
  curGenre=name;curKit=KITS[name];curBpm=curKit.bpm;document.getElementById('bpm').value=curBpm;
- document.getElementById('kitName').textContent=name+' Kit';document.getElementById('kitDesc').textContent=curKit.desc;
- document.getElementById('bpmLabel').textContent=curBpm+' BPM';
- document.getElementById('instLabel').textContent=getInstLabel();
+ document.getElementById('kitName').textContent=name+' — '+curKit.desc;
+ document.getElementById('kitDesc').textContent=curKit.tracks.join(' • ');
  document.getElementById('genreSel').value=name;
  document.querySelectorAll('.pat').forEach(p=>p.classList.toggle('on',p.textContent===name));
- initPattern();renderTracks();toast(name+' — '+curKit.desc);
+ setProgFromGenre();initPattern();renderTracks();toast(name+' — '+curKit.desc+' — unique kit loaded');
 }
-function getInstLabel(){const m={'Afrobeats':'LOG DRUM • SHAKER','Amapiano':'LOG BASS • SHUFFLE','Gqom':'DISTORTED KICK','Trap':'808 SLIDE • HAT ROLLS','Lo-Fi':'VINYL • SOFT KEYS','House':'FOUR-FLOOR • STAB'};return m[curGenre]||'KICK • SNARE • HAT • PERC • BASS • LEAD'}
-function setBpm(){curBpm=parseInt(document.getElementById('bpm').value)||96;document.getElementById('bpmLabel').textContent=curBpm+' BPM';if(isPlaying){clearInterval(timer);timer=setInterval(tick,60000/curBpm/4)}}
-function initPattern(){
- // genre-unique patterns
- const base={
- 'Afrobeats':{Kick:[1,0,0,0,0,0,1,0,1,0,0,0,0,0,1,0],Snare:[0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],Hat:[1,0,1,0,1,0,1,1],Perc:[0,0,1,0,0,0,1,0],Bass:[1,0,0,0,0,0,0,0,1,0,0,0],Lead:[1,0,0,0,0,0,0,0]},
- 'Amapiano':{Kick:[1,0,0,0,1,0,0,1,0,0,0,0,1,0,0,0],Snare:[0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0],Hat:[1,0,1,1,1,0,1,0],Perc:[0,0,1,0,0,0,1,1],Bass:[1,0,0,1,0,0,0,0,1,0,0,1],Lead:[1,0,0,0,0,0,0,0,1,0,0,0]},
- 'Gqom':{Kick:[1,0,0,1,0,0,1,0,0,0,1,0,0,0,0,0],Snare:[0,0,0,0,0,0,0,0,1,0,0,0],Hat:[1,1,0,1,1,1,0,1],Perc:[1,0,0,0,1,0,0,0],Bass:[1,0,0,0,0,0,0,0,1,0,0,0],Lead:[1,0,0,0,0,0,0,0]},
- 'Trap':{Kick:[1,0,0,0,0,0,1,0,0,0,1,0],Snare:[0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],Hat:[1,1,1,1,1,1,1,1],Perc:[0,0,0,0,0,0,0,0],Bass:[1,0,0,0,0,0,1,0],Lead:[1,0,0,0,0,0,0,0]},
- 'House':{Kick:[1,0,0,0,1,0,0,0],Snare:[0,0,0,0,1,0,0,0],Hat:[0,0,1,0,0,0,1,0],Perc:[0,0,1,0,0,0,1,0],Bass:[0,0,1,0,0,0,1,0],Lead:[0,0,0,0,1,0,0,0]},
- 'Lo-Fi':{Kick:[1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0],Snare:[0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,1],Hat:[1,0,1,0,1,0,1,0],Perc:[0,0,0,0,0,0,0,0],Bass:[1,0,0,0,0,0,0,0,1,0,0,0],Lead:[1,0,0,0,0,0,0,0,0,0,1,0]},
- };
- const p=base[curGenre]||base['Afrobeats'];
- TRACKS.forEach(t=>{pattern[t]=Array.from({length:16},(_,i)=>p[t]?.[i% p[t].length]||0);mutes[t]=false;solos[t]=false;});
-}
+function setProgFromGenre(){const map={I:0,ii:1,iii:2,IV:3,V:4,vi:5,'vii°':6,VII:4,III:4,VI:3};progSeq=(curKit.prog||['I','IV','V','vi']).map(r=>map[r]??0);activeIdx=progSeq[0];buildProgChips();updateChordUI();}
+function buildProgChips(){const c=document.getElementById('progChips');c.innerHTML='';progSeq.forEach((idx,i)=>{const d=DIATONIC[idx];const chip=document.createElement('div');chip.className='chip';chip.textContent=`${i+1}. ${d.roman}/${d.name}`;chip.onclick=()=>{activeIdx=idx;updateChordUI()};c.appendChild(chip)})}
+function updateChordUI(){document.querySelectorAll('.cBtn').forEach(b=>b.classList.remove('on'));const el=document.getElementById('cb'+activeIdx);if(el)el.classList.add('on');const d=DIATONIC[activeIdx];document.getElementById('theory').innerHTML=`<b style="color:var(--peach)">${d.roman} / ${d.name}:</b> ${d.notes.join(' - ')} — bass ${d.bass} — ${curKit.tracks.slice(-2).join(' + ')} — ${autoMove?'auto-walking':''}`;highlight(d.notes);document.getElementById('bpmLabel').textContent=curBpm+' BPM • '+d.roman+' / '+d.name;document.getElementById('instLabel').textContent=curKit.desc;}
+function toggleAuto(){autoMove=!autoMove;document.getElementById('autoSw').classList.toggle('on',autoMove);toast(autoMove?'Auto move ON':'Auto move OFF')}
+function setBpm(){curBpm=parseInt(document.getElementById('bpm').value)||96;if(isPlaying){clearInterval(timer);timer=setInterval(tick,60000/curBpm/4)}}
+function initPattern(){curKit.tracks.forEach(t=>{pattern[t]=Array.from({length:16},(_,i)=>{if(t.includes('Kick')||t==='BoomKick'||t==='DeepKick'||t==='GqomKick'||t==='DistKick'||t==='FourKick'||t==='BigKick'||t==='TrapKick'||t==='DanceKick') return [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0][i]||0; if(t==='Bass'||t==='UprightBass'||t.includes('808')||t==='LogBass') return [1,0,0,0,0,0,0,0,1,0,0,0][i]||0; if(t.includes('Snare')||t==='Brush'||t==='Rim') return [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0][i]||0; if(t.includes('Hat')||t==='Shaker') return [1,0,1,0,1,0,1,0][i]||0; return [1,0,0,0,0,0,0,0,1,0,0,0][i]||0});volumes[t]=t.includes('Bass')?0.85:t.includes('Kick')?0.9:0.6;mutes[t]=false;solos[t]=false;})}
 function renderTracks(){
  const wrap=document.getElementById('tracks');wrap.innerHTML='';
- TRACKS.forEach(t=>{
+ curKit.tracks.forEach(t=>{
   const row=document.createElement('div');row.className='trackRow';
-  row.innerHTML=`<div class="trackMeta"><div class="tName">${t}<br><span style="color:var(--amber);font-size:6px">${curKit.desc.split('•')[0]||''}</span></div><div class="msRow"><button class="ms" id="m${t}" onclick="togM('${t}')">M</button><button class="ms" id="s${t}" onclick="togS('${t}')">S</button></div><input class="vol" type="range" value="${volumes[t]*100}" oninput="volumes['${t}']=this.value/100"></div><div class="steps" id="st${t}"></div>`;
+  row.innerHTML=`<div class="trackMeta"><div class="tName">${t.replace('Bass','BASS<br>FOLLOWS').replace('Kick','KICK')}</div><div class="msRow"><button class="ms" id="m${t}" onclick="togM('${t}')">M</button><button class="ms" id="s${t}" onclick="togS('${t}')">S</button></div><input class="vol" type="range" value="${(volumes[t]||0.7)*100}" oninput="volumes['${t}']=this.value/100"></div><div class="steps" id="st${t}"></div>`;
   wrap.appendChild(row);
   const sg=row.querySelector('#st'+t);
-  for(let i=0;i<16;i++){const s=document.createElement('div');s.className='st'+(pattern[t][i]?' on'+(t==='Bass'?'B':''):'');s.onclick=()=>{pattern[t][i]=!pattern[t][i]?1:0;s.classList.toggle('on');if(t==='Bass')s.classList.toggle('onB')};sg.appendChild(s);}
+  for(let i=0;i<16;i++){const s=document.createElement('div');s.className='st'+(pattern[t][i]?' on'+(t.includes('Bass')?'B':''):'');s.onclick=()=>{pattern[t][i]=!pattern[t][i]?1:0;s.classList.toggle('on')};sg.appendChild(s);}
  });
 }
 function togM(t){mutes[t]=!mutes[t];document.getElementById('m'+t).classList.toggle('mOn',mutes[t])}
@@ -226,22 +204,18 @@ function togS(t){solos[t]=!solos[t];document.getElementById('s'+t).classList.tog
 function shouldPlay(t){if(mutes[t])return false;const anyS=Object.values(solos).some(Boolean);if(anyS) return!!solos[t];return true}
 function tick(){
  document.querySelectorAll('.st').forEach(s=>s.classList.remove('hit'));
- document.querySelectorAll('#tracks.steps').forEach((grid,ti)=>{const el=grid.children[stepPos];if(el)el.classList.add('hit')});
- if(pattern.Kick[stepPos]&&shouldPlay('Kick'))playKick();
- if(pattern.Snare[stepPos]&&shouldPlay('Snare'))playSnare();
- if(pattern.Hat[stepPos]&&shouldPlay('Hat'))playHat();
- if(pattern.Perc[stepPos]&&shouldPlay('Perc'))playPerc();
- if(pattern.Bass[stepPos]&&shouldPlay('Bass'))playBass();
- if(pattern.Lead[stepPos]&&shouldPlay('Lead'))playLead();
- const c=document.getElementById('wave'),ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);ctx.strokeStyle=curKit.cat==='afr'?'#E8B34A':'#FFD9C2';ctx.beginPath();for(let x=0;x<c.width;x++){const y=Math.sin(x*0.08+stepPos)*8*Math.random();x===0?ctx.moveTo(x,19+y):ctx.lineTo(x,19+y)}ctx.stroke();
- stepPos=(stepPos+1)%16;
+ stepPos=(stepPos+1)%16; if(stepPos===0) barCount++;
+ if(autoMove && stepPos%8===0){
+   const curPos=progSeq.indexOf(activeIdx); const nextPos=(curPos+1)%progSeq.length; activeIdx=progSeq[nextPos]; updateChordUI();
+ }
+ curKit.tracks.forEach(t=>{if(pattern[t][stepPos]&&shouldPlay(t)) playSound(t)});
+ const c=document.getElementById('wave'),ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);ctx.strokeStyle='#FFD9C2';ctx.beginPath();for(let x=0;x<c.width;x++){const y=Math.sin(x*0.08+stepPos+activeIdx)*8;x===0?ctx.moveTo(x,18+y):ctx.lineTo(x,18+y)}ctx.stroke();
 }
 function toggle(){isPlaying?stop():start()}
-function start(){init();if(aCtx.state==='suspended')aCtx.resume();isPlaying=true;document.getElementById('playBtn').textContent='■';stepPos=0;timer=setInterval(tick,60000/curBpm/4);toast(curGenre+' kit playing — premium mix')}
+function start(){init();if(aCtx.state==='suspended')aCtx.resume();isPlaying=true;document.getElementById('playBtn').textContent='■';stepPos=0;barCount=0;timer=setInterval(tick,60000/curBpm/4);toast('Playing — '+curGenre+' — '+DIATONIC[activeIdx].name+' → next...')}
 function stop(){isPlaying=false;clearInterval(timer);document.getElementById('playBtn').textContent='▶'}
 
-buildKB();buildChords();buildGenreUI();initPattern();renderTracks();highlight(['C','E','G']);
-document.getElementById('kitName').textContent='Afrobeats Kit';document.getElementById('instLabel').textContent=getInstLabel();
+buildKB();buildChords();buildGenreUI();setProgFromGenre();initPattern();renderTracks();highlight(['C','E','G']);document.getElementById('theory').innerHTML='<b style="color:var(--peach)">I / C (Tonic):</b> Home base — auto moves to ii, iii, IV, V, vi, vii° per genre prog';
 </script>
 </body>
 </html>
