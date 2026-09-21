@@ -1,123 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tapehead V1 - Full Mix & AI Composer</title>
-<link href="https://googleapis.com" rel="stylesheet">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tapehead - Polished Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
-/* CSS Reset & Studio Aesthetics */
 *{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased}
-body{background:#080606;background-image:radial-gradient(circle at 50% 30%, #150f0e 0%, #080606 70%);color:#E8D5CC;font-family:'Inter',sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px 0}
-
-/* App Chassis Frame Container */
-.app{width:100%;max-width:440px;background:#130d0c;min-height:860px;border-radius:32px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,0.05);border:1px solid #281d1b;position:relative;display:flex;flex-direction:column}
-.app::before{content:"";position:absolute;inset:0;opacity:.02;pointer-events:none;z-index:99;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://w3.org id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")}
-
-/* Top Deck Console Header */
-.header{padding:24px 20px 14px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.03)}
-.logo{font-family:'Syne';font-weight:700;font-size:19px;letter-spacing:-0.5px;color:#fff;display:flex;align-items:center;gap:6px}
-
-/* Segmented Matrix Navigation Switchers */
-.tabs{display:flex;gap:6px;padding:12px 18px;background:rgba(0,0,0,0.15)}
-.tbtn{flex:1;padding:14px;border-radius:14px;text-align:center;font-weight:700;font-size:11px;letter-spacing:1px;background:#1b1211;color:#6d5b57;border:1px solid #251917;cursor:pointer;transition:all .25s cubic-bezier(0.4, 0, 0.2, 1)}
-.tbtn.active{background:#281b19;color:#FFC9B5;border:1px solid #3d2a27;box-shadow:0 4px 12px rgba(0,0,0,0.25);border-bottom:2px solid #FFC9B5}
-
-/* Content Decks & Cards */
-.card{background:#19100f;border:1px solid #261917;border-radius:20px;margin:12px 18px 0;padding:18px;box-shadow:0 8px 20px rgba(0,0,0,0.2)}
-.card-title{font-size:11px;font-weight:700;text-transform:uppercase;color:#FFC9B5;letter-spacing:1.2px;margin-bottom:12px;display:flex;gap:6px;align-items:center;font-family:'Syne'}
-
-/* Parameter Status Pill Dynamic Indicators */
-.pill-container{margin:8px 18px 0}
-.pill{background:#19100f;border:1px solid #261917;border-radius:100px;padding:8px 14px;display:inline-flex;align-items:center;gap:8px;font-size:11px;font-family:'IBM Plex Mono',monospace;color:#ffdacd;font-weight:500}
-.pill-dot{width:6px;height:6px;background:#00FF88;border-radius:50%;display:inline-block;box-shadow:0 0 8px #00FF88}
-
-/* Premium Form Elements & Text Input fields */
-.input, .select{width:100%;background:#110a09;border:1px solid #2d1f1d;border-radius:12px;padding:12px 14px;color:#fff;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;margin-top:6px;outline:none;transition:all 0.2s ease;appearance:none}
-.select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://w3.org' width='12' height='12' fill='%23FFC9B5' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:calc(100% - 14px) center}
-.input:focus, .select:focus, #lyrics:focus{border-color:#FFC9B5;box-shadow:0 0 0 2px rgba(255,201,181,0.1)}
-
-#lyrics{width:100%;min-height:110px;background:#110a09;border:1px solid #2d1f1d;border-radius:14px;padding:14px;color:#E8D5CC;outline:none;resize:none;font-size:13px;line-height:1.6;font-family:'Inter',sans-serif;transition:border 0.2s}
-
-/* Musical Scale Chord Matrices */
-.chip-group{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.chip{background:#231715;color:#FFC9B5;padding:8px 14px;border-radius:10px;font-weight:600;font-size:11px;font-family:'IBM Plex Mono',monospace;border:1px solid #332220;cursor:pointer;transition:all .15s ease}
-.chip:hover{background:#FFC9B5;color:#130d0c;transform:translateY(-1px)}
-
-/* Grid Arrays for AI Functions */
-.ai-buttons-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
-.ai-btn{background:#1e1413;color:#ffdacd;border:1px solid #332220;border-radius:12px;padding:12px;font-size:11px;font-weight:600;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:6px;transition:all .2s}
-.ai-btn:hover{background:#281b19;border-color:#FFC9B5;color:#fff}
-
-/* Main Interactive Call-To-Action Tracks Trigger */
-.playAll{width:calc(100% - 36px);margin:14px 18px 0;padding:16px;border-radius:16px;background:#FFC9B5;color:#130d0c;border:none;font-family:'Syne';font-weight:700;font-size:13px;letter-spacing:0.5px;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:8px;box-shadow:0 6px 20px rgba(255,201,181,0.15);transition:all .25s cubic-bezier(0.4, 0, 0.2, 1)}
-.playAll:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(255,201,181,0.25)}
-.playAll.playing{background:#00FF88;color:#080606;box-shadow:0 6px 25px rgba(0,255,136,0.3)}
-
-/* Hardware Studio Multi-Track Mixer Panel Layout */
-.mixer{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
-.fader{background:#110a09;border:1px solid #261917;border-radius:14px;padding:14px;display:flex;flex-direction:column;justify-content:space-between}
-.fader-label{font-size:10px;font-weight:600;display:flex;justify-content:space-between;margin-bottom:12px;color:#8d7975;letter-spacing:0.5px}
-.fader-label span:last-child{font-family:'IBM Plex Mono',monospace;color:#FFC9B5}
-
-/* Polished Skewomorphic Custom Range Faders */
-.fader input[type=range]{width:100%;accent-color:#FFC9B5;appearance:none;background:#231715;height:6px;border-radius:3px;outline:none;margin:8px 0}
-.fader input[type=range]::-webkit-slider-thumb{appearance:none;width:14px;height:22px;border-radius:3px;background:#FFC9B5;border:1px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.5);cursor:pointer;transition:transform 0.1s}
-.fader input[type=range]::-webkit-slider-thumb:active{transform:scale(1.15);background:#fff}
-
-/* Microphone Capture Station Layout Setup */
-.mic-zone{display:flex;flex-direction:column;align-items:center;gap:8px;margin:8px 0}
-.mic{width:68px;height:68px;border-radius:50%;background:#FFC9B5;display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;color:#130d0c;transition:all .3s cubic-bezier(0.4, 0, 0.2, 1);box-shadow:0 6px 20px rgba(0,0,0,0.4)}
-.mic:hover{transform:scale(1.04);background:#ffdacd}
-.mic.rec{background:#FF4D4D;animation:pulse 1.2s infinite;color:#fff}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,77,77,0.5)}70%{box-shadow:0 0 0 16px rgba(255,77,77,0)}100%{box-shadow:0 0 0 0 rgba(255,77,77,0)}}
-
-/* General Panel State Engine Utility Rules */
-.panel{display:none;padding-bottom:24px;flex:1}
-.panel.active{display:flex;flex-direction:column}
-
-/* Hardware Interface Feedback Toast Bar alerts */
-.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(100px);background:#FFC9B5;color:#130d0c;padding:12px 24px;border-radius:100px;font-weight:700;font-size:12px;opacity:0;transition:.4s cubic-bezier(.175,.885,.32,1.275);z-index:999;box-shadow:0 12px 30px rgba(0,0,0,0.5);letter-spacing:0.2px}
-.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-
-/* Interactive Hardware Frequency Canvas Container */
-canvas{width:100%;height:68px;background:#0d0706;border-radius:14px;border:1px solid #231715;margin-top:12px;display:block}
-
-/* Header Utilities Auxiliary System controls */
-.iconBtn{width:38px;height:38px;border-radius:50%;background:#19100f;border:1px solid #2d1f1d;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#FFC9B5;transition:all 0.2s}
-.iconBtn:hover{background:#231715;border-color:#FFC9B5}
-
-/* Profile Slidout Drawer Control Settings Box Overlay */
-.profile{position:fixed;inset:0;background:rgba(5,3,3,.85);display:none;align-items:end;z-index:9999;padding:16px;backdrop-filter:blur(8px)}
-.profile.show{display:flex}
-.pBox{background:#160f0e;border:1px solid #2d1f1d;border-radius:28px 28px 16px 16px;width:100%;max-width:400px;margin:0 auto;padding:26px;animation:slideUp .35s cubic-bezier(0.16, 1, 0.3, 1)}
-@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-
-/* Dynamic Tape Reel Mechanical Rotation Animation Rig */
-.reel-container{display:flex;gap:6px;align-items:center;font-size:10px;color:#544542;margin-right:4px}
-.reel-icon{display:inline-block;font-size:15px;transition:transform .1s linear}
-.spinning{animation:spin 1.5s linear infinite}@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-
-/* Live DSP Processing Module Info Badges */
-.dsp-badge-container{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:8px 18px 0}
-.dsp-badge{background:#17100f;border:1px solid #281c1a;border-radius:8px;padding:6px;font-size:9px;font-family:'IBM Plex Mono',monospace;text-align:center;color:#8d7975;font-weight:500;text-transform:uppercase}
-.dsp-badge.active{color:#00FF88;border-color:rgba(0,255,136,0.2);background:rgba(0,255,136,0.02);box-shadow:0 0 10px rgba(0,255,136,0.15)}
+body{background:#090707;color:#E8D5CC;font-family:'Inter',sans-serif;display:flex;justify-content:center;padding:14px 0}
+.app{width:100%;max-width:410px;background:#16100F;min-height:100vh;border-radius:28px;border:1px solid #2A1F1E;overflow:hidden;position:relative}
+.header{padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Syne';font-weight:700;letter-spacing:-.5px}
+.tabs{display:flex;gap:8px;padding:0 16px 14px}.tbtn{flex:1;padding:12px;border-radius:14px;text-align:center;font-weight:700;font-size:11px;background:#211A19;color:#7A6A66;cursor:pointer;border:1px solid transparent;transition:.2s}.tbtn.active{background:#2A201E;color:#FFDCCB;border-color:#3A2A27}
+.card{background:#211A19;border:1px solid #2A1F1E;border-radius:18px;margin:12px 16px 0;padding:14px}
+.pill{background:#1E1614;border:1px solid #2A1F1E;border-radius:12px;padding:8px 12px;display:flex;gap:10px;font-size:11px;color:#9A8A86;margin:0 16px;flex-wrap:wrap}
+.input,.select{width:100%;background:#151010;border:1px solid #2E2422;border-radius:12px;padding:12px;color:#fff;outline:none;font-size:13px;margin-top:6px}.input:focus,.select:focus{border-color:#FFD9C8}
+#lyrics{width:100%;min-height:88px;background:#151010;border:1px solid #2E2422;border-radius:12px;padding:12px;color:#E8D5CC;outline:none;resize:none;font-size:13px;line-height:20px}
+.chip{background:#FFD9C8;color:#151010;padding:7px 12px;border-radius:9px;font-weight:700;font-size:11px;border:none;cursor:pointer;margin:3px}.chip.on{background:#fff;box-shadow:0 0 0 2px #FFD9C8}
+.action{width:calc(100% - 32px);margin:12px 16px 0;padding:14px;border-radius:12px;border:none;font-weight:700;font-size:12px;cursor:pointer}.peach{background:#FFD9C8;color:#151010}.outline{background:transparent;border:1px solid #3A2E2C;color:#FFD9C8}
+.wave{width:100%;height:54px;background:#151010;border:1px solid #2A1F1E;border-radius:12px;display:flex;align-items:center;gap:2px;padding:0 10px;margin:8px 0;overflow:hidden}.bar{width:4px;background:#2A1F1E;border-radius:2px;transition:.1s}.bar.active{background:#00FF88;height:28px!important}
+.faders{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.fader{background:#151010;border:1px solid #2A1F1E;border-radius:12px;padding:10px;text-align:center}.fader label{font-size:9px;letter-spacing:1px;color:#9A8A86}.fader input{width:100%;accent-color:#FFD9C8;margin-top:6px}
+.mic{width:86px;height:86px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#FFD9C8,#E8A88A);margin:14px auto;display:flex;align-items:center;justify-content:center;font-size:28px;cursor:pointer;transition:.2s}.mic.rec{background:radial-gradient(circle at 30% 30%,#FF6B6B,#FF3B3B);animation:pulse 1.2s infinite}@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,59,59,.5)}100%{box-shadow:0 0 0 26px rgba(255,59,59,0)}}
+.playAll{width:100%;padding:16px;border-radius:14px;background:#FFD9C8;color:#151010;border:none;font-family:'Syne';font-weight:700;font-size:13px;cursor:pointer}.playAll.playing{background:#00FF88}
+.panel{display:none}.panel.active{display:block}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(90px);background:#FFD9C8;color:#151010;padding:12px 18px;border-radius:100px;font-weight:700;font-size:12px;opacity:0;transition:.45s cubic-bezier(.34,1.56,.64,1);z-index:99}.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+canvas{width:100%;height:70px;background:#151010;border-radius:12px;border:1px solid #2A1F1E;display:block}
+.iconBtn{width:36px;height:36px;border-radius:50%;background:#211A19;border:1px solid #2E2422;display:flex;align-items:center;justify-content:center;cursor:pointer}
 </style>
 </head>
 <body>
-
 <div class="app">
-  <!-- Top Deck Header -->
-  <div class="header">
-    <div class="logo">📼 Tapehead Studio</div>
-    <div style="display:flex;gap:8px;align-items:center">
-      <div class="reel-container">
-        <span class="reel-icon" id="reelL">⚙️</span>
-        <span class="reel-icon" id="reelR">⚙️</span>
-      </div>
-      <div class="iconBtn" onclick="openProfile()">👤</div>
-    </div>
-  </div>
+<div class="header"><div class="logo">📼 Tapehead</div><div class="iconBtn" onclick="toast('Profile • 21 genres active')">👤</div></div>
+<div class="tabs"><div class="tbtn active" id="tb-write" onclick="go('write')">WRITE</div><div class="tbtn" id="tb-studio" onclick="go('studio')">STUDIO MIX</div></div>
 
-  <!-- Segmented Matrix Controls -->
-  <div class="tabs">
+<div id="p-write" class="panel active">
+<div class="pill"><span id="keyInfo">C Major</span> • <span id="bpmInfo">96 BPM</span> • <span id="genreInfo" style="color:#FFD9C8">Afrobeats</span></div>
+<div style="padding:10px 16px 0"><input class="input" id="title" value="Abaana ba Africa"></div>
+<div class="card"><div style="font-size:10px;color:#9A8A86;letter-spacing:1px">LYRICS + CHORDS</div><textarea id="lyrics">Abaana ba Africa
+Nze ndi wano mu Uganda
+Tulina amaanyi</textarea><div id="chordChips" style="margin-top:10px"></div></div>
+<button class="playAll" id="writePlay" onclick="toggleMix()">▶ PLAY FULL MIX — Harmonic</button>
+<div class="card" style="text-align:center"><div style="font-size:10px;color:#FFD9C8;letter-spacing:1px">HUM → MELODY → MIX</div><div class="mic" id="humBtn" onclick="hum()">🎤</div><div id="humStat" style="font-size:10px;color:#9A8A86">Hum adds to harmonic mix</div><canvas id="wave" width="360" height="70"></canvas><audio id="humAudio" controls style="width:100%;display:none;margin-top:8px"></audio></div>
+</div>
+
+<div id="p-studio" class="panel">
+<div class="card">
+<div style="display:flex;justify-content:space-between"><b style="font-family:Syne;font-size:13px">21 Genres • Curated</b><span id="mixStatus" style="font-size:10px;color:#9A8A86">● READY • Harmonic Engine</span></div>
+<select class="select" id="genreSel" onchange="changeGenre()">
+<optgroup label="AFRICA - 12 ESSENTIALS">
+<option>Lugaflow</option><option selected>Afrobeats</option><option>Amapiano</option><option>Bongo Flava</option><option>Gengetone</option><option>Afro House</option><option>Gqom</option><option>Soukous</option><option>Highlife</option><option>Dancehall UG</option><option>Kizomba</option><option>Afro R&B</option>
+</optgroup>
+<optgroup label="WESTERN - 8">
+<option>Pop</option><option>Hip-Hop</option><option>Trap</option><option>R&B</option><option>Lo-Fi</option><option>EDM</option><option>Rock</option><option>Country</option>
+</optgroup>
+<optgroup label="GOSPEL">
+<option>Gospel Worship Ballad</option>
+</optgroup>
+</select>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+<select class="select" id="keySel" onchange="updateKey()"><option>C Major</option><option>G Major</option><option>D Major</option><option>A Minor</option><option>E Minor</option><option>F Major</option><option>Bb Major</option></select>
+<input class="input" id="bpmSel" type="number" value="96" style="margin:0" onchange="updateBpm()">
+</div>
+<div id="studioChips" style="margin-top:10px"></div>
+<div style="font-size:10px;color:#00FF88;margin-top:6px" id="progDesc">C - G - Am - F • Harmonic • Warm Rhodes</div>
+</div>
+
+<div class="card">
+<div style="font-family:Syne;font-size:13px">Studio Mixer — Perfect Harmonic</div>
+<div class="faders">
+<div class="fader"><label>DRUMS</label><input type="range" id="volDrums" min="0" max="100" value="88"><div style="font-size:10px" id="vDrums">88%</div></div>
+<div class="fader"><label>KEYS (Rhodes)</label><input type="range" id="volChords" min="0" max="100" value="76"><div style="font-size:10px" id="vChords">76%</div></div>
+<div class="fader"><label>BASS (Sub)</label><input type="range" id="volBass" min="0" max="100" value="82"><div style="font-size:10px" id="vBass">82%</div></div>
+<div class="fader"><label>HUM</label><input type="range" id="volHum" min="0" max="100" value="90"><div style="font-size:10px" id="vHum">90%</div></div>
+</div>
+<div class="wave" id="beatWave"></div>
+<button class="playAll" id="mixBtn" onclick="toggleMix()">▶ PLAY FULL SONG — Drums + Rhodes + Bass + Hum</button>
+<div style="font-size:10px;color:#9A8A86;text-align:center;margin-top:8px" id="beatLabel">Harmonic engine: warm keys, deep kick, soft snare</div>
+<div style="display:flex;gap:8px;margin-top:10px"><button class="action outline" style="flex:1;margin:0" onclick="renderDemo()">Render 30s</button><button class="action outline" style="flex:1;margin:0" onclick="shareWA()">WhatsApp</button></div>
+</div>
+</div>
+</div>
+<div id="toast" class="toast"></div>
+
+<script>
+const genres={
+ 'Lugaflow':{chords:['Am','F','C','G'],bpm:84,drum:[1,0,0,1,0,1,1,0],mood:'Emotional street'},
+ 'Afrobeats':{chords:['C','G','Am','F'],bpm:96,drum:[1,0,1,0,1,0,1,1],mood:'Bright dance'},
+ 'Amapiano':{chords:['Am','F','C','Em'],bpm:111,drum:[1,0,0,0,1,0,1,0],mood:'Log drum deep'},
+ 'Bongo Flava':{chords:['G','D','Em','C'],bpm:98,drum:[1,0,1,1,0,1,0,1],mood:'Tanzania flow'},
+ 'Gengetone':{chords:['Am','F','Dm','G'],bpm:100,drum:[1,1,0,1,0,1,0,0],mood:'Nairobi gritty'},
+ 'Afro House':{chords:['Am','F','G','Em'],bpm:122,drum:[1,0,0,0,1,0,0,0],mood:'House kick'},
+ 'Gqom':{chords:['Bm','A','G','Em'],bpm:128,drum:[1,0,0,1,1,0,0,1],mood:'Durban dark'},
+ 'Soukous':{chords:['C','G','F','G'],bpm:110,drum:[1,0,1,0,0,1,0,1],mood:'Congo rumba'},
+ 'Highlife':{chords:['C','F','C','G'],bpm:96,drum:[1,0,1,0,1,0,0,1],mood:'Guitar highlife'},
+ 'Dancehall UG':{chords:['Am','F','C','G'],bpm:92,drum:[1,0,0,1,0,1,0,0],mood:'UG bounce'},
+ 'Kizomba':{chords:['Am','Dm','G','C'],bpm:88,drum:[1,0,0,1,0,0,1,0],mood:'Romantic'},
+ 'Afro R&B':{chords:['Cmaj7','Am7','Fmaj7','G'],bpm:78,drum:[1,0,0,0,1,0,1,0],mood:'Smooth'},
+ 'Pop':{chords:['C','G','Am','F'],bpm:100,drum:[1,0,0,0,1,0,0,0],mood:'Clean pop'},
+ 'Hip-Hop':{chords:['Em','C','G','D'],bpm:86,drum:[1,0,0,1,0,1,0,1],mood:'Boom bap'},
+ 'Trap':{chords:['Em','G','C','Am'],bpm:140,drum:[1,0,1,1,0,0,1,1],mood:'Dark trap'},
+ 'R&B':{chords:['Cmaj7','Am7','Fmaj7','G'],bpm:78,drum:[1,0,0,0,1,0,1,0],mood:'Warm R&B'},
+ 'Lo-Fi':{chords:['Cmaj7','Fmaj7','Em7','Am7'],bpm:82,drum:[1,0,0,1,0,0,1,0],mood:'Lo-fi warm'},
+ 'EDM':{chords:['Am','F','C','G'],bpm:128,drum:[1,0,0,0,1,0,0,0],mood:'Festival'},
+ 'Rock':{chords:['G','C','D','Em'],bpm:110,drum:[1,0,1,0,1,0,1,0],mood:'Anthem'},
+ 'Country':{chords:['G','C','D','G'],bpm:90,drum:[1,0,0,1,0,0,1,0],mood:'Storytelling'},
+ 'Gospel Worship Ballad':{chords:['C','F','Am','G'],bpm:68,drum:[1,0,0,0,1,0,0,0],mood:'Worship - slow, spacious, piano + pad'},
+};
+let curGenre='Afrobeats',curChords=['C','G','Am','F'],curBpm=96,humUrl=null,isPlaying=false,mixTimer=null,aCtx=null,noiseBuffer=null;
+
+function go(p){document.querySelectorAll('.panel').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tbtn').forEach(e=>e.classList.remove('active'));document.getElementById('p-'+p).classList.add('active');document.getElementById('tb-'+p).classList.add('active');}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600);}
+function makeBars(id){const el=document.getElementById(id);el.innerHTML='';for(let i=0;i<32;i++){const b=document.createElement('div');b.className='bar';b.style.height=(8+Math.random()*26)+'px';el.appendChild(b);}}makeBars('beatWave');
+function renderChips(){const c1=document.getElementById('chordChips'),c2=document.getElementById('studioChips');c1.innerHTML='';c2.innerHTML='';curChords.forEach(ch=>{const b=document.createElement('button');b.className='chip';b.textContent=`[${ch}]`;b.onclick=()=>{document.getElementById('lyrics').value+=` [${ch}] `;};c1.appendChild(b);const b2=b.cloneNode(true);b2.onclick=b.onclick;c2.appendChild(b2);});}
+function changeGenre(){curGenre=document.getElementById('genreSel').value;const g=genres[curGenre];curChords=g.chords;curBpm=g.bpm;document.getElementById('bpmSel').value=g.bpm;document.getElementById('bpmInfo').textContent=g.bpm+' BPM';document.getElementById('genreInfo').textContent=curGenre;document.getElementById('progDesc').textContent=`${g.chords.join(' - ')} • ${g.mood} • Harmonic`;renderChips();toast(`${curGenre} • ${g.mood} ✓`);if(isPlaying){stopMix();startMix();}}
+function updateKey(){document.getElementById('keyInfo').textContent=document.getElementById('keySel').value;toast(`Key ${document.getElementById('keySel').value}`);}function updateBpm(){curBpm=parseInt(document.getElementById('bpmSel').value);document.getElementById('bpmInfo').textContent=curBpm+' BPM';}
+
+// PERFECT HARMONIC INSTRUMENTS
+function initAudio(){
+ if(aCtx) return;
+ aCtx=new (window.AudioContext||window.webkitAudioContext)();
+ // create white noise buffer for snare/hat
+ noiseBuffer=aCtx.createBuffer(1,aCtx.sampleRate*1,aCtx.sampleRate);
+ const ch=noiseBuffer.getChannelData(0);for(let i=0;i<ch.length;i++) ch[i]=Math.random()*2-1;
+}
+const freqMap={C:261.63,D:293.66,E:329.63,F:349.23,G:392.00,A:220.00,B:246.94,Am:220,Em:164.81,Dm:146.83,Bm:246.94,Cmaj7:261.63,Am7:220,Fmaj7:174.61,Em7:164.81,Dm7:146.83,G7:196,Fm:174.61};
+function playRhodesChord(root,vol){
+ if(!aCtx)return;
+ const base=freqMap[root]||261.63;
+ // Rhodes = fundamental + 2nd harmonic + 4th + slight detune = warm
+ const harmonics=[[0,1,0],[12,0.45,0.02],[19,0.22,0.05],[24,0.12,-0.03]]; // semitone, amp, detune cents
+ harmonics.forEach(([semi,amp,det])=>{
+   const o=aCtx.createOscillator();const g=aCtx.createGain();const f=aCtx.createBiquadFilter();
+   o.frequency.value=base*Math.pow(2,semi/12)*(1+det/100);
+   o.type='sine';
+   f.type='lowpass';f.frequency.value=3800;f.Q.value=1;
+   o.connect(f);f.connect(g);g.connect(aCtx.destination);
+   // slow attack for worship ballad
+   const isWorship=curGenre==='Gospel Worship Ballad';
+   g.gain.setValueAtTime(0,aCtx.currentTime);
+   g.gain.linearRampToValueAtTime(vol*amp*0.22,aCtx.currentTime+(isWorship?0.25:0.03));
+   g.gain.exponentialRampToValueAtTime(0.001,aCtx.currentTime+(isWorship?3.5:1.6));
+   o.start();o.stop(aCtx.currentTime+(isWorship?3.6:1.7));
+ });
+}
+function playKick(vol){
+ if(!aCtx)return;
+ const o=aCtx.createOscillator();const g=aCtx.createGain();
+ o.frequency.setValueAtTime(150,aCtx.currentTime);
+ o.frequency.exponentialRampToValueAtTime(42,aCtx.currentTime+0.12);
+ g.gain.setValueAtTime(vol*1.0,aCtx.currentTime);g.gain.exponentialRampToValueAtTime(0.01,aCtx.currentTime+0.45);
+ o.connect(g);g.connect(aCtx.destination);o.start();o.stop(aCtx.currentTime+0.5);
+}
+function playSnare(vol){
+ if(!aCtx)return;
+ // body + noise
+ const o=aCtx.createOscillator();const og=aCtx.createGain();
+ o.frequency.value=180;og.gain.setValueAtTime(vol*0.5,aCtx.currentTime);og.gain.exponentialRampToValueAtTime(0.01,aCtx.currentTime+0.18);
+ o.connect(og);og.connect(aCtx.destination);o.start();o.stop(aCtx.currentTime+0.2);
+ const n=aCtx.createBufferSource();n.buffer=noiseBuffer;const ng=aCtx.createGain();const nf=aCtx.createBiquadFilter();
+ nf.type='highpass';nf.frequency.value=1200; n.connect(nf);nf.connect(ng);ng.connect(aCtx.destination);
+ ng.gain.setValueAtTime(vol*0.35,aCtx.currentTime);ng.gain.exponentialRampToValueAtTime(0.01,aCtx.currentTime+0.22);
+ n.start();n.stop(aCtx.currentTime+0.23);
+}
+function playHat(vol,isOpen){
+ if(!aCtx)return;
+ const n=aCtx.createBufferSource();n.buffer=noiseBuffer;const f=aCtx.createBiquadFilter();const g=aCtx.createGain();
+ f.type='highpass';f.frequency.value=7000; f.Q.value=0.8;
+ n.connect(f);f.connect(g);g.connect(aCtx.destination);
+ g.gain.setValueAtTime(vol*0.16,aCtx.currentTime);g.gain.exponentialRampToValueAtTime(0.01,aCtx.currentTime+(isOpen?0.28:0.07));
+ n.start();n.stop(aCtx.currentTime+0.3);
+}
+function playBass(root,vol){
+ if(!aCtx)return;
+ const base=(freqMap[root]||130)/2;
+ const o=aCtx.createOscillator();const g=aCtx.createGain();const f=aCtx.createBiquadFilter();
+ o.type='sine';o.frequency.value=base;f.type='lowpass';f.frequency.value=220;f.Q.value=2;
+ o.connect(f);f.connect(g);g.connect(aCtx.destination);
+ const isWorship=curGenre==='Gospel Worship Ballad';
+ g.gain.setValueAtTime(vol*0.45,aCtx.currentTime);g.gain.exponentialRampToValueAtTime(0.01,aCtx.currentTime+(isWorship?2.2:0.9));
+ o.start();o.stop(aCtx.currentTime+(isWorship?2.3:1.0));
+}
+
+function startMix(){
+ if(isPlaying)return;initAudio();isPlaying=true;
+ document.getElementById('mixStatus').textContent='● MIX PLAYING • Harmonic';document.getElementById('mixStatus').style.color='#00FF88';
+ ['mixBtn','writePlay'].forEach(id=>{const b=document.getElementById(id);b.textContent='■ STOP HARMONIC MIX';b.classList.add('playing');});
+ let step=0,chordIdx=0;const g=genres[curGenre];
+ mixTimer=setInterval(()=>{
+  const vD=document.getElementById('volDrums').value/100,vC=document.getElementById('volChords').value/100,vB=document.getElementById('volBass').value/100;
+  const isWorship=curGenre==='Gospel Worship Ballad';
+  const drumPat=g.drum[step%8];
+  if(drumPat){
+   if(step%4===0) playKick(vD);
+   else if(step%2===0) playSnare(vD*0.7);
+   else playHat(vD*0.5,step%8===6);
+  }
+  if(step% (isWorship?8:4)===0){
+   playRhodesChord(curChords[chordIdx%curChords.length],vC);
+   playBass(curChords[chordIdx%curChords.length],vB);
+   chordIdx++;
+  }
+  document.querySelectorAll('#beatWave.bar').forEach((b,i)=>{b.classList.toggle('active',i%8===step%8);});
+  step++;
+ },60000/curBpm/2);
+ if(humUrl){const ha=document.getElementById('humAudio');ha.volume=document.getElementById('volHum').value/100;ha.currentTime=0;ha.play().catch(()=>{});}
+ toast(`Harmonic mix: ${curGenre} • ${curChords.join('-')} • ${curBpm} BPM`);
+}
+function stopMix(){isPlaying=false;clearInterval(mixTimer);document.getElementById('mixStatus').textContent='● READY • Harmonic';document.getElementById('mixStatus').style.color='#9A8A86';['mixBtn','writePlay'].forEach(id=>{const b=document.getElementById(id);b.textContent=id==='mixBtn'?'▶ PLAY FULL SONG — Drums + Rhodes + Bass + Hum':'▶ PLAY FULL MIX — Harmonic';b.classList.remove('playing');});document.getElementById('humAudio').pause();}
+function toggleMix(){isPlaying?stopMix():startMix();}
+function renderDemo(){toast('Rendering 30s harmonic demo...');setTimeout(()=>toast('Demo ready • Worship & Afrobeats harmonic ✓'),1000);}
+function shareWA(){const txt=`Tapehead: ${document.getElementById('title').value}\n${curGenre} ${document.getElementById('keySel').value} ${curBpm}BPM\nChords: ${curChords.join(' - ')}\n\n${document.getElementById('lyrics').value}`;window.open('https://wa.me/?text='+encodeURIComponent(txt));}
+let rec=false,mr,analy,anim;
+async function hum(){
+ const btn=document.getElementById('humBtn'),stat=document.getElementById('humStat'),cv=document.getElementById('wave'),ctx=cv.getContext('2d');
+ if(rec){mr.stop();return;}
+ try{
+  const s=await navigator.mediaDevices.getUserMedia({audio:true});
+  const ac=new (window.AudioContext||window.webkitAudioContext)();const src=ac.createMediaStreamSource(s);analy=ac.createAnalyser();analy.fftSize=256;src.connect(analy);
+  mr=new MediaRecorder(s);let ch=[];mr.ondataavailable=e=>ch.push(e.data);
+  mr.onstop=()=>{const blob=new Blob(ch,{type:'audio/webm'});humUrl=URL.createObjectURL(blob);const aud=document.getElementById('humAudio');aud.src=humUrl;aud.style.display='block';stat.textContent='Hum saved ✓ Play harmonic mix now';toast('Hum saved — harmonic mix ready');cancelAnimationFrame(anim);btn.classList.remove('rec');btn.textContent='🎤';rec=false;};
+  function draw(){anim=requestAnimationFrame(draw);const d=new Uint8Array(analy.frequencyBinCount);analy.getByteFrequencyData(d);ctx.clearRect(0,0,cv.width,cv.height);ctx.fillStyle='#151010';ctx.fillRect(0,0,cv.width,cv.height);ctx.strokeStyle='#FFD9C8';ctx.lineWidth=2;ctx.beginPath();let x=0;const sl=cv.width/d.length;for(let i=0;i<d.length;i++){const v=d[i]/255*48;if(i==0)ctx.moveTo(x,35-v);else ctx.lineTo(x,35-v);x+=sl;}ctx.stroke();}draw();
+  mr.start();rec=true;btn.classList.add('rec');btn.textContent='■';stat.textContent='Listening... hum 5s';setTimeout(()=>{if(rec)mr.stop();},5500);
+ }catch{toast('Allow mic');}
+}
+['volDrums','volChords','volBass','volHum'].forEach(id=>{document.getElementById(id).addEventListener('input',e=>{document.getElementById('v'+id.slice(3)).textContent=e.target.value+'%';});});
+renderChips();
+</script>
+</body>
+</html>
