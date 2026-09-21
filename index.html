@@ -2,75 +2,67 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TAPEHEAD</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#121212;color:#fff;font-family:'JetBrains Mono',monospace;min-height:100vh}
+body{background:#121212;color:#fff;font-family:'JetBrains Mono',monospace}
 .app{max-width:480px;margin:0 auto;background:#151515;min-height:100vh;border-left:1px solid #222;border-right:1px solid #222}
-header{padding:22px 20px 14px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;letter-spacing:-0.5px;display:flex;align-items:center;gap:8px}
-.logo span{color:#FF6B35}
-nav{display:flex;border-bottom:1px solid #222;margin:0 0 18px}
-.tab{flex:1;padding:14px 0;text-align:center;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:#666;cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s}
+header{padding:22px 20px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Syne',sans-serif;font-size:26px;font-weight:800}
+nav{display:flex;border-bottom:1px solid #222}
+.tab{flex:1;padding:14px 0;text-align:center;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:#555;cursor:pointer;border-bottom:3px solid transparent}
 .tab.active{color:#fff;border-color:#FF6B35}
-.card{background:#1D1D1F;border:1px solid #2A2A2C;border-radius:20px;margin:0 16px 16px;padding:16px}
+.panel{display:none;padding-bottom:30px}.panel.active{display:block}
+.card{background:#1D1D1F;border:1px solid #2A2A2C;border-radius:20px;margin:16px;padding:16px}
 .label{font-size:11px;color:#888;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px;display:flex;justify-content:space-between}
-.locked{color:#FF6B35;font-weight:700;display:flex;align-items:center;gap:6px}
-.chords{display:flex;align-items:center;gap:10px;background:#151515;border:1px solid #2A2A2C;border-radius:14px;padding:12px;justify-content:space-between}
-.chord{width:54px;height:54px;border:1px solid #3A3A3C;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:700;background:#222;font-size:16px}
-.dash{color:#333}
+.locked{color:#FF6B35;font-weight:700}
+.chords{display:flex;gap:10px;background:#151515;border:1px solid #2A2A2C;border-radius:14px;padding:12px;justify-content:space-between}
+.chord{width:54px;height:54px;border:1px solid #3A3A3C;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:700;background:#222}
 .meta{display:flex;justify-content:space-between;margin-top:14px;font-size:13px;color:#888}
 .meta b{color:#fff;font-size:18px}
-.lyric-head{display:flex;justify-content:space-between;align-items:center}
-.editor{margin-top:12px;background:#151515;border:1px solid #2A2A2C;border-radius:14px;padding:14px;min-height:260px;position:relative}
-.line{display:flex;gap:14px;padding:6px 0;font-size:14px;line-height:1.6}
-.num{color:#444;min-width:22px;font-size:12px}
-#lyricInput{position:absolute;inset:0;width:100%;height:100%;background:transparent;border:none;color:transparent;caret-color:#FF6B35;padding:14px 14px 14px 50px;font-family:inherit;font-size:14px;line-height:1.6;outline:none;resize:none;z-index:2}
-#lyricDisplay{pointer-events:none;white-space:pre-wrap}
+.editor{background:#151515;border:1px solid #2A2A2C;border-radius:14px;padding:0;min-height:280px;position:relative;overflow:hidden}
+#lyricInput{width:100%;height:280px;background:transparent;border:none;color:#fff;padding:14px;font-family:inherit;font-size:13px;line-height:1.8;outline:none;resize:none}
 .tools{display:flex;gap:8px;margin:14px 16px;flex-wrap:wrap}
 .tbtn{background:#fff;color:#000;border:none;padding:9px 14px;border-radius:100px;font-weight:700;font-size:11px;cursor:pointer}
 .tbtn.dark{background:#2A2A2C;color:#fff;border:1px solid #333}
-.export{margin:0 16px 30px;background:#FF6B35;color:#fff;border:none;width:calc(100% - 32px);padding:18px;border-radius:14px;font-family:'Syne',sans-serif;font-weight:800;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
-.footer{padding:0 16px 20px;display:flex;justify-content:space-between;font-size:11px;color:#666}
+.export{background:#FF6B35;color:#fff;border:none;width:calc(100% - 32px);margin:0 16px;padding:18px;border-radius:14px;font-family:'Syne',sans-serif;font-weight:800;font-size:15px;cursor:pointer}
+.mic{width:84px;height:84px;border-radius:50%;background:#FF6B35;border:4px solid rgba(255,107,53,0.3);margin:24px auto;display:flex;align-items:center;justify-content:center;font-size:30px;cursor:pointer;transition:0.2s}
+.mic.rec{background:#FF0033;animation:pulse 1s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,0,51,0.5)}70%{box-shadow:0 0 0 20px rgba(255,0,51,0)}100%{box-shadow:0 0 0 0 rgba(255,0,51,0)}}
 </style>
 </head>
 <body>
 <div class="app">
-<header><div class="logo">📼 TAPEHEAD</div><div style="display:flex;gap:16px;opacity:0.4">⚙️ 👤</div></header>
-<nav><div class="tab active">WRITE</div><div class="tab" onclick="alert('Studio mic - tap mic to record, works on live link')">STUDIO</div><div class="tab" onclick="alert('Publish coming - Export first')">PUBLISH</div></nav>
+<header><div class="logo">📼 TAPEHEAD</div><div style="opacity:0.3">⚙️</div></header>
+<nav>
+<div class="tab active" id="tWrite" onclick="show('write')">WRITE</div>
+<div class="tab" id="tStudio" onclick="show('studio')">STUDIO</div>
+<div class="tab" id="tPublish" onclick="show('publish')">PUBLISH</div>
+</nav>
 
-<div class="card">
-<div class="label"><span>Chord Progression</span><span class="locked">🔒 LOCKED</span></div>
-<div class="chords"><div class="chord">Am</div><div class="dash">-</div><div class="chord">F</div><div class="dash">-</div><div class="chord">C</div><div class="dash">-</div><div class="chord">G</div></div>
-<div class="meta"><span>BPM <b>90</b></span><span>🎵 KEY: Am</span><span>4/4</span></div>
-</div>
-
-<div class="card">
-<div class="label lyric-head"><span>Lyric Editor</span><span style="color:#FF6B35">⇄ JetBrains Mono</span></div>
-<div class="editor" id="editorBox">
-<textarea id="lyricInput" placeholder="Type here... [Am - F - C - G] to lock chords"></textarea>
-<div id="lyricDisplay"></div>
-</div>
-</div>
-
-<div class="tools">
-<button class="tbtn" onclick="insertTxt('Verse 2:\n')">+ Verse</button>
-<button class="tbtn" onclick="insertTxt('Chorus:\n')">+ Chorus</button>
-<button class="tbtn dark" onclick="rhyme()">Rhyme Finder</button>
-<button class="tbtn dark" onclick="finish()">Line Finisher</button>
-</div>
-
-<div class="footer"><span id="count">0 characters • 0 words</span><span style="color:#FF6B35;cursor:pointer" onclick="ai()">💡 AI SUGGEST</span></div>
+<div id="write" class="panel active">
+<div class="card"><div class="label"><span>Chord Progression</span><span class="locked">🔒 LOCKED</span></div><div class="chords"><div class="chord">Am</div><div class="chord">F</div><div class="chord">C</div><div class="chord">G</div></div><div class="meta"><span>BPM <b>90</b></span><span>KEY: Am</span><span>4/4</span></div></div>
+<div class="card" style="padding:0"><div class="label" style="padding:16px 16px 0"><span>Lyric Editor</span><span style="color:#FF6B35">JetBrains Mono</span></div><div class="editor"><textarea id="lyricInput"></textarea></div></div>
+<div class="tools"><button class="tbtn" onclick="addText('\nVerse 2:\n')">+ Verse</button><button class="tbtn" onclick="addText('\nChorus:\n')">+ Chorus</button><button class="tbtn dark" onclick="rhyme()">Rhyme Finder</button><button class="tbtn dark" onclick="finish()">Line Finisher</button></div>
 <button class="export" onclick="exportSong()">⬇ EXPORT</button>
 </div>
 
+<div id="studio" class="panel">
+<div class="card" style="text-align:center"><h3 style="font-family:Syne">STUDIO MIC</h3><p style="color:#888;font-size:12px;margin:8px 0">Record over Am - F - C - G at 90 BPM</p><div class="mic" id="micBtn" onclick="toggleRec()">🎙️</div><div id="recStatus" style="font-size:12px;color:#888">Tap to record</div><audio id="player" controls style="width:100%;margin-top:16px;display:none"></audio><canvas id="wave" width="300" height="60" style="width:100%;margin-top:12px;display:none"></canvas></div>
+<div class="card"><h4 style="font-size:12px;color:#888">CHORD LOOPER</h4><div style="display:flex;gap:8px;margin-top:10px"><button class="tbtn dark">Am</button><button class="tbtn dark">F</button><button class="tbtn dark">C</button><button class="tbtn dark">G</button></div></div>
+</div>
+
+<div id="publish" class="panel">
+<div class="card"><h3 style="font-family:Syne">Publish Tape</h3><p style="color:#888;font-size:12px;margin:8px 0 16px">Your lyrics saved locally. No data leaves phone.</p><button class="tbtn" style="width:100%;padding:14px;margin-bottom:8px" onclick="exportSong()">Download .TXT</button><button class="tbtn dark" style="width:100%;padding:14px;margin-bottom:8px" onclick="copy()">Copy Lyrics</button><button class="tbtn dark" style="width:100%;padding:14px" onclick="shareWA()">Share to WhatsApp</button></div>
+<div class="card" style="border-color:#FF6B35"><b>Made in Kajansi, UG 🇺🇬</b><p style="font-size:12px;color:#888;margin-top:6px">TAPEHEAD v4 - Perfect Edition</p></div>
+</div>
+
+</div>
 <script>
-const input=document.getElementById('lyricInput');
-const display=document.getElementById('lyricDisplay');
-const count=document.getElementById('count');
-let lyrics=localStorage.getItem('tape_v3')||`Verse 1
+function show(p){document.querySelectorAll('.panel').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tab').forEach(e=>e.classList.remove('active'));document.getElementById(p).classList.add('active');document.getElementById('t'+p.charAt(0).toUpperCase()+p.slice(1)).classList.add('active');}
+const input=document.getElementById('lyricInput');input.value=localStorage.getItem('tape_v4')||`Verse 1
 I'm chasing quiet in the neon dark
 Breathing slow, we tear the silence apart
 Hold my breath, watch the city spark
@@ -78,39 +70,15 @@ If you stay, I won't fall apart
 
 [Am - F - C - G]
 Nze ndi wano, ngenda mu maaso...`;
-input.value=lyrics;
-function render(){
-  const lines=input.value.split('\n');
-  let html=''; lines.forEach((l,i)=>{
-    const num=String(i+1).padStart(2,'0');
-    html+=`<div class="line"><span class="num">${num}</span><span>${l||' '}</span></div>`;
-  });
-  display.innerHTML=html;
-  count.textContent=`${input.value.length} characters • ${input.value.trim().split(/\s+/).filter(Boolean).length} words`;
-  localStorage.setItem('tape_v3',input.value);
-}
-input.addEventListener('input',render);
-render();
-function insertTxt(t){input.value+=`\n${t}`;render();input.focus();}
-function rhyme(){
-  const last=input.value.trim().split(/\s+/).pop()||'wano';
-  alert(`Rhyme for "${last}":\n• bwino, mpola, omwoyo\n• dark, spark, apart\n• fire, desire, higher`);
-}
-function finish(){
-  const ends=["Nze ndi wano, ng'omukwano gwo", "Omwoyo gwaange gukuyita", "We keep it burning through the night"];
-  input.value+=ends[Math.floor(Math.random()*ends.length)]+'\n';render();
-}
-function ai(){
-  input.value+="\nIf you leave, the light goes dark\nBut with you, I find my spark\n";render();
-}
-function exportSong(){
-  const blob=new Blob([input.value],{type:'text/plain'});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download=`TAPEHEAD_${Date.now()}.txt`;
-  a.click();
-}
+input.addEventListener('input',()=>localStorage.setItem('tape_v4',input.value));
+function addText(t){input.value+=t;input.focus();localStorage.setItem('tape_v4',input.value);}
+function rhyme(){alert('Rhyme: bwino, mpola, omwoyo, dark/spark/apart, fire/desire');}
+function finish(){input.value+=['Nze ndi wano, ','Omwoyo gwaange ','We burning like '][Math.floor(Math.random()*3)];}
+function exportSong(){const b=new Blob([input.value],{type:'text/plain'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='TAPEHEAD.txt';a.click();}
+function copy(){navigator.clipboard.writeText(input.value);alert('Copied ✓');}
+function shareWA(){window.open('https://wa.me/?text='+encodeURIComponent(input.value));}
+let mr, chunks=[], rec=false;
+async function toggleRec(){const btn=document.getElementById('micBtn'), st=document.getElementById('recStatus'), pl=document.getElementById('player');if(!rec){try{const s=await navigator.mediaDevices.getUserMedia({audio:true});mr=new MediaRecorder(s);chunks=[];mr.ondataavailable=e=>chunks.push(e.data);mr.onstop=()=>{pl.src=URL.createObjectURL(new Blob(chunks,{type:'audio/webm'}));pl.style.display='block';};mr.start();rec=true;btn.classList.add('rec');btn.textContent='■';st.textContent='Recording... tap to stop';}catch{st.textContent='Allow mic in browser settings';}}else{mr.stop();rec=false;btn.classList.remove('rec');btn.textContent='🎙️';st.textContent='Saved ✓ play below';}}
 </script>
-</div>
 </body>
 </html>
