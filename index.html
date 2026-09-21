@@ -4,39 +4,110 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tapehead V1 - Full Mix & AI Composer</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=Inter:wght@400;600&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<link href="https://googleapis.com" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#0D0A0A;color:#E8D5CC;font-family:'Inter',sans-serif;padding:12px 0}
-.app{max-width:440px;margin:0 auto;background:#1A1211;min-height:100vh;border-radius:28px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.5);border:1px solid #2E2422;position:relative}
-.app::before{content:"";position:absolute;inset:0;opacity:.03;pointer-events:none;z-index:99;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")}
-.header{padding:20px 18px 10px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-family:'Syne';font-weight:700;font-size:18px}
-.tabs{display:flex;gap:8px;padding:0 16px 12px}.tbtn{flex:1;padding:12px;border-radius:14px;text-align:center;font-weight:700;font-size:12px;background:#211A19;color:#7A6A66;border:1px solid #2A1E1C;cursor:pointer;transition:.2s}.tbtn.active{background:#2A1E1C;color:#FFC9B5;border-bottom:3px solid #FFC9B5}
-.card{background:#211A19;border:1px solid #2E2422;border-radius:18px;margin:10px 16px 0;padding:16px;position:relative}
-.card-title{font-size:11px;font-weight:700;text-transform:uppercase;color:#FFC9B5;letter-spacing:1px;margin-bottom:8px;display:flex;gap:6px;align-items:center}
-.pill-container{margin:0 16px}.pill{background:#211A19;border:1px solid #2E2422;border-radius:100px;padding:6px 14px;display:inline-flex;align-items:center;gap:8px;font-size:11px;font-family:'IBM Plex Mono',monospace;color:#FFC9B5}.pill-dot{width:6px;height:6px;background:#FFD9C8;border-radius:50%;display:inline-block}
-.input,.select{width:100%;background:#1A1211;border:1px solid #3A2E2C;border-radius:10px;padding:11px;color:#fff;font-size:12px;margin-top:6px;outline:none}.input:focus,.select:focus{border-color:#FFD9C8}
-#lyrics{width:100%;min-height:120px;background:#1A1211;border:1px solid #3A2E2C;border-radius:12px;padding:12px;color:#E8D5CC;outline:none;resize:none;font-size:13px;line-height:1.6}
-.chip-group{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.chip{background:#332523;color:#FFD9C8;padding:7px 11px;border-radius:8px;font-weight:600;font-size:11px;border:1px solid #443230;cursor:pointer;transition:.15s}.chip:hover{background:#FFD9C8;color:#1A1211}
-.ai-buttons-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.ai-btn{background:#2E2422;color:#FFC9B5;border:1px solid #4A3A37;border-radius:10px;padding:10px;font-size:11px;font-weight:600;cursor:pointer;display:flex;justify-content:center;gap:4px;transition:.2s}.ai-btn:hover{background:#3A2E2C;border-color:#FFD9C8}
-.action{width:calc(100% - 32px);margin:12px 16px 0;padding:14px;border-radius:12px;border:none;font-weight:700;font-size:12px;cursor:pointer;display:flex;justify-content:center;gap:6px}.peach{background:#FFD9C8;color:#1A1211}.outline{background:transparent;border:1px solid #FFD9C8;color:#FFD9C8}
-.mixer{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.fader{background:#1A1211;border:1px solid #3A2E2C;border-radius:10px;padding:10px}.fader-label{font-size:10px;display:flex;justify-content:space-between;margin-bottom:6px;color:#9A8A86}.fader input{width:100%;accent-color:#FFD9C8}
-.wave{width:100%;height:44px;background:#1A1211;border-radius:10px;display:flex;align-items:center;gap:2px;padding:0 8px;margin:8px 0;border:1px solid #2E2422;overflow:hidden}.bar{width:8px;background:#3A2E2C;border-radius:4px;height:10px;transition:.1s}
-.mic-zone{display:flex;flex-direction:column;align-items:center;gap:8px;margin:10px 0}.mic{width:70px;height:70px;border-radius:50%;background:#FFD9C8;display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;color:#1A1211;transition:.3s;box-shadow:0 4px 15px rgba(0,0,0,.3)}.mic.rec{background:#FF4D4D;animation:pulse 1s infinite;color:#fff}@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,77,77,.7)}100%{box-shadow:0 0 0 15px rgba(255,77,77,0)}}
-.panel{display:none;padding-bottom:24px}.panel.active{display:block}
-.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(80px);background:#FFD9C8;color:#1A1211;padding:12px 22px;border-radius:100px;font-weight:700;font-size:12px;opacity:0;transition:.4s cubic-bezier(.175,.885,.32,1.275);z-index:99;box-shadow:0 10px 25px rgba(0,0,0,.4)}.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-canvas{width:100%;height:64px;background:#1F1514;border-radius:12px;border:1px solid #3A2E2C;margin-top:8px}
-.playAll{width:calc(100% - 32px);margin:12px 16px 0;padding:16px;border-radius:16px;background:#FFD9C8;color:#1A1211;border:none;font-family:'Syne';font-weight:700;font-size:14px;cursor:pointer;display:flex;justify-content:center;gap:8px;box-shadow:0 6px 20px rgba(255,217,200,.2);transition:.2s}.playAll.playing{background:#00FF88;color:#0D0A0A}
-.iconBtn{width:36px;height:36px;border-radius:50%;background:#211A19;border:1px solid #3A2E2C;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#FFD9C8}
-.profile{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:end;z-index:50;padding:16px;backdrop-filter:blur(4px)}.profile.show{display:flex}.pBox{background:#1A1211;border:1px solid #3A2E2C;border-radius:24px 24px 0 0;width:100%;max-width:440px;margin:0 auto;padding:22px;animation:slideUp.3s ease}@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-.reel-container{display:flex;gap:4px;align-items:center;font-size:10px;color:#7A6A66}.reel-icon{display:inline-block;font-size:14px;transition:transform.1s linear}.spinning{animation:spin 1.2s linear infinite}@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+/* CSS Reset & Studio Aesthetics */
+*{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased}
+body{background:#080606;background-image:radial-gradient(circle at 50% 30%, #150f0e 0%, #080606 70%);color:#E8D5CC;font-family:'Inter',sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px 0}
+
+/* App Chassis Frame Container */
+.app{width:100%;max-width:440px;background:#130d0c;min-height:860px;border-radius:32px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,0.05);border:1px solid #281d1b;position:relative;display:flex;flex-direction:column}
+.app::before{content:"";position:absolute;inset:0;opacity:.02;pointer-events:none;z-index:99;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://w3.org id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")}
+
+/* Top Deck Console Header */
+.header{padding:24px 20px 14px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.03)}
+.logo{font-family:'Syne';font-weight:700;font-size:19px;letter-spacing:-0.5px;color:#fff;display:flex;align-items:center;gap:6px}
+
+/* Segmented Matrix Navigation Switchers */
+.tabs{display:flex;gap:6px;padding:12px 18px;background:rgba(0,0,0,0.15)}
+.tbtn{flex:1;padding:14px;border-radius:14px;text-align:center;font-weight:700;font-size:11px;letter-spacing:1px;background:#1b1211;color:#6d5b57;border:1px solid #251917;cursor:pointer;transition:all .25s cubic-bezier(0.4, 0, 0.2, 1)}
+.tbtn.active{background:#281b19;color:#FFC9B5;border:1px solid #3d2a27;box-shadow:0 4px 12px rgba(0,0,0,0.25);border-bottom:2px solid #FFC9B5}
+
+/* Content Decks & Cards */
+.card{background:#19100f;border:1px solid #261917;border-radius:20px;margin:12px 18px 0;padding:18px;box-shadow:0 8px 20px rgba(0,0,0,0.2)}
+.card-title{font-size:11px;font-weight:700;text-transform:uppercase;color:#FFC9B5;letter-spacing:1.2px;margin-bottom:12px;display:flex;gap:6px;align-items:center;font-family:'Syne'}
+
+/* Parameter Status Pill Dynamic Indicators */
+.pill-container{margin:8px 18px 0}
+.pill{background:#19100f;border:1px solid #261917;border-radius:100px;padding:8px 14px;display:inline-flex;align-items:center;gap:8px;font-size:11px;font-family:'IBM Plex Mono',monospace;color:#ffdacd;font-weight:500}
+.pill-dot{width:6px;height:6px;background:#00FF88;border-radius:50%;display:inline-block;box-shadow:0 0 8px #00FF88}
+
+/* Premium Form Elements & Text Input fields */
+.input, .select{width:100%;background:#110a09;border:1px solid #2d1f1d;border-radius:12px;padding:12px 14px;color:#fff;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;margin-top:6px;outline:none;transition:all 0.2s ease;appearance:none}
+.select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://w3.org' width='12' height='12' fill='%23FFC9B5' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:calc(100% - 14px) center}
+.input:focus, .select:focus, #lyrics:focus{border-color:#FFC9B5;box-shadow:0 0 0 2px rgba(255,201,181,0.1)}
+
+#lyrics{width:100%;min-height:110px;background:#110a09;border:1px solid #2d1f1d;border-radius:14px;padding:14px;color:#E8D5CC;outline:none;resize:none;font-size:13px;line-height:1.6;font-family:'Inter',sans-serif;transition:border 0.2s}
+
+/* Musical Scale Chord Matrices */
+.chip-group{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chip{background:#231715;color:#FFC9B5;padding:8px 14px;border-radius:10px;font-weight:600;font-size:11px;font-family:'IBM Plex Mono',monospace;border:1px solid #332220;cursor:pointer;transition:all .15s ease}
+.chip:hover{background:#FFC9B5;color:#130d0c;transform:translateY(-1px)}
+
+/* Grid Arrays for AI Functions */
+.ai-buttons-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.ai-btn{background:#1e1413;color:#ffdacd;border:1px solid #332220;border-radius:12px;padding:12px;font-size:11px;font-weight:600;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:6px;transition:all .2s}
+.ai-btn:hover{background:#281b19;border-color:#FFC9B5;color:#fff}
+
+/* Main Interactive Call-To-Action Tracks Trigger */
+.playAll{width:calc(100% - 36px);margin:14px 18px 0;padding:16px;border-radius:16px;background:#FFC9B5;color:#130d0c;border:none;font-family:'Syne';font-weight:700;font-size:13px;letter-spacing:0.5px;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:8px;box-shadow:0 6px 20px rgba(255,201,181,0.15);transition:all .25s cubic-bezier(0.4, 0, 0.2, 1)}
+.playAll:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(255,201,181,0.25)}
+.playAll.playing{background:#00FF88;color:#080606;box-shadow:0 6px 25px rgba(0,255,136,0.3)}
+
+/* Hardware Studio Multi-Track Mixer Panel Layout */
+.mixer{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+.fader{background:#110a09;border:1px solid #261917;border-radius:14px;padding:14px;display:flex;flex-direction:column;justify-content:space-between}
+.fader-label{font-size:10px;font-weight:600;display:flex;justify-content:space-between;margin-bottom:12px;color:#8d7975;letter-spacing:0.5px}
+.fader-label span:last-child{font-family:'IBM Plex Mono',monospace;color:#FFC9B5}
+
+/* Polished Skewomorphic Custom Range Faders */
+.fader input[type=range]{width:100%;accent-color:#FFC9B5;appearance:none;background:#231715;height:6px;border-radius:3px;outline:none;margin:8px 0}
+.fader input[type=range]::-webkit-slider-thumb{appearance:none;width:14px;height:22px;border-radius:3px;background:#FFC9B5;border:1px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.5);cursor:pointer;transition:transform 0.1s}
+.fader input[type=range]::-webkit-slider-thumb:active{transform:scale(1.15);background:#fff}
+
+/* Microphone Capture Station Layout Setup */
+.mic-zone{display:flex;flex-direction:column;align-items:center;gap:8px;margin:8px 0}
+.mic{width:68px;height:68px;border-radius:50%;background:#FFC9B5;display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;color:#130d0c;transition:all .3s cubic-bezier(0.4, 0, 0.2, 1);box-shadow:0 6px 20px rgba(0,0,0,0.4)}
+.mic:hover{transform:scale(1.04);background:#ffdacd}
+.mic.rec{background:#FF4D4D;animation:pulse 1.2s infinite;color:#fff}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,77,77,0.5)}70%{box-shadow:0 0 0 16px rgba(255,77,77,0)}100%{box-shadow:0 0 0 0 rgba(255,77,77,0)}}
+
+/* General Panel State Engine Utility Rules */
+.panel{display:none;padding-bottom:24px;flex:1}
+.panel.active{display:flex;flex-direction:column}
+
+/* Hardware Interface Feedback Toast Bar alerts */
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(100px);background:#FFC9B5;color:#130d0c;padding:12px 24px;border-radius:100px;font-weight:700;font-size:12px;opacity:0;transition:.4s cubic-bezier(.175,.885,.32,1.275);z-index:999;box-shadow:0 12px 30px rgba(0,0,0,0.5);letter-spacing:0.2px}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* Interactive Hardware Frequency Canvas Container */
+canvas{width:100%;height:68px;background:#0d0706;border-radius:14px;border:1px solid #231715;margin-top:12px;display:block}
+
+/* Header Utilities Auxiliary System controls */
+.iconBtn{width:38px;height:38px;border-radius:50%;background:#19100f;border:1px solid #2d1f1d;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#FFC9B5;transition:all 0.2s}
+.iconBtn:hover{background:#231715;border-color:#FFC9B5}
+
+/* Profile Slidout Drawer Control Settings Box Overlay */
+.profile{position:fixed;inset:0;background:rgba(5,3,3,.85);display:none;align-items:end;z-index:9999;padding:16px;backdrop-filter:blur(8px)}
+.profile.show{display:flex}
+.pBox{background:#160f0e;border:1px solid #2d1f1d;border-radius:28px 28px 16px 16px;width:100%;max-width:400px;margin:0 auto;padding:26px;animation:slideUp .35s cubic-bezier(0.16, 1, 0.3, 1)}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+
+/* Dynamic Tape Reel Mechanical Rotation Animation Rig */
+.reel-container{display:flex;gap:6px;align-items:center;font-size:10px;color:#544542;margin-right:4px}
+.reel-icon{display:inline-block;font-size:15px;transition:transform .1s linear}
+.spinning{animation:spin 1.5s linear infinite}@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+/* Live DSP Processing Module Info Badges */
+.dsp-badge-container{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:8px 18px 0}
+.dsp-badge{background:#17100f;border:1px solid #281c1a;border-radius:8px;padding:6px;font-size:9px;font-family:'IBM Plex Mono',monospace;text-align:center;color:#8d7975;font-weight:500;text-transform:uppercase}
+.dsp-badge.active{color:#00FF88;border-color:rgba(0,255,136,0.2);background:rgba(0,255,136,0.02)}
 </style>
 </head>
 <body>
 
 <div class="app">
-  <!-- Header Section -->
+  <!-- Top Deck Header -->
   <div class="header">
     <div class="logo">📼 Tapehead Studio</div>
     <div style="display:flex;gap:8px;align-items:center">
@@ -48,73 +119,5 @@ canvas{width:100%;height:64px;background:#1F1514;border-radius:12px;border:1px s
     </div>
   </div>
 
-  <!-- Navigation Tabs -->
+  <!-- Segmented Matrix Controls -->
   <div class="tabs">
-    <div class="tbtn active" id="tb-write" onclick="go('write')">WRITE</div>
-    <div class="tbtn" id="tb-studio" onclick="go('studio')">STUDIO • MIXER</div>
-  </div>
-
-  <!-- Tab 1: Write Panel -->
-  <div id="p-write" class="panel active">
-    <div class="pill-container">
-      <div class="pill">
-        <span class="pill-dot"></span>
-        <span id="keyInfo">C Major</span> • <span id="bpmInfo">96 BPM</span> • <span id="genreInfo">Afrobeats</span>
-      </div>
-    </div>
-    <div style="padding:8px 16px">
-      <input class="input" id="title" value="Abaana ba Africa" placeholder="Song Title">
-    </div>
-    
-    <div class="card">
-      <div class="card-title">📝 Lyrics & Arrangement</div>
-      <textarea id="lyrics">Abaana ba Africa&#10;Nze ndi wano mu Uganda&#10;Tulina amaanyi</textarea>
-      <div style="font-size:10px;color:#9A8A86;margin-top:6px">Tap chords to insert:</div>
-      <div id="chordChips" class="chip-group"></div>
-      <div class="ai-buttons-grid">
-        <button class="ai-btn" onclick="aiCompleteLyrics()">✨ AI Complete Song</button>
-        <button class="ai-btn" onclick="aiGenerateMelody()">🎼 AI Compose Melody</button>
-      </div>
-      <div style="font-size:10px;color:#9A8A86;text-align:center;margin-top:6px" id="aiMelodyStat">Melody: Not generated • Key: C Major</div>
-    </div>
-
-    <button class="playAll" id="writePlay" onclick="toggleFullMix()">▶ PLAY FULL SONG MIX</button>
-
-    <div class="card">
-      <div class="card-title" style="justify-content:center">Step 1: Record Vocal Guide / Hum</div>
-      <div class="mic-zone">
-        <div class="mic" id="humBtn" onclick="hum()">🎤</div>
-        <div style="font-size:10px;color:#9A8A86" id="humStat">Hum → auto audio guide</div>
-      </div>
-      <canvas id="wave" width="360" height="64"></canvas>
-      <audio id="humAudio" controls style="width:100%; display:none; margin-top:10px;"></audio>
-    </div>
-  </div>
-
-  <!-- Tab 2: Studio / Mixer Panel -->
-  <div id="p-studio" class="panel">
-    <!-- Genre Selection Lab -->
-    <div class="card">
-      <div class="card-title">GENRE LAB • 32 GENRES <span style="margin-left:auto; color:#00FF88;">• READY</span></div>
-      <select class="select" id="genreSelect" onchange="updateGenre(this.value)">
-        <option value="Afrobeats">Afrobeats</option>
-        <option value="Amapiano" selected>Amapiano</option>
-        <option value="Dancehall">Dancehall</option>
-        <option value="Reggae">Reggae</option>
-        </select>
-        <div style="display: flex; gap: 8px; margin-top: 8px;">
-          <select class="select" id="keySelect" style="flex: 2;">
-            <option value="C Major">C Major</option>
-            <option value="A Minor">A Minor</option>
-            <option value="G Major">G Major</option>
-          </select>
-          <input type="number" class="input" id="bpmInput" value="111" style="flex: 1; text-align: center;">
-        </div>
-    </div>
-
-    <!-- Live Mixer Control Faders -->
-    <div class="card">
-      <div class="card-title">MIXER — DRUMS + CHORDS + BASS + HUM</div>
-      <div class="mixer">
-        <div class="fader">
-          <div class="fader-label"><span>DRUMS</span><span id="v-drums">85%</span></div>
