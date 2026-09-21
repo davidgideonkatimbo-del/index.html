@@ -3,82 +3,140 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TAPEHEAD</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>TAPEHEAD — Write. Sing. Publish.</title>
+<meta name="theme-color" content="#FF6B35">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#121212;color:#fff;font-family:'JetBrains Mono',monospace}
-.app{max-width:480px;margin:0 auto;background:#151515;min-height:100vh;border-left:1px solid #222;border-right:1px solid #222}
-header{padding:22px 20px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-family:'Syne',sans-serif;font-size:26px;font-weight:800}
-nav{display:flex;border-bottom:1px solid #222}
-.tab{flex:1;padding:14px 0;text-align:center;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:#555;cursor:pointer;border-bottom:3px solid transparent}
-.tab.active{color:#fff;border-color:#FF6B35}
-.panel{display:none;padding-bottom:30px}.panel.active{display:block}
-.card{background:#1D1D1F;border:1px solid #2A2A2C;border-radius:20px;margin:16px;padding:16px}
-.label{font-size:11px;color:#888;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px;display:flex;justify-content:space-between}
-.locked{color:#FF6B35;font-weight:700}
-.chords{display:flex;gap:10px;background:#151515;border:1px solid #2A2A2C;border-radius:14px;padding:12px;justify-content:space-between}
-.chord{width:54px;height:54px;border:1px solid #3A3A3C;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:700;background:#222}
-.meta{display:flex;justify-content:space-between;margin-top:14px;font-size:13px;color:#888}
-.meta b{color:#fff;font-size:18px}
-.editor{background:#151515;border:1px solid #2A2A2C;border-radius:14px;padding:0;min-height:280px;position:relative;overflow:hidden}
-#lyricInput{width:100%;height:280px;background:transparent;border:none;color:#fff;padding:14px;font-family:inherit;font-size:13px;line-height:1.8;outline:none;resize:none}
-.tools{display:flex;gap:8px;margin:14px 16px;flex-wrap:wrap}
-.tbtn{background:#fff;color:#000;border:none;padding:9px 14px;border-radius:100px;font-weight:700;font-size:11px;cursor:pointer}
-.tbtn.dark{background:#2A2A2C;color:#fff;border:1px solid #333}
-.export{background:#FF6B35;color:#fff;border:none;width:calc(100% - 32px);margin:0 16px;padding:18px;border-radius:14px;font-family:'Syne',sans-serif;font-weight:800;font-size:15px;cursor:pointer}
-.mic{width:84px;height:84px;border-radius:50%;background:#FF6B35;border:4px solid rgba(255,107,53,0.3);margin:24px auto;display:flex;align-items:center;justify-content:center;font-size:30px;cursor:pointer;transition:0.2s}
-.mic.rec{background:#FF0033;animation:pulse 1s infinite}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,0,51,0.5)}70%{box-shadow:0 0 0 20px rgba(255,0,51,0)}100%{box-shadow:0 0 0 0 rgba(255,0,51,0)}}
+body{background:#0E0E0E;color:#fff;font-family:'JetBrains Mono',monospace;-webkit-font-smoothing:antialiased}
+.app{max-width:520px;margin:0 auto;background:#151515;min-height:100vh;border-left:1px solid #1F1F1F;border-right:1px solid #1F1F1F;display:flex;flex-direction:column}
+header{padding:20px 20px 12px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:rgba(21,21,21,0.92);backdrop-filter:blur(12px);z-index:10}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:24px;letter-spacing:-0.5px}
+.logo i{color:#FF6B35;font-style:normal}
+nav{display:flex;padding:0 8px;border-bottom:1px solid #1F1F1F}
+.tab{flex:1;text-align:center;padding:16px 0;font-family:'Syne',sans-serif;font-weight:800;font-size:13px;letter-spacing:0.5px;color:#4A4A4A;border-bottom:3px solid transparent;cursor:pointer;transition:.2s}
+.tab.active{color:#fff;border-bottom-color:#FF6B35}
+.panel{display:none;flex:1;flex-direction:column}.panel.active{display:flex}
+.card{background:#1C1C1E;border:1px solid #262628;border-radius:20px;margin:16px 16px 0;padding:16px}
+.lbl{font-size:10px;letter-spacing:1.6px;color:#6A6A6E;text-transform:uppercase;display:flex;justify-content:space-between;margin-bottom:14px}
+.lock{color:#FF6B35;font-weight:700;font-size:11px}
+.chordRow{display:flex;align-items:center;justify-content:space-between;background:#121212;border:1px solid #242426;border-radius:16px;padding:12px}
+.chip{width:58px;height:48px;border-radius:12px;background:#1F1F21;border:1px solid #2C2C2E;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px}
+.sep{color:#2A2A2A}
+.meta{display:flex;justify-content:space-between;margin-top:12px;color:#6A6A6E;font-size:12px}
+.meta b{color:#fff;font-size:18px;font-weight:800}
+.editorWrap{background:#121212;border:1px solid #242426;border-radius:16px;margin-top:12px;overflow:hidden;position:relative}
+#editor{width:100%;min-height:340px;background:transparent;border:none;color:#EAEAEA;font-family:'JetBrains Mono',monospace;font-size:13.5px;line-height:26px;padding:14px 14px 14px 48px;outline:none;resize:none;white-space:pre-wrap}
+.lineNums{position:absolute;left:0;top:0;padding:14px 0 0 12px;color:#3A3A3E;font-size:12px;line-height:26px;pointer-events:none;text-align:right;width:36px}
+.hl{color:#FF6B35;background:rgba(255,107,53,0.12);border:1px solid rgba(255,107,53,0.25);border-radius:6px;padding:0 4px}
+.tools{display:flex;gap:8px;padding:12px 16px;flex-wrap:wrap}
+.btn{background:#fff;color:#000;border:none;padding:10px 16px;border-radius:100px;font-weight:800;font-size:11px;cursor:pointer}
+.btn.ghost{background:#232326;color:#fff;border:1px solid #2E2E30}
+.exportBtn{margin:8px 16px 24px;background:#FF6B35;color:#fff;border:none;padding:18px;border-radius:16px;font-family:'Syne',sans-serif;font-weight:800;font-size:15px;letter-spacing:0.3px;cursor:pointer}
+.micWrap{display:flex;flex-direction:column;align-items:center;padding:30px 0 10px}
+.micBtn{width:88px;height:88px;border-radius:50%;background:#FF6B35;display:flex;align-items:center;justify-content:center;font-size:34px;cursor:pointer;box-shadow:0 0 0 0 rgba(255,107,53,0.4);transition:.2s;border:4px solid rgba(255,107,53,0.2)}
+.micBtn.rec{background:#FF1A3D;animation:beat 1s infinite}
+@keyframes beat{0%{box-shadow:0 0 0 0 rgba(255,26,61,0.6)}70%{box-shadow:0 0 0 22px rgba(255,26,61,0)}100%{box-shadow:0 0 0 0 rgba(255,26,61,0)}}
+canvas#wave{width:100%;height:70px;margin-top:14px}
+.small{font-size:11px;color:#6A6A6E}
 </style>
 </head>
 <body>
 <div class="app">
-<header><div class="logo">📼 TAPEHEAD</div><div style="opacity:0.3">⚙️</div></header>
-<nav>
-<div class="tab active" id="tWrite" onclick="show('write')">WRITE</div>
-<div class="tab" id="tStudio" onclick="show('studio')">STUDIO</div>
-<div class="tab" id="tPublish" onclick="show('publish')">PUBLISH</div>
-</nav>
+<header><div class="logo"><i>📼</i> TAPEHEAD</div><div class="small">v5 • Kajansi</div></header>
+<nav><div class="tab active" id="tab-write" onclick="go('write')">WRITE</div><div class="tab" id="tab-studio" onclick="go('studio')">STUDIO</div><div class="tab" id="tab-publish" onclick="go('publish')">PUBLISH</div></nav>
 
-<div id="write" class="panel active">
-<div class="card"><div class="label"><span>Chord Progression</span><span class="locked">🔒 LOCKED</span></div><div class="chords"><div class="chord">Am</div><div class="chord">F</div><div class="chord">C</div><div class="chord">G</div></div><div class="meta"><span>BPM <b>90</b></span><span>KEY: Am</span><span>4/4</span></div></div>
-<div class="card" style="padding:0"><div class="label" style="padding:16px 16px 0"><span>Lyric Editor</span><span style="color:#FF6B35">JetBrains Mono</span></div><div class="editor"><textarea id="lyricInput"></textarea></div></div>
-<div class="tools"><button class="tbtn" onclick="addText('\nVerse 2:\n')">+ Verse</button><button class="tbtn" onclick="addText('\nChorus:\n')">+ Chorus</button><button class="tbtn dark" onclick="rhyme()">Rhyme Finder</button><button class="tbtn dark" onclick="finish()">Line Finisher</button></div>
-<button class="export" onclick="exportSong()">⬇ EXPORT</button>
+<div id="p-write" class="panel active">
+<div class="card">
+<div class="lbl"><span>Chord Progression</span><span class="lock">🔒 LOCKED</span></div>
+<div class="chordRow"><div class="chip">Am</div><div class="sep">—</div><div class="chip">F</div><div class="sep">—</div><div class="chip">C</div><div class="sep">—</div><div class="chip">G</div></div>
+<div class="meta"><span>BPM <b id="bpm">90</b></span><span>KEY: Am</span><span>4/4</span></div>
 </div>
 
-<div id="studio" class="panel">
-<div class="card" style="text-align:center"><h3 style="font-family:Syne">STUDIO MIC</h3><p style="color:#888;font-size:12px;margin:8px 0">Record over Am - F - C - G at 90 BPM</p><div class="mic" id="micBtn" onclick="toggleRec()">🎙️</div><div id="recStatus" style="font-size:12px;color:#888">Tap to record</div><audio id="player" controls style="width:100%;margin-top:16px;display:none"></audio><canvas id="wave" width="300" height="60" style="width:100%;margin-top:12px;display:none"></canvas></div>
-<div class="card"><h4 style="font-size:12px;color:#888">CHORD LOOPER</h4><div style="display:flex;gap:8px;margin-top:10px"><button class="tbtn dark">Am</button><button class="tbtn dark">F</button><button class="tbtn dark">C</button><button class="tbtn dark">G</button></div></div>
+<div class="card" style="padding-bottom:0">
+<div class="lbl"><span>Lyric Editor</span><span style="color:#FF6B35">⇄ JetBrains Mono</span></div>
+<div class="editorWrap" id="wrap">
+<div class="lineNums" id="nums">01<br>02<br>03<br>04<br>05</div>
+<textarea id="editor" spellcheck="false"></textarea>
+</div>
+<div class="small" style="padding:10px 4px 14px;display:flex;justify-content:space-between"><span id="stats">0 words • auto-save ✓</span><span style="color:#FF6B35;cursor:pointer" onclick="aiSuggest()">💡 AI SUGGEST</span></div>
 </div>
 
-<div id="publish" class="panel">
-<div class="card"><h3 style="font-family:Syne">Publish Tape</h3><p style="color:#888;font-size:12px;margin:8px 0 16px">Your lyrics saved locally. No data leaves phone.</p><button class="tbtn" style="width:100%;padding:14px;margin-bottom:8px" onclick="exportSong()">Download .TXT</button><button class="tbtn dark" style="width:100%;padding:14px;margin-bottom:8px" onclick="copy()">Copy Lyrics</button><button class="tbtn dark" style="width:100%;padding:14px" onclick="shareWA()">Share to WhatsApp</button></div>
-<div class="card" style="border-color:#FF6B35"><b>Made in Kajansi, UG 🇺🇬</b><p style="font-size:12px;color:#888;margin-top:6px">TAPEHEAD v4 - Perfect Edition</p></div>
+<div class="tools">
+<button class="btn" onclick="ins('\n\nVerse 2:\n[Am - F - C - G]\n')">+ VERSE</button>
+<button class="btn" onclick="ins('\n\nChorus:\n[C - G - Am - F]\n')">+ CHORUS</button>
+<button class="btn ghost" onclick="rhyme()">RHYME FINDER</button>
+<button class="btn ghost" onclick="finish()">LINE FINISHER</button>
+</div>
+
+<button class="exportBtn" onclick="exp()">⬇ EXPORT</button>
+</div>
+
+<div id="p-studio" class="panel">
+<div class="card" style="text-align:center">
+<div class="lbl"><span>Studio Mic</span><span>90 BPM</span></div>
+<div class="micWrap">
+<div class="micBtn" id="mic" onclick="rec()">🎙️</div>
+<div id="rStatus" class="small" style="margin-top:12px">Tap to record over Am - F - C - G</div>
+<canvas id="wave"></canvas>
+<audio id="player" controls style="width:100%;margin-top:12px;display:none"></audio>
+</div>
+</div>
+<div class="card"><div class="lbl"><span>Metronome</span><span class="small">tap</span></div><button class="btn ghost" style="width:100%;padding:14px" onclick="metro()">▶ START CLICK — 90 BPM</button></div>
+</div>
+
+<div id="p-publish" class="panel">
+<div class="card"><h3 style="font-family:Syne;margin-bottom:6px">Publish Your Tape</h3><p class="small" style="line-height:1.5;margin-bottom:16px">Export clean. No watermark. Saved only on your phone in Kajansi.</p>
+<button class="btn" style="width:100%;padding:16px;margin-bottom:10px" onclick="exp()">DOWNLOAD.TXT</button>
+<button class="btn ghost" style="width:100%;padding:16px;margin-bottom:10px" onclick="copy()">COPY LYRICS</button>
+<button class="btn ghost" style="width:100%;padding:16px" onclick="wa()">SHARE TO WHATSAPP</button>
+</div>
+<div class="card" style="border-color:#FF6B35"><b style="font-family:Syne">Made in Kajansi, UG 🇺🇬</b><p class="small" style="margin-top:6px">TAPEHEAD — Write. Sing. Publish. Offline-first.</p></div>
 </div>
 
 </div>
 <script>
-function show(p){document.querySelectorAll('.panel').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tab').forEach(e=>e.classList.remove('active'));document.getElementById(p).classList.add('active');document.getElementById('t'+p.charAt(0).toUpperCase()+p.slice(1)).classList.add('active');}
-const input=document.getElementById('lyricInput');input.value=localStorage.getItem('tape_v4')||`Verse 1
+function go(p){document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.getElementById('p-'+p).classList.add('active');document.getElementById('tab-'+p).classList.add('active');}
+const ed=document.getElementById('editor'), nums=document.getElementById('nums'), stats=document.getElementById('stats');
+ed.value=localStorage.getItem('tapehead_v5')||`Verse 1
 I'm chasing quiet in the neon dark
 Breathing slow, we tear the silence apart
 Hold my breath, watch the city spark
 If you stay, I won't fall apart
 
 [Am - F - C - G]
-Nze ndi wano, ngenda mu maaso...`;
-input.addEventListener('input',()=>localStorage.setItem('tape_v4',input.value));
-function addText(t){input.value+=t;input.focus();localStorage.setItem('tape_v4',input.value);}
-function rhyme(){alert('Rhyme: bwino, mpola, omwoyo, dark/spark/apart, fire/desire');}
-function finish(){input.value+=['Nze ndi wano, ','Omwoyo gwaange ','We burning like '][Math.floor(Math.random()*3)];}
-function exportSong(){const b=new Blob([input.value],{type:'text/plain'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='TAPEHEAD.txt';a.click();}
-function copy(){navigator.clipboard.writeText(input.value);alert('Copied ✓');}
-function shareWA(){window.open('https://wa.me/?text='+encodeURIComponent(input.value));}
-let mr, chunks=[], rec=false;
-async function toggleRec(){const btn=document.getElementById('micBtn'), st=document.getElementById('recStatus'), pl=document.getElementById('player');if(!rec){try{const s=await navigator.mediaDevices.getUserMedia({audio:true});mr=new MediaRecorder(s);chunks=[];mr.ondataavailable=e=>chunks.push(e.data);mr.onstop=()=>{pl.src=URL.createObjectURL(new Blob(chunks,{type:'audio/webm'}));pl.style.display='block';};mr.start();rec=true;btn.classList.add('rec');btn.textContent='■';st.textContent='Recording... tap to stop';}catch{st.textContent='Allow mic in browser settings';}}else{mr.stop();rec=false;btn.classList.remove('rec');btn.textContent='🎙️';st.textContent='Saved ✓ play below';}}
+Nze ndi wano, ngenda mu maaso
+Omwoyo gwaange guli mu love yo
+
+Chorus
+[C - G - Am - F]
+We are rising, we are golden`;
+function update(){const lines=ed.value.split('\n');nums.innerHTML=lines.map((_,i)=>String(i+1).padStart(2,'0')).join('<br>');stats.textContent=`${ed.value.trim().split(/\s+/).filter(Boolean).length} words • auto-save ✓`;localStorage.setItem('tapehead_v5',ed.value);}
+ed.addEventListener('input',update);update();
+function ins(t){ed.value+=t;update();ed.focus();}
+function rhyme(){const w=ed.value.trim().split(/\s+/).pop()||'wano';const dict={wano:'bwino, mpola, nsono, omwoyo',dark:'spark, apart, heart',fire:'desire, higher, liar',love:'above, enough, dreams'};alert(`Rhyme for "${w}":\n${dict[w.toLowerCase()]||'omwoyo, bwino, fire, love, dark'}`);}
+function finish(){const s=['Nze ndi wano, ng\'omukwano','Omwoyo gwaange gukuyita','We keep it burning till the dawn','Enkya eyaaka ne love yo'];ed.value+=s[Math.floor(Math.random()*s.length)]+'\n';update();}
+function aiSuggest(){ed.value+='\nIf you leave, the light goes dark\nBut with you, I found my spark\n';update();}
+function exp(){const b=new Blob([ed.value],{type:'text/plain'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=`TAPEHEAD_${new Date().toISOString().slice(0,10)}.txt`;a.click();}
+function copy(){navigator.clipboard.writeText(ed.value);alert('Copied ✓');}
+function wa(){window.open('https://wa.me/?text='+encodeURIComponent('TAPEHEAD:\n\n'+ed.value));}
+let mediaRec,chunks=[],recording=false,audioCtx,analyser,animId;
+async function rec(){
+ const btn=document.getElementById('mic'), st=document.getElementById('rStatus'), pl=document.getElementById('player'), cv=document.getElementById('wave'), ctx=cv.getContext('2d');
+ if(!recording){
+  try{
+   const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+   mediaRec=new MediaRecorder(stream);chunks=[];
+   mediaRec.ondataavailable=e=>chunks.push(e.data);
+   mediaRec.onstop=()=>{pl.src=URL.createObjectURL(new Blob(chunks,{type:'audio/webm'}));pl.style.display='block';cancelAnimationFrame(animId);};
+   audioCtx=new (window.AudioContext||window.webkitAudioContext)();const src=audioCtx.createMediaStreamSource(stream);analyser=audioCtx.createAnalyser();analyser.fftSize=256;src.connect(analyser);
+   function draw(){animId=requestAnimationFrame(draw);const data=new Uint8Array(analyser.frequencyBinCount);analyser.getByteFrequencyData(data);ctx.clearRect(0,0,cv.width,cv.height);ctx.fillStyle='#1C1C1E';ctx.fillRect(0,0,cv.width,cv.height);ctx.strokeStyle='#FF6B35';ctx.beginPath();const slice=cv.width/data.length;let x=0;for(let i=0;i<data.length;i++){const v=data[i]/128;const y=v*35;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);x+=slice;}ctx.stroke();}draw();
+   cv.style.display='block';mediaRec.start();recording=true;btn.classList.add('rec');btn.textContent='■';st.textContent='Recording... tap to stop';
+  }catch(e){st.textContent='Mic blocked — allow mic in browser';}
+ }else{mediaRec.stop();recording=false;btn.classList.remove('rec');btn.textContent='🎙️';st.textContent='Saved ✓ Play below';}
+}
+let clickInt=null;
+function metro(){const b=document.getElementById('bpm');let on=false;if(clickInt){clearInterval(clickInt);clickInt=null;event.target.textContent='▶ START CLICK — 90 BPM';return;}event.target.textContent='■ STOP CLICK';clickInt=setInterval(()=>{const a=new (window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();o.frequency.value=1000;o.connect(a.destination);o.start();setTimeout(()=>o.stop(),80);},60000/90);}
 </script>
 </body>
 </html>
