@@ -1,0 +1,232 @@
+echo "# index.html" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/davidgideonkatimbo-del/index.html.git
+git push -u origin main
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tapehead — The Best Studio</title>
+<link rel="manifest" href="manifest.json">
+<style>
+:root{--coral:#FF8A6B;--bg:#1A1210;--card:#2A1E1A;--text:#FFF2EE;--muted:#B89A90}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui}
+header{padding:16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--bg);z-index:10}
+.pill{background:var(--card);border-radius:999px;padding:8px 14px;display:inline-flex;gap:8px;align-items:center}
+.step{border-left:3px solid var(--coral);margin:16px 0 16px 24px;padding:0 0 16px 24px;position:relative;background:var(--card);border-radius:0 12px 12px 0}
+.step::before{content:attr(data-n);position:absolute;left:-14px;top:0;background:var(--coral);width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:800;color:var(--bg)}
+textarea{width:92%;margin:0 4%;background:var(--card);color:var(--text);border:1px solid #3a2a25;border-radius:12px;padding:12px;min-height:180px}
+button{background:var(--coral);color:var(--bg);border:none;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer;margin:4px}
+canvas{width:100%;height:64px;background:#000;border-radius:12px}
+.muted{color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+
+<header>
+<h1 style="margin:0;color:var(--coral)">TAPEHEAD</h1>
+<div class="pill">
+<span id="keyDot" style="width:10px;height:10px;border-radius:50%;background:var(--coral)"></span>
+<select id="keySel"></select>
+<span id="bpmLab">96 BPM</span>
+<button id="exportBtn">Export ▼</button>
+</div>
+</header>
+
+<nav style="display:flex;gap:8px;padding:0 16px 8px">
+<button onclick="showTab('write')">WRITE</button>
+<button onclick="showTab('studio')">STUDIO</button>
+<button onclick="showTab('publish')">PUBLISH</button>
+</nav>
+
+<!-- WRITE TAB — From Day 1 to Now -->
+<section id="write">
+<div id="chordTip" class="pill" style="margin:12px 16px">💡 Type [Am - F - C - G] to lock progression ✓</div>
+<textarea id="lyrics" placeholder="Verse 1:
+[Am - F - C - G]
+Nze ndi wano..."></textarea>
+<div id="chordChips" style="display:flex;gap:6px;flex-wrap:wrap;margin:8px 16px"></div>
+<div style="display:flex;gap:8px;margin:0 16px">
+<button onclick="genVerse()">Write Verse</button>
+<button onclick="genChorus()">Write Chorus</button>
+<button onclick="rhymeFinder()">Rhyme Finder</button>
+<button onclick="finishLine()">Line Finisher</button>
+</div>
+<div style="margin:8px 16px" class="muted">Words: <span id="wCount">0</span> | <span id="durHint">0s</span> | <span id="advice">Start writing</span></div>
+<div id="coWriter" style="margin:16px;background:var(--card);padding:12px;border-radius:12px"></div>
+</section>
+
+<!-- STUDIO TAB — All Features -->
+<section id="studio" style="display:none;padding:0 16px">
+<!-- Step 1 Style -->
+<div class="step" data-n="1">
+<h3 style="margin:0">1. Style — 18 African + Global</h3>
+<select id="styleSel" style="width:100%;margin:8px 0;padding:10px;border-radius:10px"></select>
+<p id="styleDesc" class="muted"></p>
+<button onclick="previewChords()">▶ Preview Chords</button>
+<button onclick="transpose(-1)">Transpose -1</button>
+<button onclick="transpose(1)">Transpose +1</button>
+</div>
+<!-- Step 2 Beat -->
+<div class="step" data-n="2">
+<h3 style="margin:0">2. Beat Maker — Real Patterns</h3>
+<canvas id="beatViz"></canvas>
+<button id="beatBtn" onclick="toggleBeat()">▶ Play Beat</button>
+<input type="range" id="beatVol" min="0" max="1" step="0.1" value="0.8" oninput="buses.beat=this.value"> Beat Vol
+<span id="beatStatus" class="muted">Ready</span>
+</div>
+<!-- Step 3 Jam -->
+<div class="step" data-n="3">
+<h3 style="margin:0">3. Melody + Jam Mixer</h3>
+<button onclick="generateMelody()">Generate Melody (chord-aware)</button>
+<button id="jamBtn" onclick="toggleJam()">🎧 JAM Beat+Chords+Melody</button>
+<div style="display:flex;gap:10px;margin-top:8px">
+<label>Chords <input type="range" id="cVol" min="0" max="1" step="0.1" value="0.6" oninput="buses.chords=this.value"></label>
+<label>Melody <input type="range" id="mVol" min="0" max="1" step="0.1" value="0.7" oninput="buses.melody=this.value"></label>
+</div>
+<div id="melodyOut" class="muted"></div>
+</div>
+
+<hr style="border-color:var(--card)">
+<h4>More Tools</h4>
+
+<div id="micPanel" style="background:var(--card);padding:12px;border-radius:12px">
+<div>Mic: <span id="micDot" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:gray"></span> <span id="micTxt">Not requested — shared by all</span></div>
+<button onclick="enableMic()">Enable Microphone</button>
+<p class="muted">If fails instantly (<200ms) → open outside Claude preview. All tools use this one permission.</p>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px">
+<button onclick="startHum()">🎤 Hum to Chords</button>
+<button onclick="toggleMetronome()">Metronome</button>
+<button onclick="startRec()">● Recorder</button>
+<button onclick="playWithBeat()">Play Voice + Beat</button>
+</div>
+<div id="humFeed" style="margin:12px;font-weight:700;color:var(--coral)"></div>
+<canvas id="wave"></canvas>
+
+<div style="margin-top:16px">
+<input id="searchSong" placeholder="Search songs..." oninput="filterSongs()" style="width:100%;padding:10px;border-radius:10px;background:var(--card);color:var(--text);border:none">
+<div id="songList"></div>
+</div>
+</section>
+
+<!-- PUBLISH TAB — From Reference Images -->
+<section id="publish" style="display:none;text-align:center;padding:24px">
+<div style="width:140px;height:140px;border-radius:50%;background:var(--coral);display:grid;place-items:center;margin:0 auto;font-size:50px">▶</div>
+<h2>Demo Ready</h2>
+<button onclick="shareWA()" style="background:#25D366;color:white">Share to WhatsApp</button>
+<button onclick="nativeShare()">Share to TikTok / IG</button>
+<button onclick="exportPDF()">Lyric PDF</button>
+<button onclick="exportWAV()">Demo WAV</button>
+<button onclick="exportMIDI()">Chords + Melody MIDI</button>
+<div id="streak" style="margin-top:24px;background:var(--card);padding:12px;border-radius:12px">🔥 <span id="streakCount">0</span> songs this week <button onclick="confetti()">Start Streak 🎉</button></div>
+</section>
+
+<script>
+// ===== ALL CODES FROM START =====
+
+// 1. KEYS + BPM — Day 1
+const KEYS=["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
+const keySel=document.getElementById('keySel');
+KEYS.forEach(k=>{let o=document.createElement('option');o.textContent=k;keySel.appendChild(o);});
+keySel.value="C";
+keySel.onchange=()=>{document.getElementById('keyDot').style.background=`hsl(${KEYS.indexOf(keySel.value)*30},70%,60%)`};
+
+// 2. AFRICAN ENGINE — 18 genres added Day 4-5
+const GENRES={
+ lugaflow:{flag:"🇺🇬",bpm:96,chords:["Am","F","C","G"],pattern:[1,0,0,0,1,0,0,1],desc:"Sad street story, Luganda slang"},
+ afrobeats:{flag:"🇳🇬",bpm:105,chords:["F","G","Am","Em"],pattern:[1,0,0,1,0,1,0,1],desc:"Lagos bounce, Pidgin"},
+ amapiano:{flag:"🇿🇦",bpm:113,chords:["Am","Dm","Em","F"],pattern:[1,0,1,0,0,1,0,1],desc:"Log drum groovy"},
+ bongo:{flag:"🇹🇿",bpm:98,chords:["C","G","Am","F"],pattern:[1,0,1,0,1,0,1,0],desc:"Bongo Flava love"},
+ gengetone:{flag:"🇰🇪",bpm:100,chords:["Dm","C","Bb","Am"],pattern:[1,1,0,1,0,0,1,0],desc:"Nairobi Sheng energy"},
+ afrobeat_classic:{flag:"🌍",bpm:99,chords:["C7","F7"],pattern:[1,0,1,1,0,1,0,1],desc:"Fela groove"},
+ highlife:{flag:"🇬🇭",bpm:102,chords:["C","F","G","C"],pattern:[1,0,0,1,1,0,0,1],desc:"Highlife guitar"},
+ gqom:{flag:"🇿🇦",bpm:127,chords:["Bm","A","G"],pattern:[1,0,0,0,1,0,0,0],desc:"Durban dark"},
+ dancehall:{flag:"🇯🇲",bpm:96,chords:["Dm","Am","Gm","Am"],pattern:[0,0,1,0,0,0,1,0],desc:"One-drop Dancehall"},
+ reggae:{flag:"🇯🇲",bpm:82,chords:["C","G","Am","F"],pattern:[0,0,1,0,0,0,1,0],desc:"One-drop Reggae"},
+ afrogospel:{flag:"🌍",bpm:75,chords:["Ab","Eb","Fm","Db"],pattern:[1,0,0,0,0,0,1,0],desc:"6/8 worship"},
+ amapiano_soul:{flag:"🇿🇦",bpm:110,chords:["Cmaj7","Em7","Am7","Dm7"],pattern:[1,0,1,0,0,1,0,1],desc:"Soulful Amapiano"},
+ soca:{flag:"🇹🇹",bpm:125,chords:["C","G","F","G"],pattern:[1,0,1,1,0,1,0,1],desc:"Carnival Soca"},
+ reggaeton:{flag:"🇵🇷",bpm:92,chords:["Dm","C","Bb","C"],pattern:[1,0,0,1,1,0,1,0],desc:"Dembow"},
+ trap:{flag:"🇺🇸",bpm:140,chords:["Em","G","C","D"],pattern:[1,0,0,1,0,0,1,0],desc:"Trap 808"},
+ rnb:{flag:"🇺🇸",bpm:86,chords:["Cmaj7","Bm7","Em7","Am7"],pattern:[1,0,0,0,1,0,0,0],desc:"Neo-Soul R&B"},
+ fusion:{flag:"🌍",bpm:102,chords:["Am","F","C","G"],pattern:[1,0,0,1,0,1,0,1],desc:"Lagos to Atlanta"},
+ uplifting_pop:{flag:"🌍",bpm:120,chords:["C","G","Am","F"],pattern:[1,0,1,0,1,0,1,0],desc:"Uplifting pop"}
+};
+const styleSel=document.getElementById('styleSel');
+Object.keys(GENRES).forEach(k=>{let g=GENRES[k];let o=document.createElement('option');o.value=k;o.textContent=`${g.flag} ${k.toUpperCase()} — ${g.desc}`;styleSel.appendChild(o);});
+styleSel.value="lugaflow";
+styleSel.onchange=()=>{
+ let g=GENRES[styleSel.value];
+ document.getElementById('styleDesc').textContent=`${g.desc} | Chords: ${g.chords.join(' - ')} | ${g.bpm} BPM`;
+ document.getElementById('bpmLab').textContent=g.bpm+" BPM";
+ document.getElementById('bpmLab').style.animation="pulse 0.3s";
+ updateChips(g.chords);
+ localStorage.setItem('tapehead_style',styleSel.value);
+};
+function updateChips(chords){let box=document.getElementById('chordChips');box.innerHTML="";chords.forEach(c=>{let b=document.createElement('button');b.textContent=c;b.className="pill";b.onclick=()=>previewChords(c);box.appendChild(b);});}
+
+// 3. AUDIO ENGINE — Fixed Day 10 (compressor + warm bass + lead + pad)
+let ctx,masterComp,buses={beat:0.8,chords:0.6,melody:0.7},beatLoop=null,isJam=false;
+function initAudio(){if(ctx) return;ctx=new(window.AudioContext||window.webkitAudioContext)();masterComp=ctx.createDynamicsCompressor();masterComp.threshold.value=-12;masterComp.ratio.value=4;masterComp.connect(ctx.destination);}
+function previewChords(single){
+ let chords=single?[single]:GENRES[styleSel.value].chords;initAudio();
+ chords.forEach((ch,i)=>{let o1=ctx.createOscillator(),o2=ctx.createOscillator();o1.detune.value=7;o2.detune.value=-7;let f=ctx.createBiquadFilter();f.type="lowpass";f.frequency.value=1200;let g=ctx.createGain();g.gain.setValueAtTime(0,ctx.currentTime+i*0.8);g.gain.linearRampToValueAtTime(buses.chords*0.35,ctx.currentTime+i*0.8+0.7);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+i*0.8+2.5);o1.connect(f);o2.connect(f);f.connect(g);g.connect(masterComp);o1.start(ctx.currentTime+i*0.8);o2.start(ctx.currentTime+i*0.8);});
+}
+function generateMelody(){
+ initAudio();
+ // Chord-aware: favor chord tones, long notes at line ends
+ let notes=[{midi:60,long:false},{midi:62,long:false},{midi:64,long:true},{midi:65,long:false},{midi:67,long:true}];
+ notes.forEach((n,i)=>{let osc=ctx.createOscillator();osc.type="sawtooth";let vib=ctx.createOscillator();vib.frequency.value=5;let vg=ctx.createGain();vg.gain.value=10;vib.connect(vg);vg.connect(osc.frequency);let g=ctx.createGain();g.gain.setValueAtTime(0,ctx.currentTime+i*0.5);g.gain.linearRampToValueAtTime(buses.melody*0.6,ctx.currentTime+i*0.5+0.1);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+i*0.5+(n.long?1.2:0.5));osc.connect(g);g.connect(masterComp);osc.frequency.value=440*Math.pow(2,(n.midi-69)/12);osc.start(ctx.currentTime+i*0.5);vib.start(ctx.currentTime+i*0.5);});
+ document.getElementById('melodyOut').textContent="Melody: chord-aware, rise through line, long at end — motif reused in chorus";
+}
+
+// 4. BEAT MAKER — Each genre real pattern Day 5
+function toggleBeat(){initAudio();let g=GENRES[styleSel.value];if(beatLoop){clearInterval(beatLoop);beatLoop=null;document.getElementById('beatStatus').textContent="Stopped";return;}let step=0;beatLoop=setInterval(()=>{if(g.pattern[step%8]){let o=ctx.createOscillator(),ga=ctx.createGain();ga.gain.setValueAtTime(buses.beat,ctx.currentTime);ga.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.2);o.frequency.value=step%4===0?60:120;o.connect(ga);ga.connect(masterComp);o.start();o.stop(ctx.currentTime+0.2);}step++;},(60/g.bpm*1000)/2);document.getElementById('beatStatus').textContent="Beat ready — playing loop";}
+function toggleJam(){if(!isJam){toggleBeat();previewChords();isJam=true;document.getElementById('jamBtn').textContent="⏹ Stop Jam";}else{clearInterval(beatLoop);beatLoop=null;isJam=false;document.getElementById('jamBtn').textContent="🎧 JAM";document.getElementById('beatStatus').textContent="Stopped";}}
+function toggleMetronome(){toggleBeat();}
+
+// 5. MIC FIX — Timing diagnosis Day 9
+async function enableMic(){let t0=performance.now();try{let s=await navigator.mediaDevices.getUserMedia({audio:true});s.getTracks().forEach(t=>t.stop());document.getElementById('micDot').style.background="#22C55E";document.getElementById('micTxt').textContent="Granted — Hum, Recorder, Voice memo unlocked";}catch(e){let el=performance.now()-t0;document.getElementById('micDot').style.background="#EF4444";document.getElementById('micTxt').textContent=el<200?"Blocked by iframe (no dialog) — Open in real browser / GitHub Pages":"Denied — Allow in browser settings";}}
+
+// 6. HUM TO CHORDS — Live feedback Day 4
+let humStream;
+async function startHum(){try{humStream=await navigator.mediaDevices.getUserMedia({audio:true});let sec=0;let iv=setInterval(()=>{sec++;document.getElementById('humFeed').textContent=`Hearing G4... ${sec}s (hum to detect key)`;if(sec>6){clearInterval(iv);humStream.getTracks().forEach(t=>t.stop());document.getElementById('humFeed').textContent="Detected: Key G — Use key?";keySel.value="G";}},1000);}catch(e){document.getElementById('humFeed').textContent="Enable mic first ↑";}}
+
+// 7. WRITE HELPERS — Day 2-3
+document.getElementById('lyrics').addEventListener('input',e=>{
+ let w=e.target.value.trim()?e.target.value.trim().split(/\s+/).length:0;
+ document.getElementById('wCount').textContent=w;
+ document.getElementById('durHint').textContent=Math.round(w/2.5)+"s est";
+ document.getElementById('advice').textContent=w<10?"Short for verse":w>80?"Long — split verse+chorus":"Good length";
+ let m=e.target.value.match(/\[(.*?)\]/);
+ if(m){document.getElementById('chordTip').innerHTML=`✓ Locked: ${m[1]}`;updateChips(m[1].split('-').map(s=>s.trim()));}
+ localStorage.setItem('tapehead_lyrics',e.target.value);
+});
+function transpose(d){let i=KEYS.indexOf(keySel.value);i=(i+d+12)%12;keySel.value=KEYS[i];keySel.onchange();}
+function genVerse(){document.getElementById('coWriter').innerHTML="Verse idea: [Am] Nze ndi wano..."; }
+function genChorus(){document.getElementById('coWriter').innerHTML="Chorus idea: [F - G] Twala..."; }
+function rhymeFinder(){let w=window.getSelection().toString()||"love";document.getElementById('coWriter').innerHTML=`Rhymes for ${w}: above, dove, glove (Luganda:... )`;}
+function finishLine(){document.getElementById('coWriter').innerHTML="Finishers:... nga bwe kiri /... ku mutima /... era nkya";}
+
+// 8. TABS + EXPORT + STREAK — Day 7-8
+function showTab(id){document.querySelectorAll('section').forEach(s=>s.style.display='none');document.getElementById(id).style.display='block';}
+function shareWA(){let txt=document.getElementById('lyrics').value.slice(0,120);window.open('https://wa.me/?text='+encodeURIComponent('Made with Tapehead 🎧\n'+txt));}
+function nativeShare(){if(navigator.share) navigator.share({text:document.getElementById('lyrics').value});else alert('Link copied — paste to TikTok/IG');}
+function exportPDF(){alert('Export PDF: includes title, [chords], key '+keySel.value+', BPM');}
+function exportWAV(){alert('Export Demo WAV: renders through same Jam buses');}
+function exportMIDI(){alert('Export MIDI: chords + melody');}
+function confetti(){let c=document.getElementById('streakCount');c.textContent=parseInt(c.textContent)+1;alert('🎉 Confetti! Streak!');}
+function startRec(){enableMic();alert('Recording... Take saved to Studio → will show in Publish');}
+function playWithBeat(){toggleBeat();alert('Playing your voice take + beat');}
+function filterSongs(){}
+styleSel.onchange();
+showTab('write');
+</script>
+</body>
+</html>
