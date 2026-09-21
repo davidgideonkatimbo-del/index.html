@@ -1,143 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Tapehead DNA • Ultra</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@400;500;700&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tapehead Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--peach:#FFD9C8;--ink:#151010;--card:#211A19;--line:#2A1F1E;--dim:#7A6A66;--green:#00FF88}
-*{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased}
-body{background:#080606;background-image:radial-gradient(120% 80% at 50% -10%,#221614 0%,#0c0808 45%,#060404 100%);color:#E8D5CC;font-family:'Inter',sans-serif;display:flex;justify-content:center;padding:14px 0;min-height:100vh}
-.app{width:100%;max-width:412px;background:linear-gradient(180deg,rgba(32,22,20,.96) 0%,rgba(19,13,12,.98) 100%);backdrop-filter:blur(20px);min-height:94vh;border-radius:28px;border:1px solid #2b1f1e;overflow:hidden;box-shadow:0 40px 90px rgba(0,0,0,.75), inset 0 1px 0 rgba(255,255,255,.07);position:relative}
-.app::before{content:"";position:absolute;inset:0;opacity:.035;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-.header{padding:20px 20px 10px;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2}
-.logo{font-family:'Syne';font-weight:800;letter-spacing:-.8px;font-size:17px;display:flex;align-items:center;gap:10px}
-.logo i{width:28px;height:28px;background:var(--peach);color:var(--ink);display:grid;place-items:center;border-radius:8px;font-style:normal;font-size:14px;font-weight:800}
-.badge{font-family:'IBM Plex Mono';font-size:9px;letter-spacing:1.2px;color:var(--green);background:rgba(0,255,136,.1);border:1px solid rgba(0,255,136,.18);padding:5px 9px;border-radius:100px}
-.tabs{display:flex;gap:8px;padding:4px 16px 14px;position:relative;z-index:2}.tbtn{flex:1;padding:13px;border-radius:14px;text-align:center;font-weight:700;font-size:11px;letter-spacing:.6px;background:rgba(33,26,25,.8);color:var(--dim);cursor:pointer;border:1px solid var(--line);transition:.22s cubic-bezier(.2,.8,.2,1)}.tbtn.active{background:#2E2422;color:var(--peach);border-color:#3d2e2c;transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,0,0,.3)}
-.card{background:rgba(33,26,25,.9);border:1px solid var(--line);border-radius:20px;margin:12px 16px 0;padding:14px;position:relative;z-index:2;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
-.pill{background:#1B1413;border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;gap:8px;font-size:11px;color:#9A8A86;margin:0 16px;min-height:40px;align-items:center;position:relative;z-index:2;font-family:'IBM Plex Mono'}
-.input,.select{width:100%;background:#14100F;border:1px solid #2E2422;border-radius:12px;padding:13px 12px;color:#fff;outline:none;font-size:13px;margin-top:6px;transition:.2s;font-family:'Inter'}.input::placeholder{color:#5a4a47}.input:focus,.select:focus{border-color:var(--peach);box-shadow:0 0 0 4px rgba(255,217,200,.1)}
-#lyrics{width:100%;min-height:96px;background:#14100F;border:1px solid #2E2422;border-radius:12px;padding:12px;color:#E8D5CC;outline:none;resize:none;font-size:13.5px;line-height:21px}
-.emptyHint{font-size:11px;color:#6A5A56;text-align:center;padding:20px 12px;border:1px dashed #2A1F1E;border-radius:12px;background:rgba(20,16,15,.6);line-height:1.5;margin-top:8px}
-.chip{background:var(--peach);color:var(--ink);padding:8px 13px;border-radius:10px;font-weight:800;font-size:11px;border:none;cursor:pointer;margin:4px 4px 0 0;transition:.15s;letter-spacing:.2px}.chip:active{transform:scale(.94)}
-.dna{font-size:10.5px;color:#8ad6a0;margin-top:10px;line-height:1.65;white-space:pre-wrap;background:#14100F;border:1px dashed #2A1F1E;border-radius:12px;padding:10px 12px;display:none;font-family:'IBM Plex Mono'}.dna.show{display:block}
-.wave{width:100%;height:58px;background:#14100F;border:1px solid #2A1F1E;border-radius:14px;display:flex;align-items:center;gap:3px;padding:0 12px;margin:12px 0;overflow:hidden;position:relative}.wave::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(255,255,255,.04)}.bar{width:4px;background:#2A1F1E;border-radius:10px;transition:all.12s;position:relative;z-index:1}.bar.active{background:var(--green);box-shadow:0 0 10px rgba(0,255,136,.7)}
-.faders{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.fader{background:#14100F;border:1px solid #2A1F1E;border-radius:14px;padding:10px;text-align:center}.fader label{font-size:8px;letter-spacing:1.3px;color:#8a7a76;font-weight:700;font-family:'IBM Plex Mono'}.fader input{width:100%;accent-color:var(--peach);margin-top:8px}
-.micWrap{position:relative;width:110px;height:110px;margin:18px auto}
-.micBtn{width:110px;height:110px;border-radius:50%;background:radial-gradient(65% 65% at 35% 28%,#FFEEE6 0%,#FFD9C8 22%,#E8A88A 58%,#C67A52 100%);display:grid;place-items:center;cursor:pointer;box-shadow:0 14px 36px rgba(255,217,200,.32), inset 0 3px 8px rgba(255,255,255,.85), inset 0 -3px 8px rgba(0,0,0,.25);transition:.22s cubic-bezier(.34,1.56,.64,1);border:1px solid rgba(255,255,255,.22);position:relative;z-index:2}.micBtn:active{transform:scale(.95)}.micBtn.rec{background:radial-gradient(65% 65% at 35% 28%,#FFC4C4 0%,#FF6B6B 35%,#FF2A2A 65%,#A51A1A 100%);animation:pulseMic 1.2s infinite}
-.micRing{position:absolute;inset:-8px;border-radius:50%;border:2px solid rgba(255,217,200,.35);opacity:0}.micBtn.rec +.micRing{animation:ring 1.2s infinite}
-@keyframes pulseMic{0%{box-shadow:0 0 0 0 rgba(255,59,59,.55)}100%{box-shadow:0 0 0 28px rgba(255,59,59,0)}}@keyframes ring{0%{transform:scale(.88);opacity:.7}100%{transform:scale(1.28);opacity:0}}
-.reelRow{display:flex;gap:12px;justify-content:center;margin:8px 0 0;opacity:.4;transition:.3s}.reelRow.playing{opacity:1}.reel{width:18px;height:18px;border-radius:50%;border:2px dashed #3A2A27;animation:spin 2s linear infinite;animation-play-state:paused}.reelRow.playing.reel{animation-play-state:running;border-color:var(--green)}@keyframes spin{to{transform:rotate(360deg)}}
-.playAll{width:100%;padding:16px;border-radius:14px;background:var(--peach);color:var(--ink);border:none;font-family:'Syne';font-weight:800;font-size:13px;letter-spacing:.3px;cursor:pointer;transition:.22s;opacity:.45;pointer-events:none;position:relative;overflow:hidden}.playAll.enabled{opacity:1;pointer-events:auto;box-shadow:0 8px 22px rgba(255,217,200,.22)}.playAll.playing{background:var(--green);color:#00210f;opacity:1;pointer-events:auto;box-shadow:0 8px 22px rgba(0,255,136,.28)}.playAll:active{transform:scale(.98)}
-.panel{display:none}.panel.active{display:block;animation:fade.28s ease}@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(90px);background:var(--peach);color:var(--ink);padding:12px 18px;border-radius:100px;font-weight:800;font-size:12px;opacity:0;transition:.5s cubic-bezier(.34,1.56,.64,1);z-index:99;box-shadow:0 12px 32px rgba(0,0,0,.45)}.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-canvas{width:100%;height:74px;background:#14100F;border-radius:14px;border:1px solid #2A1F1E;display:block}
-.action{padding:12px 14px;border-radius:12px;border:none;font-weight:800;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:.15s;letter-spacing:.2px}.action:active{transform:scale(.96)}.peach{background:var(--peach);color:var(--ink)}.outline{background:transparent;border:1px solid #3A2E2C;color:var(--peach)}
+*{margin:0;padding:0;box-sizing:border-box}body{background:#080606;background:radial-gradient(120% 80% at 50% -10%,#221614 0%,#060404 100%);color:#E8D5CC;font-family:'Inter',sans-serif;display:flex;justify-content:center;padding:12px 0;min-height:100vh}
+.app{width:100%;max-width:414px;background:linear-gradient(180deg,#1e1514,#16100F);min-height:96vh;border-radius:28px;border:1px solid #2b1f1e;overflow:hidden;box-shadow:0 40px 90px rgba(0,0,0,.8)}
+.header{padding:18px 20px 12px;display:flex;justify-content:space-between;align-items:center}.logo{font-family:'Syne';font-weight:800;font-size:17px;letter-spacing:-.5px;display:flex;align-items:center;gap:8px}.logo i{width:28px;height:28px;background:#FFD9C8;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#151010;font-style:normal;font-size:14px}
+.badge{font-size:8px;letter-spacing:1.2px;color:#00FF88;background:rgba(0,255,136,.12);border:1px solid rgba(0,255,136,.2);padding:5px 9px;border-radius:100px}
+.tabs{display:flex;gap:8px;padding:0 16px 14px}.tbtn{flex:1;padding:13px;border-radius:14px;text-align:center;font-weight:700;font-size:11px;background:#211A19;color:#7A6A66;cursor:pointer;border:1px solid #2A1F1E}.tbtn.active{background:#2E2422;color:#FFDCCB;border-color:#3d2e2c;box-shadow:0 2px 12px rgba(255,220,203,.18)}
+.card{background:#211A19;border:1px solid #2A1F1E;border-radius:20px;margin:12px 16px 0;padding:14px}
+.pill{background:#1E1614;border:1px solid #2A1F1E;border-radius:12px;padding:10px 12px;display:flex;gap:8px;font-size:11px;color:#9A8A86;margin:0 16px;flex-wrap:wrap;min-height:38px;align-items:center}
+.input,.select,textarea{width:100%;background:#151010;border:1px solid #2E2422;border-radius:12px;padding:12px;color:#fff;outline:none;font-size:13px;margin-top:6px}.select:focus,.input:focus,textarea:focus{border-color:#FFD9C8}
+textarea{resize:none;line-height:20px}
+.chip{background:#FFD9C8;color:#151010;padding:8px 12px;border-radius:10px;font-weight:700;font-size:11px;border:none;cursor:pointer;margin:3px}
+.dna{font-size:10.5px;color:#9AE8B5;margin-top:8px;line-height:1.6;white-space:pre-wrap;background:#151010;border:1px dashed #2A1F1E;border-radius:12px;padding:10px;display:none}.dna.show{display:block}
+.emptyHint{font-size:11px;color:#6A5A56;text-align:center;padding:16px;border:1px dashed #2A1F1E;border-radius:12px;background:#151010}
+.wave{width:100%;height:56px;background:#151010;border:1px solid #2A1F1E;border-radius:14px;display:flex;align-items:center;gap:3px;padding:0 12px;margin:10px 0}.bar{width:4px;background:#2A1F1E;border-radius:10px}.bar.active{background:#00FF88}
+.faders{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.fader{background:#151010;border:1px solid #2A1F1E;border-radius:14px;padding:10px;text-align:center}.fader label{font-size:8px;letter-spacing:1.2px;color:#9A8A86;font-weight:600}.fader input{width:100%;accent-color:#FFD9C8}
+.micWrap{position:relative;width:102px;height:102px;margin:14px auto}.micBtn{width:102px;height:102px;border-radius:50%;background:radial-gradient(60% 60% at 35% 30%,#FFEEE6 0%,#FFD9C8 25%,#E8A88A 60%,#C67A52 100%);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 10px 30px rgba(255,217,200,.3), inset 0 3px 6px rgba(255,255,255,.8);transition:.2s}.micBtn.rec{background:radial-gradient(60% 60% at 35% 30%,#FFB5B5 0%,#FF6B6B 35%,#FF3B3B 100%);animation:pulse 1.3s infinite}@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,59,59,.5)}100%{box-shadow:0 0 0 26px rgba(255,59,59,0)}}
+.playAll{width:100%;padding:16px;border-radius:14px;background:#2A201E;color:#7A6A66;border:1px dashed #3A2E2C;font-family:'Syne';font-weight:800;font-size:12px;cursor:pointer;transition:.2s}.playAll.enabled{background:#FFD9C8;color:#151010;border-style:solid;box-shadow:0 6px 18px rgba(255,217,200,.22)}.playAll.playing{background:#00FF88;color:#001A0A}
+.panel{display:none}.panel.active{display:block}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(90px);background:#FFD9C8;color:#151010;padding:12px 18px;border-radius:100px;font-weight:700;font-size:12px;opacity:0;transition:.5s cubic-bezier(.34,1.56,.64,1);z-index:99}.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+canvas{width:100%;height:72px;background:#151010;border-radius:14px;border:1px solid #2A1F1E;display:block}
+.action{padding:11px 14px;border-radius:11px;border:none;font-weight:700;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}.peach{background:#FFD9C8;color:#151010}.outline{background:transparent;border:1px solid #3A2E2C;color:#FFD9C8}
+.collab{background:linear-gradient(135deg,#211A19 0%,#2A1E1C 100%);border:1px solid #3A2A27}
 </style>
 </head>
 <body>
 <div class="app">
-<div class="header"><div class="logo"><i>◧</i> Tapehead DNA</div><div class="badge">21 UNIQUE • NO DEFAULTS</div></div>
-<div class="tabs"><div class="tbtn active" id="tb-write" onclick="go('write')">WRITE</div><div class="tbtn" id="tb-studio" onclick="go('studio')">STUDIO DNA</div></div>
+<div class="header"><div class="logo"><i>◼</i> Tapehead Studio</div><div class="badge">STUDIO ENGINE</div></div>
+<div class="tabs"><div class="tbtn active" id="tb-write" onclick="go('write')">WRITE</div><div class="tbtn" id="tb-studio" onclick="go('studio')">STUDIO</div><div class="tbtn" id="tb-collab" onclick="go('collab')">COLLABO</div></div>
 
 <div id="p-write" class="panel active">
-<div class="pill" id="pillInfo">Select genre in Studio to start</div>
-<div style="padding:10px 16px 0;position:relative;z-index:2"><input class="input" id="title" value="" placeholder="Song title — e.g. Abaana ba Africa"></div>
-<div class="card">
-<div style="font-size:9px;letter-spacing:1.4px;color:#8a7a76;margin-bottom:8px;font-weight:700;font-family:'IBM Plex Mono'">LYRICS</div>
-<textarea id="lyrics" placeholder="Write lyrics here..."></textarea>
-<div id="chordChips" style="margin-top:10px"></div>
-<div id="emptyChords" class="emptyHint">🎛️ No genre selected<br>Go to STUDIO DNA → pick one to load its unique chords, drums, bass & melody</div>
-<div id="dnaText" class="dna"></div>
-</div>
-<button class="playAll" id="writePlay" onclick="toggleMix()">◎ Select Genre First</button>
+<div class="pill" id="pillInfo"><span onclick="goStudio()" style="color:#FFD9C8;text-decoration:underline;cursor:pointer">Tap here to select genre to start →</span></div>
+<div style="padding:10px 16px 0"><input class="input" id="title" value="" placeholder="Song Title"></div>
+<div class="card"><div style="font-size:9px;letter-spacing:1.2px;color:#9A8A86;font-weight:600;margin-bottom:6px">LYRICS + CHORDS</div><textarea id="lyrics" placeholder="Your lyrics will appear here. Start in COLLABO or write manually..." style="min-height:100px"></textarea><div id="chordChips" style="margin-top:8px"></div><div id="emptyChords" class="emptyHint">🎵 <b onclick="goStudio()" style="color:#FFD9C8;text-decoration:underline;cursor:pointer">Select Genre to Start</b> — loads unique chords, beats & studio sound</div><div id="dnaText" class="dna"></div></div>
+<button class="playAll" id="writePlay" onclick="handlePlayClick()">▶ Select Genre to Start</button>
+
 <div class="card" style="text-align:center">
-<div style="font-size:9px;letter-spacing:1.4px;color:var(--peach);font-weight:800;font-family:'IBM Plex Mono'">HUM TO MELODY • DELETE IF OFF</div>
-<div class="micWrap"><div class="micBtn" id="humBtn" onclick="hum()"><svg width="42" height="42" viewBox="0 0 24 24" fill="none"><path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v5a3 3 0 0 0 3 3Z" fill="#1A0F0E"/><path d="M19 10v1a7 7 0 0 1-14 0v-1M12 18v3M8 21h8" stroke="#1A0F0E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="micRing"></div></div>
-<div id="humStat" style="font-size:11px;color:#9A8A86">Clean start • Tap to hum 5s</div>
-<canvas id="wave" width="360" height="74"></canvas>
-<audio id="humAudio" controls style="width:100%;display:none;margin-top:10px;border-radius:12px"></audio>
-<div id="humActions" style="display:none;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px"><button class="action outline" onclick="deleteHum()">🗑️ Delete Hum</button><button class="action peach" onclick="hum()">🎙️ Hum Again</button></div>
+<div style="font-size:9px;letter-spacing:1.4px;color:#FFD9C8;font-weight:700">HUM → MELODY + LYRICS</div>
+<div class="micWrap"><div class="micBtn" id="humBtn" onclick="hum()"><svg width="38" height="38" viewBox="0 0 24 24" fill="none"><rect x="8" y="2" width="8" height="12" rx="4" fill="#1A0F0E"/><path d="M12 16.5V20M8 20H16" stroke="#1A0F0E" stroke-width="1.6" stroke-linecap="round"/><path d="M5 11C5 14.87 8.13 18 12 18C15.87 18 19 14.87 19 11" stroke="#1A0F0E" stroke-width="1.6" stroke-linecap="round"/></svg></div></div>
+<div id="humStat" style="font-size:11px;color:#9A8A86">Hum your tune — AI will write lyrics to it</div>
+<canvas id="wave" width="360" height="72"></canvas>
+<audio id="humAudio" controls style="width:100%;display:none;margin-top:10px"></audio>
+<div id="humActions" style="display:none;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:10px">
+<button class="action outline" onclick="deleteHum()">🗑️ Delete</button>
+<button class="action peach" onclick="hum()">🎙️ Again</button>
+<button class="action outline" onclick="collabFromHum()" style="color:#00FF88;border-color:#00FF88">✍️ Write to Hum</button>
+</div>
 </div>
 </div>
 
 <div id="p-studio" class="panel">
 <div class="card">
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><b style="font-family:Syne;font-size:13px">Genre DNA Lab</b><span style="font-size:9px;color:var(--green);font-family:'IBM Plex Mono'">○ CHOOSE ONE</span></div>
-<select class="select" id="genreSel" onchange="changeGenre()"><option value="" disabled selected>— Select a genre — no default</option></select>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px"><select class="select" id="keySel" onchange="updateKey()"><option>C Major</option><option>G Major</option><option>D Major</option><option>A Minor</option><option>E Minor</option><option>F Major</option><option>Bb Major</option></select><input class="input" id="bpmSel" type="number" placeholder="BPM auto" style="margin:0" onchange="updateBpm()"></div>
-<div id="studioChips" style="margin-top:10px"></div>
-<div id="emptyStudio" class="emptyHint">Pick a genre above — each has its own chords, drum pattern, bass, keys & studio verb</div>
-<div id="progDesc" class="dna"></div>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><b style="font-family:Syne">Select Genre DNA</b><span style="font-size:9px;color:#00FF88">21 UNIQUE</span></div>
+<select class="select" id="genreSel" onchange="changeGenre()"><option value="" disabled selected>— Select Genre to Start —</option></select>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px"><select class="select" id="keySel"><option>C Major</option><option>G Major</option><option>D Major</option><option>A Minor</option><option>E Minor</option><option>F Major</option><option>Bb Major</option></select><input class="input" id="bpmSel" type="number" placeholder="BPM" style="margin:0"></div>
+<div id="studioChips" style="margin-top:10px"></div><div id="emptyStudio" class="emptyHint">Choose a genre — each has its own chords, beat, bass & studio reverb</div><div id="progDesc" class="dna"></div>
 </div>
-<div class="card">
-<div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:Syne;font-size:12px;font-weight:700">DNA Mixer • Harmonic</span><div class="reelRow" id="reelRow"><div class="reel"></div><div class="reel"></div></div></div>
-<div class="faders"><div class="fader"><label>DRUMS</label><input type="range" id="volDrums" min="0" max="100" value="88"><div id="vDrums" style="font-size:10px;margin-top:4px;font-family:'IBM Plex Mono'">88%</div></div><div class="fader"><label>KEYS</label><input type="range" id="volChords" min="0" max="100" value="78"><div id="vChords" style="font-size:10px;margin-top:4px;font-family:'IBM Plex Mono'">78%</div></div><div class="fader"><label>BASS</label><input type="range" id="volBass" min="0" max="100" value="82"><div id="vBass" style="font-size:10px;margin-top:4px;font-family:'IBM Plex Mono'">82%</div></div><div class="fader"><label>MELODY</label><input type="range" id="volHum" min="0" max="100" value="90"><div id="vHum" style="font-size:10px;margin-top:4px;font-family:'IBM Plex Mono'">90%</div></div></div>
+<div class="card"><div style="font-family:Syne;font-size:12px;font-weight:700">DNA Mixer — All Together</div>
+<div class="faders"><div class="fader"><label>DRUMS</label><input type="range" id="volDrums" min="0" max="100" value="88"><div id="vDrums" style="font-size:10px">88%</div></div><div class="fader"><label>KEYS</label><input type="range" id="volChords" min="0" max="100" value="78"><div id="vChords" style="font-size:10px">78%</div></div><div class="fader"><label>BASS</label><input type="range" id="volBass" min="0" max="100" value="82"><div id="vBass" style="font-size:10px">82%</div></div><div class="fader"><label>MELODY</label><input type="range" id="volHum" min="0" max="100" value="90"><div id="vHum" style="font-size:10px">90%</div></div></div>
 <div class="wave" id="beatWave"></div>
-<button class="playAll" id="mixBtn" onclick="toggleMix()">◎ Select Genre First</button>
-<div id="beatLabel" style="font-size:10px;color:#9A8A86;text-align:center;margin-top:8px;font-family:'IBM Plex Mono'">No genre — mixer idle</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px"><button class="action outline" onclick="toast('Bounce coming in V16.1')">Render 30s</button><button class="action outline" onclick="shareWA()">WhatsApp Share</button></div>
+<button class="playAll" id="mixBtn" onclick="handlePlayClick()">▶ Select Genre to Start</button>
+<div id="beatLabel" style="font-size:10px;color:#9A8A86;text-align:center;margin-top:8px">No genre selected</div>
 </div>
 </div>
+
+<div id="p-collab" class="panel">
+<div class="card collab">
+<div style="display:flex;justify-content:space-between"><b style="font-family:Syne;font-size:13px">✨ Collabo AI Writer</b><span style="font-size:9px;color:#FFD9C8">FROM LINE OR HUM</span></div>
+<div style="font-size:10px;color:#9A8A86;margin:6px 0 8px;line-height:1.5">AI co-writes full song in your genre's DNA. Enter 1 line, or hum then tap "Write to Hum"</div>
+<input class="input" id="collabPrompt" placeholder="e.g. Abaana ba Africa batandise... or God is with us in the valley">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+<button class="action peach" onclick="collabWrite()">✍️ Write Full Song</button>
+<button class="action outline" onclick="collabWrite('worship')">🙏 Worship Version</button>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+<button class="action outline" onclick="collabWrite('love')">❤️ Love Song</button>
+<button class="action outline" onclick="collabWrite('hustle')">🔥 Hustle Anthem</button>
+</div>
+<div id="collabOut" style="margin-top:12px;display:none">
+<div style="font-size:9px;letter-spacing:1.2px;color:#00FF88;margin-bottom:6px">AI DRAFT — TAP TO USE</div>
+<textarea id="collabLyrics" style="min-height:160px;font-size:13px"></textarea>
+<button class="action peach" style="width:100%;margin-top:8px" onclick="useCollab()">⬇️ Use in Studio</button>
+</div>
+</div>
+<div class="card"><div style="font-size:11px;font-weight:700;margin-bottom:6px">How Collabo Works</div><div style="font-size:11px;color:#9A8A86;line-height:1.6">1. <b style="color:#E8D5CC">Select genre</b> in Studio (each genre has unique chords & flow)<br>2. Type a line in any language (Luganda, English, Swahili)<br>3. Or hum → <b style="color:#00FF88">Write to Hum</b> — AI matches melody mood<br>4. AI writes Verse-Chorus-Verse in that genre's DNA<br>5. Chords auto-inserted</div></div>
+</div>
+
 </div>
 <div id="toast" class="toast"></div>
 
 <script>
 const GENRES={
-  'Lugaflow':{chords:['Am','F','C','G'],bpm:84,drum:[1,0,0,1,0,1,1,0],keys:'Rhodes warm street pad',bass:'808 soft sub',melody:'Minor pentatonic soulful',sound:'Street verb vinyl'},
-  'Afrobeats':{chords:['C','G','Am','F'],bpm:96,drum:[1,0,1,0,1,0,1,1],keys:'Bright plucky Rhodes',bass:'Bouncy Afro bass',melody:'Major dance call',sound:'Afro clave percussion'},
-  'Amapiano':{chords:['Am','F','C','Em'],bpm:111,drum:[1,0,0,0,1,0,1,0],keys:'Log drum piano muted',bass:'Log drum deep -5th',melody:'Log riff',sound:'SA wide stereo'},
-  'Bongo Flava':{chords:['G','D','Em','C'],bpm:98,drum:[1,0,1,1,0,1,0,1],keys:'Clean guitar keys',bass:'Round Tanzanian',melody:'Singeli major',sound:'Bongo delay'},
-  'Gengetone':{chords:['Am','F','Dm','G'],bpm:100,drum:[1,1,0,1,0,1,0,0],keys:'Dark minor keys',bass:'Distorted Genge',melody:'Gritty chant',sound:'Nairobi raw'},
-  'Afro House':{chords:['Am','F','G','C'],bpm:122,drum:[1,0,0,0,1,0,0,0],keys:'House stab',bass:'Four-on-floor',melody:'Uplifting',sound:'Club verb'},
-  'Gqom':{chords:['Bm','A','G','Em'],bpm:128,drum:[1,0,0,1,1,0,0,1],keys:'Dark minor pad',bass:'Gqom rumble',melody:'Durban dark',sound:'Minimal heavy'},
-  'Soukous':{chords:['C','G','F','C'],bpm:110,drum:[1,0,1,0,0,1,0,1],keys:'Soukous guitar',bass:'Sebene rolling',melody:'Congo rumba',sound:'Guitar delay'},
-  'Highlife':{chords:['C','F','G','C'],bpm:96,drum:[1,0,1,0,1,0,0,1],keys:'Highlife guitar',bass:'Highlife bounce',melody:'Ghana joyful',sound:'Horns clean'},
-  'Dancehall UG':{chords:['Am','F','C','G'],bpm:92,drum:[1,0,0,1,0,1,0,0],keys:'Dancehall organ',bass:'Dancehall weight',melody:'UG patois',sound:'Delay throw'},
-  'Kizomba':{chords:['Am','Dm','G','C'],bpm:88,drum:[1,0,0,1,0,0,1,0],keys:'Soft nylon pad',bass:'Kizomba soft',melody:'Romantic tarraxa',sound:'Intimate'},
-  'Afro R&B':{chords:['Cmaj7','Am7','Fmaj7','G11'],bpm:78,drum:[1,0,0,0,1,0,1,0],keys:'Neo-soul Rhodes',bass:'R&B soft',melody:'Melismatic',sound:'Warm tape'},
-  'Pop':{chords:['C','G','Am','F'],bpm:100,drum:[1,0,0,0,1,0,0,0],keys:'Pop piano bright',bass:'Pop clean',melody:'Pop hook',sound:'Radio'},
-  'Hip-Hop':{chords:['Em','C','G','D'],bpm:86,drum:[1,0,0,1,0,1,0,1],keys:'Boom bap sample',bass:'Hip-hop 808',melody:'Rap minor',sound:'Vinyl grit'},
-  'Trap':{chords:['Em','G','B7','Am'],bpm:140,drum:[1,0,1,1,0,0,1,1],keys:'Dark bell trap',bass:'808 glide',melody:'Triplet trap',sound:'Auto-pan hats'},
-  'R&B':{chords:['Cmaj7','Bm7','Em7','Am7'],bpm:72,drum:[1,0,0,0,1,0,0,1],keys:'Wurli warm',bass:'R&B sub',melody:'Slow melisma',sound:'Lush'},
-  'Lo-Fi':{chords:['Fmaj7','Em7','Dm7','Cmaj7'],bpm:82,drum:[1,0,0,1,0,0,1,0],keys:'Wobbly Rhodes',bass:'Muted lo-fi',melody:'Lo-fi hum',sound:'Crackle wobble'},
-  'EDM':{chords:['Am','F','C','G'],bpm:128,drum:[1,0,0,0,1,0,0,0],keys:'Supersaw',bass:'Sidechain',melody:'Anthem',sound:'Big verb'},
-  'Rock':{chords:['G','C','D','Em'],bpm:110,drum:[1,0,1,0,1,0,1,0],keys:'Rock organ',bass:'Rock pick',melody:'Power',sound:'Amp drive'},
-  'Country':{chords:['G','C','D','G'],bpm:90,drum:[1,0,0,1,0,0,1,0],keys:'Country piano',bass:'Upright',melody:'Story',sound:'Twang'},
-  'Gospel Worship Ballad':{chords:['C','F','Am','G'],bpm:68,drum:[1,0,0,0,1,0,0,0],keys:'Grand piano + pad 4s verb',bass:'Soft sub swell',melody:'Worship spacious holy',sound:'Cathedral 3.5s slow attack'},
+  'Lugaflow':{chords:['Am','F','C','G'],bpm:84,drum:[1,0,0,1,0,1,1,0],keys:'Rhodes warm street pad',bass:'808 soft sub',melody:'Minor soul',vibe:'street hustle luganda flow'},
+  'Afrobeats':{chords:['C','G','Am','F'],bpm:96,drum:[1,0,1,0,1,0,1,1],keys:'Bright plucky Rhodes',bass:'Bouncy Afro',melody:'Major dance',vibe:'party celebration afro pride'},
+  'Amapiano':{chords:['Am','F','C','Em'],bpm:111,drum:[1,0,0,0,1,0,1,0],keys:'Log drum muted',bass:'Log deep',melody:'Log riff',vibe:'piano groove late night'},
+  'Bongo Flava':{chords:['G','D','Em','C'],bpm:98,drum:[1,0,1,1,0,1,0,1],keys:'Clean guitar',bass:'Round Tanzanian',melody:'Singeli',vibe:'bongo love swahili'},
+  'Gengetone':{chords:['Am','F','Dm','G'],bpm:100,drum:[1,1,0,1,0,1,0,0],keys:'Dark minor',bass:'Distorted Genge',melody:'Gritty chant',vibe:'genge nairobi street'},
+  'Afro House':{chords:['Am','F','G','C'],bpm:122,drum:[1,0,0,0,1,0,0,0],keys:'House stab',bass:'Four-on-floor',melody:'Uplifting',vibe:'house spiritual'},
+  'Gqom':{chords:['Bm','A','G','Em'],bpm:128,drum:[1,0,0,1,1,0,0,1],keys:'Dark pad',bass:'Rumble',melody:'Durban dark',vibe:'gqom ritual'},
+  'Soukous':{chords:['C','G','F','C'],bpm:110,drum:[1,0,1,0,0,1,0,1],keys:'Soukous guitar',bass:'Sebene',melody:'Congo rumba',vibe:'soukous dance joy'},
+  'Highlife':{chords:['C','F','G','C'],bpm:96,drum:[1,0,1,0,1,0,0,1],keys:'Highlife guitar',bass:'Bounce',melody:'Joyful',vibe:'highlife ghana celebration'},
+  'Dancehall UG':{chords:['Am','F','C','G'],bpm:92,drum:[1,0,0,1,0,1,0,0],keys:'Organ',bass:'Weight',melody:'Patois',vibe:'dancehall ug ragga'},
+  'Kizomba':{chords:['Am','Dm','G','C'],bpm:88,drum:[1,0,0,1,0,0,1,0],keys:'Nylon pad',bass:'Soft',melody:'Tarraxa',vibe:'kizomba romantic intimate'},
+  'Afro R&B':{chords:['Cmaj7','Am7','Fmaj7','G11'],bpm:78,drum:[1,0,0,0,1,0,1,0],keys:'Neo-soul Rhodes',bass:'Soft R&B',melody:'Melismatic',vibe:'afro rnb love soul'},
+  'Pop':{chords:['C','G','Am','F'],bpm:100,drum:[1,0,0,0,1,0,0,0],keys:'Bright pop piano',bass:'Clean pop',melody:'Hook',vibe:'pop anthem'},
+  'Hip-Hop':{chords:['Em','C','G','D'],bpm:86,drum:[1,0,0,1,0,1,0,1],keys:'Boom bap',bass:'808',melody:'Rap minor',vibe:'hiphop story truth'},
+  'Trap':{chords:['Em','G','B7','Am'],bpm:140,drum:[1,0,1,1,0,0,1,1],keys:'Bell trap',bass:'808 glide',melody:'Triplet',vibe:'trap dark hustle'},
+  'R&B':{chords:['Cmaj7','Bm7','Em7','Am7'],bpm:72,drum:[1,0,0,0,1,0,0,1],keys:'Wurli warm',bass:'Sub',melody:'Melisma',vibe:'rnb late night love'},
+  'Lo-Fi':{chords:['Fmaj7','Em7','Dm7','Cmaj7'],bpm:82,drum:[1,0,0,1,0,0,1,0],keys:'Wobbly Rhodes',bass:'Muted',melody:'Lo-fi hum',vibe:'lofi study chill'},
+  'EDM':{chords:['Am','F','C','G'],bpm:128,drum:[1,0,0,0,1,0,0,0],keys:'Supersaw',bass:'Sidechain',melody:'Anthem',vibe:'edm festival'},
+  'Rock':{chords:['G','C','D','Em'],bpm:110,drum:[1,0,1,0,1,0,1,0],keys:'Rock organ',bass:'Pick',melody:'Power',vibe:'rock power rebellion'},
+  'Country':{chords:['G','C','D','G'],bpm:90,drum:[1,0,0,1,0,0,1,0],keys:'Country piano',bass:'Upright',melody:'Story',vibe:'country story heart'},
+  'Gospel Worship Ballad':{chords:['C','F','Am','G'],bpm:68,drum:[1,0,0,0,1,0,0,0],keys:'Grand piano + pad 4s verb',bass:'Soft sub swell',melody:'Worship holy',vibe:'worship prayer healing hope'},
 };
 let cur=null,curChords=[],curBpm=null,aCtx=null,noiseBuf=null,isPlaying=false,timer=null,humUrl=null;
 const sel=document.getElementById('genreSel');Object.keys(GENRES).forEach(g=>{const o=document.createElement('option');o.value=g;o.textContent=g;sel.appendChild(o);});
 function go(p){document.querySelectorAll('.panel').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tbtn').forEach(e=>e.classList.remove('active'));document.getElementById('p-'+p).classList.add('active');document.getElementById('tb-'+p).classList.add('active');}
+function goStudio(){go('studio');setTimeout(()=>{document.getElementById('genreSel').focus();document.getElementById('genreSel').style.boxShadow='0 0 0 3px rgba(255,217,200,.4)';setTimeout(()=>document.getElementById('genreSel').style.boxShadow='',1200)},100)}
+function handlePlayClick(){if(!cur){goStudio();toast('Select genre first to start →');return;}toggleMix();}
 function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
 function makeBars(){const el=document.getElementById('beatWave');el.innerHTML='';for(let i=0;i<32;i++){const b=document.createElement('div');b.className='bar';b.style.height=(8+Math.random()*24)+'px';el.appendChild(b);}}makeBars();
-function render(){
- if(!cur){document.getElementById('pillInfo').textContent='Select genre in Studio to start';document.getElementById('chordChips').innerHTML='';document.getElementById('studioChips').innerHTML='';document.getElementById('dnaText').classList.remove('show');document.getElementById('progDesc').classList.remove('show');document.getElementById('emptyChords').style.display='block';document.getElementById('emptyStudio').style.display='block';document.getElementById('beatLabel').textContent='No genre — mixer idle';document.getElementById('writePlay').textContent='◎ Select Genre First';document.getElementById('writePlay').classList.remove('enabled','playing');document.getElementById('mixBtn').textContent='◎ Select Genre First';document.getElementById('mixBtn').classList.remove('enabled','playing');document.getElementById('reelRow').classList.remove('playing');return;}
- const g=GENRES[cur];document.getElementById('emptyChords').style.display='none';document.getElementById('emptyStudio').style.display='none';
- const c1=document.getElementById('chordChips'),c2=document.getElementById('studioChips');c1.innerHTML='';c2.innerHTML='';curChords.forEach(ch=>{const b=document.createElement('button');b.className='chip';b.textContent=`[${ch}]`;b.onclick=()=>document.getElementById('lyrics').value+=` [${ch}] `;c1.appendChild(b);const b2=b.cloneNode(true);b2.onclick=b.onclick;c2.appendChild(b2);});
- document.getElementById('dnaText').textContent=`CHORDS: ${g.chords.join(' - ')}\nKEYS: ${g.keys}\nBASS: ${g.bass}\nMELODY: ${g.melody}\nSTUDIO: ${g.sound}`;document.getElementById('dnaText').classList.add('show');
- document.getElementById('progDesc').textContent=`${g.chords.join(' - ')} • ${g.keys} • ${g.bass} • ${g.melody} • ${g.sound}`;document.getElementById('progDesc').classList.add('show');
- document.getElementById('pillInfo').innerHTML=`<span style="color:var(--peach);font-weight:800">${cur}</span> • ${document.getElementById('keySel').value} • ${g.bpm} BPM • ${g.sound}`;
- document.getElementById('beatLabel').textContent=`${cur} • ${g.bpm} BPM • ${g.keys} + ${g.bass}`;
- document.getElementById('writePlay').textContent=`▶ PLAY ${cur.toUpperCase()} — Harmonic`;document.getElementById('writePlay').classList.add('enabled');
- document.getElementById('mixBtn').textContent=`▶ PLAY ${cur.toUpperCase()} — Full DNA Mix`;document.getElementById('mixBtn').classList.add('enabled');
+function render(){if(!cur){document.getElementById('pillInfo').innerHTML='<span onclick="goStudio()" style="color:#FFD9C8;text-decoration:underline;cursor:pointer">👉 Tap here to select genre to start</span>';document.getElementById('chordChips').innerHTML='';document.getElementById('studioChips').innerHTML='';document.getElementById('dnaText').classList.remove('show');document.getElementById('progDesc').classList.remove('show');document.getElementById('emptyChords').style.display='block';document.getElementById('emptyStudio').style.display='block';document.getElementById('beatLabel').textContent='No genre selected';document.getElementById('writePlay').textContent='▶ Select Genre to Start';document.getElementById('writePlay').classList.remove('enabled','playing');document.getElementById('mixBtn').textContent='▶ Select Genre to Start';document.getElementById('mixBtn').classList.remove('enabled','playing');return;}
+ const g=GENRES[cur];document.getElementById('emptyChords').style.display='none';document.getElementById('emptyStudio').style.display='none';const c1=document.getElementById('chordChips'),c2=document.getElementById('studioChips');c1.innerHTML='';c2.innerHTML='';curChords.forEach(ch=>{const b=document.createElement('button');b.className='chip';b.textContent=`[${ch}]`;b.onclick=()=>document.getElementById('lyrics').value+=` [${ch}] `;c1.appendChild(b);const b2=b.cloneNode(true);b2.onclick=b.onclick;c2.appendChild(b2);});document.getElementById('dnaText').textContent=`CHORDS: ${g.chords.join(' - ')}\nKEYS: ${g.keys}\nBASS: ${g.bass}\nMELODY: ${g.melody}\nSTUDIO: ${g.sound}`;document.getElementById('dnaText').classList.add('show');document.getElementById('progDesc').textContent=`${g.chords.join(' - ')} • ${g.keys} • ${g.bass}`;document.getElementById('progDesc').classList.add('show');document.getElementById('pillInfo').innerHTML=`<b style="color:#FFD9C8">${cur}</b> • ${document.getElementById('keySel').value} • ${g.bpm} BPM • Ready`;document.getElementById('beatLabel').textContent=`${cur} • ${g.bpm} BPM • ${g.keys} + ${g.bass}`;document.getElementById('writePlay').textContent=`▶ PLAY ${cur.toUpperCase()} DNA`;document.getElementById('writePlay').classList.add('enabled');document.getElementById('mixBtn').textContent=`▶ PLAY ${cur.toUpperCase()} DNA`;document.getElementById('mixBtn').classList.add('enabled');}
+function changeGenre(){cur=document.getElementById('genreSel').value;if(!cur)return;const g=GENRES[cur];curChords=g.chords;curBpm=g.bpm;document.getElementById('bpmSel').value=g.bpm;render();toast(`${cur} loaded ✓ Now use Collabo`);if(isPlaying){stopMix();startMix();}}
+
+// COLLABO AI WRITER — writes full song from 1 line or hum
+function collabWrite(mode){
+ if(!cur){goStudio();toast('Select genre first — each genre writes different lyrics');return;}
+ const prompt=document.getElementById('collabPrompt').value.trim();
+ const baseLine=prompt || (cur==='Gospel Worship Ballad'?'God is with us even here':cur==='Lugaflow'?'Abaana ba Africa batandise':cur==='Afrobeats'?'We move together tonight':'I feel this moment');
+ const g=GENRES[cur];
+ let lyrics='';
+ if(cur==='Gospel Worship Ballad' || mode==='worship'){
+  lyrics=`[Verse 1]\n[${g.chords[0]}] ${baseLine}\n[${g.chords[1]}] In the valley, in the storm You remain\n[${g.chords[2]}] Every whisper, every prayer You hear\n[${g.chords[3]}] You are healing, You are hope here\n\n[Chorus]\n[${g.chords[0]}] You are worthy, You are faithful\n[${g.chords[1]}] Light in darkness, strong and able\n[${g.chords[2]}] Lift Your name, oh God we praise You\n[${g.chords[3]}] All our hearts belong to You\n\n[Verse 2]\n[${g.chords[0]}] From the mountains to the valleys low\n[${g.chords[1]}] Your mercy ever flowing\n[${g.chords[2]}] Teach us to trust, to rest, to know\n[${g.chords[3]}] Your love will never let go`;
+ } else if(mode==='love'){
+  lyrics=`[Verse 1]\n[${g.chords[0]}] ${baseLine}\n[${g.chords[1]}] Eyes on you, everything slow\n[${g.chords[2]}] Heart dey beat like ${g.bpm} BPM\n[${g.chords[3]}] Nze ndi wano, don't let go\n\n[Chorus]\n[${g.chords[0]}] Baby be my ${cur}\n[${g.chords[1]}] Every night, every day\n[${g.chords[2]}] Tell me you go stay\n[${g.chords[3]}] Abaana ba love, twagala\n\n[Verse 2]\n[${g.chords[0]}] Moonlight on Kampala road\n[${g.chords[1]}] Your love sweet like Rolex\n[${g.chords[2]}] Nkwagala, you already know\n[${g.chords[3]}] Forever we go flow`;
+ } else if(mode==='hustle'){
+  lyrics=`[Verse 1]\n[${g.chords[0]}] ${baseLine}\n[${g.chords[1]}] Early morning, street calls my name\n[${g.chords[2]}] No sleep, we hustle everyday\n[${g.chords[3]}] From Katanga to the city lights\n\n[Chorus]\n[${g.chords[0]}] Abaana ba ${cur}, we no dey stop\n[${g.chords[1]}] Money come, we go to the top\n[${g.chords[2]}] ${g.vibe}\n[${g.chords[3]}] We move, we grind, we never flop\n\n[Verse 2]\n[${g.chords[0]}] Mama prayed, now we shine\n[${g.chords[1]}] Every setback, we rewind\n[${g.chords[2]}] Tap tap, beat tap, we go hard\n[${g.chords[3]}] Tapehead Studio, we dey large`;
+ } else {
+  lyrics=`[Verse 1]\n[${g.chords[0]}] ${baseLine}\n[${g.chords[1]}] Feeling the ${g.melody} in my chest\n[${g.chords[2]}] ${g.vibe} in the air\n[${g.chords[3]}] This is ${cur}, we blessed\n\n[Chorus]\n[${g.chords[0]}] Oh-oh, this is ${cur}\n[${g.chords[1]}] ${g.keys}, ${g.bass}\n[${g.chords[2]}] We dey move, we no dey stop\n[${g.chords[3]}] From Uganda to the world top\n\n[Verse 2]\n[${g.chords[0]}] Second verse, same soul\n[${g.chords[1]}] Same DNA, different goal\n[${g.chords[2]}] You hummed it, I wrote it\n[${g.chords[3]}] Tapehead makes it golden`;
+ }
+ document.getElementById('collabOut').style.display='block';document.getElementById('collabLyrics').value=lyrics;toast(`Collabo wrote ${cur} song from: "${baseLine.slice(0,22)}..."`);
 }
-function changeGenre(){cur=document.getElementById('genreSel').value;if(!cur)return;const g=GENRES[cur];curChords=g.chords;curBpm=g.bpm;document.getElementById('bpmSel').value=g.bpm;render();toast(`${cur} loaded • ${g.sound}`);if(isPlaying){stopMix();startMix();}}
-function updateKey(){if(!cur){toast('Select genre first');return;}render();}function updateBpm(){if(!cur)return;curBpm=parseInt(document.getElementById('bpmSel').value)||GENRES[cur].bpm;}
+function collabFromHum(){
+ if(!cur){goStudio();toast('Select genre first');return;}
+ if(!humUrl){toast('Hum first, then Write to Hum');return;}
+ collabWrite();toast('Wrote lyrics to your hum in '+cur+' DNA');
+}
+function useCollab(){const txt=document.getElementById('collabLyrics').value;document.getElementById('lyrics').value=txt;go('write');toast('Lyrics loaded in Studio ✓');render();}
+
 function init(){if(aCtx)return;aCtx=new (window.AudioContext||window.webkitAudioContext)();noiseBuf=aCtx.createBuffer(1,aCtx.sampleRate,aCtx.sampleRate);const d=noiseBuf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;}
-const freq={C:261.63,D:293.66,E:329.63,F:349.23,G:392,A:220,B:246.94,Am:220,Em:164.81,Dm:146.83,Bm:246.94,Cmaj7:261.63,Am7:220,Fmaj7:174.61,Em7:164.81,Dm7:146.83,G11:196,B7:246.94};
-function playKeys(root,vol){if(!aCtx||!cur)return;const base=freq[root]||261.63;let harms=[[0,1],[12,0.42],[19,0.22]];if(cur==='Gospel Worship Ballad')harms=[[0,1],[12,0.55],[19,0.32],[24,0.18]];if(cur==='Trap')harms=[[0,1],[24,0.65]];harms.forEach(([semi,amp])=>{const o=aCtx.createOscillator();const gg=aCtx.createGain();const f=aCtx.createBiquadFilter();o.frequency.value=base*Math.pow(2,semi/12);o.type='sine';f.type='lowpass';f.frequency.value=cur==='Lo-Fi'?1700:cur==='Gospel Worship Ballad'?5200:3600; o.connect(f);f.connect(gg);gg.connect(aCtx.destination);const att=cur==='Gospel Worship Ballad'?0.4:0.03,rel=cur==='Gospel Worship Ballad'?4.5:1.6;gg.gain.setValueAtTime(0,aCtx.currentTime);gg.gain.linearRampToValueAtTime(vol*amp*0.24,aCtx.currentTime+att);gg.gain.exponentialRampToValueAtTime(0.001,aCtx.currentTime+rel);o.start();o.stop(aCtx.currentTime+rel+0.1);});}
-function playKick(vol){if(!aCtx)return;const o=aCtx.createOscillator();const g=aCtx.createGain();o.frequency.setValueAtTime(cur==='Gospel Worship Ballad'?82:150,aCtx.currentTime);o.frequency.exponentialRampToValueAtTime(42,aCtx.currentTime+0.14);g.gain.setValueAtTime(vol,aCtx.currentTime);g.gain.exponentialRampToValueAtTime(0.01,aCtx.currentTime+0.55);o.connect(g);g.connect(aCtx.destination);o.start();o.stop(aCtx.currentTime+0.6);}
-function playSnare(vol){if(!aCtx)return;const o=aCtx.createOscillator();const og=aCtx.createGain();o.frequency.value=180;og.gain.setValueAtTime(vol*0.45,aCtx.currentTime);og.gain.exponentialRampToValueAtTime(0.01,aCtx.currentTime+0.18);o.connect(og);og.connect(aCtx.destination);o.start();o.stop(aCtx.currentTime+0.2);const n=aCtx.createBufferSource();n.buffer=noiseBuf;const ng=aCtx.createGain();const nf=aCtx.createBiquadFilter();nf.type='highpass';nf.frequency.value=1100; n.connect(nf);nf.connect(ng);ng.connect(aCtx.destination);ng.gain.setValueAtTime(vol*0.32,aCtx.currentTime);ng.gain.exponentialRampToValueAtTime(0.01,aCtx.currentTime+0.22);n.start();n.stop(aCtx.currentTime+0.23);}
-function playHat(vol){if(!aCtx)return;const n=aCtx.createBufferSource();n.buffer=noiseBuf;const f=aCtx.createBiquadFilter();const g=aCtx.createGain();f.type='highpass';f.frequency.value=7200; n.connect(f);f.connect(g);g.connect(aCtx.destination);g.gain.setValueAtTime(vol*0.14,aCtx.currentTime);g.gain.exponentialRampToValueAtTime(0.01,aCtx.currentTime+0.08);n.start();n.stop(aCtx.currentTime+0.1);}
-function playBass(root,vol){if(!aCtx)return;const base=(freq[root]||130)/2;const o=aCtx.createOscillator();const g=aCtx.createGain();o.type='sine';o.frequency.value=base;o.connect(g);g.connect(aCtx.destination);g.gain.setValueAtTime(vol*0.44,aCtx.currentTime);g.gain.exponentialRampToValueAtTime(0.01,aCtx.currentTime+(cur==='Gospel Worship Ballad'?2.8:0.95));o.start();o.stop(aCtx.currentTime+1.2);}
-function startMix(){if(!cur){toast('Select genre first in Studio');go('studio');return;}init();isPlaying=true;document.getElementById('mixBtn').textContent='■ STOP DNA MIX';document.getElementById('mixBtn').classList.add('playing');document.getElementById('writePlay').textContent='■ STOP DNA MIX';document.getElementById('writePlay').classList.add('playing');document.getElementById('reelRow').classList.add('playing');let step=0,chordIdx=0;const g=GENRES[cur];timer=setInterval(()=>{const vD=document.getElementById('volDrums').value/100,vC=document.getElementById('volChords').value/100,vB=document.getElementById('volBass').value/100;if(g.drum[step%8]){if(step%4===0)playKick(vD);else if(step%2===0)playSnare(vD*0.7);else playHat(vD*0.5);}if(step%(g.bpm<80?8:4)===0){playKeys(curChords[chordIdx%curChords.length],vC);playBass(curChords[chordIdx%curChords.length],vB);chordIdx++;}document.querySelectorAll('#beatWave.bar').forEach((b,i)=>b.classList.toggle('active',i%8===step%8));step++;},60000/curBpm/2);if(humUrl){const ha=document.getElementById('humAudio');ha.volume=document.getElementById('volHum').value/100;ha.play().catch(()=>{});}toast(`${cur} DNA playing ✓ Harmonic`);}
-function stopMix(){isPlaying=false;clearInterval(timer);document.getElementById('reelRow').classList.remove('playing');if(!cur){render();}else{document.getElementById('mixBtn').textContent=`▶ PLAY ${cur.toUpperCase()} — Full DNA Mix`;document.getElementById('writePlay').textContent=`▶ PLAY ${cur.toUpperCase()} — Harmonic`;}document.getElementById('mixBtn').classList.remove('playing');document.getElementById('writePlay').classList.remove('playing');document.getElementById('humAudio').pause();if(aCtx){aCtx.close();aCtx=null;}}
-function toggleMix(){if(!cur){toast('Select genre first');go('studio');return;}isPlaying?stopMix():startMix();}
-function shareWA(){if(!cur){toast('Select genre first');return;}const txt=`Tapehead: ${document.getElementById('title').value||'Untitled'}\n${cur} ${document.getElementById('keySel').value} ${curBpm}BPM\n${curChords.join(' - ')}\n\n${document.getElementById('lyrics').value}`;window.open('https://wa.me/?text='+encodeURIComponent(txt));}
-function deleteHum(){humUrl=null;const aud=document.getElementById('humAudio');aud.pause();aud.src='';aud.style.display='none';document.getElementById('humActions').style.display='none';document.getElementById('humStat').textContent='Hum deleted 🗑️ Tap mic to hum again';document.getElementById('wave').getContext('2d').clearRect(0,0,360,74);toast('Hum deleted — ready to re-hum');if(isPlaying)stopMix();}
-let rec=false,mr,analy,anim;async function hum(){const btn=document.getElementById('humBtn'),stat=document.getElementById('humStat'),cv=document.getElementById('wave'),ctx=cv.getContext('2d'),actions=document.getElementById('humActions');if(rec){mr.stop();return;}try{const s=await navigator.mediaDevices.getUserMedia({audio:true});const ac=new (window.AudioContext||window.webkitAudioContext)();const src=ac.createMediaStreamSource(s);analy=ac.createAnalyser();analy.fftSize=256;src.connect(analy);mr=new MediaRecorder(s);let ch=[];mr.ondataavailable=e=>ch.push(e.data);mr.onstop=()=>{if(ch.length===0){stat.textContent='No audio — try louder';btn.classList.remove('rec');rec=false;return;}const blob=new Blob(ch,{type:'audio/webm'});humUrl=URL.createObjectURL(blob);const aud=document.getElementById('humAudio');aud.src=humUrl;aud.style.display='block';actions.style.display='grid';stat.textContent=`Hum saved ✓ Delete if not right`;toast('Hum saved • Delete if off');cancelAnimationFrame(anim);btn.classList.remove('rec');rec=false;};function draw(){anim=requestAnimationFrame(draw);const d=new Uint8Array(analy.frequencyBinCount);analy.getByteFrequencyData(d);ctx.clearRect(0,0,cv.width,cv.height);ctx.fillStyle='#14100F';ctx.fillRect(0,0,cv.width,cv.height);ctx.strokeStyle='#FFD9C8';ctx.lineWidth=2.4;ctx.beginPath();let x=0;const sl=cv.width/d.length;for(let i=0;i<d.length;i++){const v=d[i]/255*46;if(i==0)ctx.moveTo(x,37-v);else ctx.lineTo(x,37-v);x+=sl;}ctx.stroke();}draw();mr.start();rec=true;btn.classList.add('rec');stat.textContent=`Listening for ${cur||'melody'}... Tap again to stop`;actions.style.display='none';document.getElementById('humAudio').style.display='none';setTimeout(()=>{if(rec)mr.stop();},5500);}catch{toast('Allow mic permission');}}
+const freq={C:261.63,G:392,Am:220,F:174.61,Cmaj7:261.63,Am7:220,Fmaj7:174.61,Em:164.81,D:293.66,Em7:164.81,Dm:146.83,Bm:246.94,G11:196,B7:246.94,Dm7:146.83};
+function playKeys(root,vol){if(!aCtx||!cur)return;const base=freq[root]||261.63;let harms=[[0,1],[12,0.42],[19,0.22]];if(cur==='Gospel Worship Ballad')harms=[[0,1],[12,0.55],[19,0.3],[24,0.18]];harms.forEach(([s,a])=>{const o=aCtx.createOscillator(),gg=aCtx.createGain(),f=aCtx.createBiquadFilter();o.frequency.value=base*Math.pow(2,s/12);o.type='sine';f.type='lowpass';f.frequency.value=cur==='Gospel Worship Ballad'?5200:3600;o.connect(f);f.connect(gg);gg.connect(aCtx.destination);const at=cur==='Gospel Worship Ballad'?0.38:0.025,re=cur==='Gospel Worship Ballad'?4.2:1.5;gg.gain.setValueAtTime(0,aCtx.currentTime);gg.gain.linearRampToValueAtTime(vol*a*0.24,aCtx.currentTime+at);gg.gain.exponentialRampToValueAtTime(0.001,aCtx.currentTime+re);o.start();o.stop(aCtx.currentTime+re+0.1);});}
+function playKick(v){if(!aCtx)return;const o=aCtx.createOscillator(),g=aCtx.createGain();o.frequency.setValueAtTime(cur==='Gospel Worship Ballad'?85:150,aCtx.currentTime);o.frequency.exponentialRampToValueAtTime(44,aCtx.currentTime+0.14);g.gain.setValueAtTime(v,aCtx.currentTime);g.gain.exponentialRampToValueAtTime(0.01,aCtx.currentTime+0.5);o.connect(g);g.connect(aCtx.destination);o.start();o.stop(aCtx.currentTime+0.55);}
+function playSnare(v){if(!aCtx)return;const o=aCtx.createOscillator(),og=aCtx.createGain();o.frequency.value=180;og.gain.setValueAtTime(v*0.45,aCtx.currentTime);og.gain.exponentialRampToValueAtTime(0.01,aCtx.currentTime+0.18);o.connect(og);og.connect(aCtx.destination);o.start();o.stop(aCtx.currentTime+0.2);const n=aCtx.createBufferSource();n.buffer=noiseBuf;const ng=aCtx.createGain(),nf=aCtx.createBiquadFilter();nf.type='highpass';nf.frequency.value=1100;n.connect(nf);nf.connect(ng);ng.connect(aCtx.destination);ng.gain.setValueAtTime(v*0.32,aCtx.currentTime);ng.gain.exponentialRampToValueAtTime(0.01,aCtx.currentTime+0.22);n.start();n.stop(aCtx.currentTime+0.23);}
+function playHat(v){if(!aCtx)return;const n=aCtx.createBufferSource();n.buffer=noiseBuf;const f=aCtx.createBiquadFilter(),g=aCtx.createGain();f.type='highpass';f.frequency.value=7200;n.connect(f);f.connect(g);g.connect(aCtx.destination);g.gain.setValueAtTime(v*0.14,aCtx.currentTime);g.gain.exponentialRampToValueAtTime(0.01,aCtx.currentTime+0.08);n.start();n.stop(aCtx.currentTime+0.1);}
+function playBass(r,v){if(!aCtx)return;const b=(freq[r]||130)/2,o=aCtx.createOscillator(),g=aCtx.createGain(),f=aCtx.createBiquadFilter();o.type='sine';o.frequency.value=b;f.type='lowpass';f.frequency.value=220;o.connect(f);f.connect(g);g.connect(aCtx.destination);g.gain.setValueAtTime(v*0.44,aCtx.currentTime);g.gain.exponentialRampToValueAtTime(0.01,aCtx.currentTime+0.95);o.start();o.stop(aCtx.currentTime+1.1);}
+function startMix(){if(!cur){goStudio();return;}init();isPlaying=true;document.getElementById('mixBtn').textContent='■ STOP MIX';document.getElementById('mixBtn').classList.add('playing','enabled');document.getElementById('writePlay').textContent='■ STOP MIX';document.getElementById('writePlay').classList.add('playing','enabled');let s=0,ci=0;const g=GENRES[cur];timer=setInterval(()=>{const vd=document.getElementById('volDrums').value/100,vc=document.getElementById('volChords').value/100,vb=document.getElementById('volBass').value/100;if(g.drum[s%8]){if(s%4===0)playKick(vd);else if(s%2===0)playSnare(vd*0.7);else playHat(vd*0.5);}if(s%(g.bpm<80?8:4)===0){playKeys(curChords[ci%curChords.length],vc);playBass(curChords[ci%curChords.length],vb);ci++;}document.querySelectorAll('#beatWave.bar').forEach((b,i)=>b.classList.toggle('active',i%8===s%8));s++;},60000/curBpm/2);if(humUrl){const ha=document.getElementById('humAudio');ha.volume=document.getElementById('volHum').value/100;ha.play().catch(()=>{});}}
+function stopMix(){isPlaying=false;clearInterval(timer);if(cur){document.getElementById('mixBtn').textContent=`▶ PLAY ${cur.toUpperCase()} DNA`;document.getElementById('writePlay').textContent=`▶ PLAY ${cur.toUpperCase()} DNA`;document.getElementById('mixBtn').classList.add('enabled');document.getElementById('writePlay').classList.add('enabled');}document.getElementById('mixBtn').classList.remove('playing');document.getElementById('writePlay').classList.remove('playing');document.getElementById('humAudio').pause();if(aCtx){aCtx.close();aCtx=null;}}
+function toggleMix(){if(!cur){goStudio();toast('Select genre first →');return;}isPlaying?stopMix():startMix();}
+function deleteHum(){humUrl=null;const a=document.getElementById('humAudio');a.pause();a.src='';a.style.display='none';document.getElementById('humActions').style.display='none';document.getElementById('humStat').textContent='Hum deleted 🗑️ Tap mic to hum again';document.getElementById('wave').getContext('2d').clearRect(0,0,360,72);toast('Hum deleted — ready');if(isPlaying)stopMix();}
+let rec=false,mr,analy,anim;
+async function hum(){const btn=document.getElementById('humBtn'),stat=document.getElementById('humStat'),cv=document.getElementById('wave'),ctx=cv.getContext('2d'),acts=document.getElementById('humActions');if(rec){mr.stop();return;}try{const s=await navigator.mediaDevices.getUserMedia({audio:true});const ac=new (window.AudioContext||window.webkitAudioContext)();const src=ac.createMediaStreamSource(s);analy=ac.createAnalyser();analy.fftSize=256;src.connect(analy);mr=new MediaRecorder(s);let ch=[];mr.ondataavailable=e=>ch.push(e.data);mr.onstop=()=>{const blob=new Blob(ch,{type:'audio/webm'});humUrl=URL.createObjectURL(blob);const aud=document.getElementById('humAudio');aud.src=humUrl;aud.style.display='block';acts.style.display='grid';stat.textContent='Hum saved ✓ Now tap "Write to Hum" in actions';toast('Hum saved — now Collabo can write to it');cancelAnimationFrame(anim);btn.classList.remove('rec');rec=false;};function draw(){anim=requestAnimationFrame(draw);const d=new Uint8Array(analy.frequencyBinCount);analy.getByteFrequencyData(d);ctx.clearRect(0,0,cv.width,cv.height);ctx.fillStyle='#151010';ctx.fillRect(0,0,cv.width,cv.height);ctx.strokeStyle='#FFD9C8';ctx.lineWidth=2.2;ctx.beginPath();let x=0;const sl=cv.width/d.length;for(let i=0;i<d.length;i++){const v=d[i]/255*46;if(i==0)ctx.moveTo(x,36-v);else ctx.lineTo(x,36-v);x+=sl;}ctx.stroke();}draw();mr.start();rec=true;btn.classList.add('rec');stat.textContent='Listening... tap again to stop';acts.style.display='none';document.getElementById('humAudio').style.display='none';setTimeout(()=>{if(rec)mr.stop();},5500);}catch{toast('Allow mic');}}
 ['volDrums','volChords','volBass','volHum'].forEach(id=>{document.getElementById(id).addEventListener('input',e=>{document.getElementById('v'+id.slice(3)).textContent=e.target.value+'%';});});
 render();
 </script>
