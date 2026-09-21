@@ -1,0 +1,9 @@
+{
+  "name": "Tapehead Studio - Afro-Fusion Songwriter",
+  "short_name": "Tapehead",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#1A1210",
+  "theme_color": "#FF8A6B",
+  "icons": [{"src": "https://cdn-icons-png.flaticon.com/512/138/138817.png","sizes":"512x512","type":"image/png"}]
+}
