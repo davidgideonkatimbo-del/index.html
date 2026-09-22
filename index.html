@@ -2,101 +2,105 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Tapehead Studio — Afrobeats Workspace & AI Engines</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,900&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<title>Tapehead — Afrobeats Recommended Order + Buses</title>
+<link href="https://googleapis.com" rel="stylesheet">
 <style>
 :root{--bg:#17130F;--bg2:#1E1A16;--card:#2A221B;--card2:#231E19;--line:#3A332C;--line2:#4A443C;--peach:#FFD9C2;--peach2:#E8B3A0;--text:#F2E6D8;--muted:#B9A99C;--amber:#E8B34A;--rust:#C4623B;--bus:#E8B34A}
 *{margin:0;padding:0;box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;display:flex;justify-content:center;padding:20px 0}
-.app{width:100%;max-width:426px;min-height:100vh;background:var(--bg);border-left:1px solid var(--line);border-right:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 30px 60px rgba(0,0,0,0.6)}
+.app{width:100%;max-width:426px;min-height:100vh;background:var(--bg);border-left:1px solid var(--line);border-right:1px solid var(--line);position:relative}
 .h{height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:var(--bg2);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
-.tabsWrap{padding:10px 14px;background:var(--bg2);border-bottom:1px solid var(--line)}.tabs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;background:#12100E;border:1px solid var(--line);border-radius:12px;padding:4px}.tb{height:34px;border-radius:8px;display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);cursor:pointer;transition:all 0.2s ease}.tb.on{background:var(--peach);color:#000;font-weight:700}
+.tabsWrap{padding:10px 14px;background:var(--bg2);border-bottom:1px solid var(--line)}.tabs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;background:#12100E;border:1px solid var(--line);border-radius:12px;padding:4px}.tb{height:34px;border-radius:8px;display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);cursor:pointer}.tb.on{background:var(--peach);color:#000;font-weight:700}
 .pn{display:none}.pn.on{display:block}.card{margin:12px 14px 0;background:linear-gradient(180deg,var(--card),var(--card2));border:1px solid var(--line);border-radius:16px;padding:12px}
-.kbOuter{background:#12100E;border:1px solid #2F2A24;border-radius:14px;padding:10px;margin-top:10px}.kb{position:relative;display:flex;gap:2px;height:82px}.wk{flex:1;background:#26211C;border:1px solid #3D362E;border-radius:0 0 11px 11px;display:flex;align-items:end;justify-content:center;padding-bottom:8px;font-size:10px;color:#D6C9BA;cursor:pointer;z-index:1}.wk.on{background:var(--peach2);color:#000;font-weight:700}.bk{position:absolute;top:0;width:22px;height:50px;background:linear-gradient(180deg,#0B0A09,#1A1816);border-radius:0 0 7px 7px;z-index:3;cursor:pointer;display:flex;align-items:end;justify-content:center;padding-bottom:4px;font-size:8px;color:#8a7f76}.bk.on{background:linear-gradient(180deg,#5A2A1E,#C4623B);color:#fff}
-.chordGrid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:7px;margin-top:10px}.chordGrid2{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-top:7px}.cBtn{background:#1E1A16;border:1px solid var(--line);border-radius:11px;padding:10px 4px;text-align:center;cursor:pointer}.cBtn.on{background:var(--peach)}.cBtn.rom{font-family:'JetBrains Mono',monospace;font-size:9px;color:#8A7F76}.cBtn.nam{font-family:'Fraunces',serif;font-size:16px;font-weight:900}.cBtn.on.rom,.cBtn.on.nam{color:#000}
+.kbOuter{background:#12100E;border:1px solid #2F2A24;border-radius:14px;padding:10px;margin-top:10px}.kb{position:relative;display:flex;gap:2px;height:82px;overflow-x:auto;scrollbar-width:none}.kb::-webkit-scrollbar{display:none}
+.wk{flex:1;min-width:28px;background:#26211C;border:1px solid #3D362E;border-radius:0 0 11px 11px;display:flex;align-items:end;justify-content:center;padding-bottom:8px;font-size:10px;color:#D6C9BA;cursor:pointer;z-index:1;user-select:none}.wk.on{background:var(--peach2);color:#000;font-weight:700}.bk{position:absolute;top:0;width:18px;height:50px;background:linear-gradient(180deg,#0B0A09,#1A1816);border-radius:0 0 7px 7px;z-index:3;cursor:pointer;display:flex;align-items:end;justify-content:center;padding-bottom:4px;font-size:8px;color:#8a7f76;user-select:none}.bk.on{background:linear-gradient(180deg,#5A2A1E,#C4623B);color:#fff}
+.chordGrid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:7px;margin-top:10px}.chordGrid2{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-top:7px}.cBtn{background:#1E1A16;border:1px solid var(--line);border-radius:11px;padding:10px 4px;text-align:center;cursor:pointer}.cBtn.on{background:var(--peach)}.cBtn.rom{font-family:'JetBrains Mono',monospace;font-size:9px;color:#8A7F76}.cBtn.nam{font-family:'Fraunces',serif;font-size:15px;font-weight:900}.cBtn.on.rom,.cBtn.on.nam{color:#000}
 .theory{margin-top:10px;background:#0E0C0A;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:11px;color:var(--muted);line-height:1.5}
-.writerBox{display:flex;flex-direction:column;gap:8px;margin-top:12px;background:#12100E;border:1px solid var(--line);border-radius:12px;padding:12px}
+.writerBox{display:flex;flex-direction:column;gap:8px;margin-top:12px;background:#12100E;border:1px solid var(--line);border-radius:12px;padding:10px}
 .writerBox input, .writerBox textarea{width:100%;background:#0A0908;border:1px solid var(--line2);border-radius:9px;padding:9px 11px;color:var(--text);font-size:13px;outline:none;font-family:inherit}
-.writerBox textarea{height:65px;resize:none}
-.writerBtn{padding:10px 12px;border-radius:9px;background:var(--peach);border:none;color:#000;font-weight:700;font-size:12px;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px}
+.writerBox textarea{height:60px;resize:none}
+.writerBtn{padding:9px 12px;border-radius:9px;background:var(--peach);border:none;color:#000;font-weight:700;font-size:11px;cursor:pointer;text-transform:uppercase}
 .mixer{background:#0E0C0A;border:1px solid var(--line);border-radius:14px;margin-top:14px;overflow:hidden;margin-bottom:20px}
 .mixHead{padding:12px 14px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(180deg,#1E1A16,#17130F);border-bottom:1px solid var(--line)}
-.trackRow{display:grid;grid-template-columns:95px 1fr;border-top:1px solid #1E1A16;position:relative}
-.trackMeta{background:#15120F;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:6px;border-right:1px solid var(--line)}
-.tName{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--muted);text-align:center;line-height:1.2;min-height:36px;width:100%}.tName b{color:var(--text);font-size:9px;display:block}.tName i{font-style:normal;color:var(--amber);font-size:7px;display:block;margin-top:2px}
-.busLabel{font-family:'JetBrains Mono',monospace;font-size:6.5px;color:var(--bg);background:var(--bus);padding:2px 5px;border-radius:100px;margin-top:4px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
-.msRow{display:flex;gap:4px;width:100%;justify-content:center}.ms{width:24px;height:18px;font-size:8px;font-weight:bold;border-radius:5px;border:1px solid var(--line2);background:#0E0C0A;color:var(--muted);cursor:pointer}.ms.mOn{background:var(--rust);color:#fff}.ms.sOn{background:var(--peach);color:#000}
-.volControls{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 15px;background:#0A0908;gap:4px}
-.volLabels{display:flex;width:100%;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:7px;color:#555}
-.vol{width:100%;height:4px;accent-color:var(--peach);cursor:pointer}
-.masterBar{display:grid;grid-template-columns:95px 1fr;height:55px;background:linear-gradient(180deg,#1E1A16,#12100E);border-top:2px solid var(--amber)}
-.masterMeta{background:#12100E;display:flex;align-items:center;justify-content:center;border-right:1px solid var(--line);font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--amber);font-weight:bold}
-.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(100px);background:var(--peach);color:#000;padding:10px 16px;border-radius:100px;font-size:11px;opacity:0;transition:.35s;z-index:99;font-weight:bold;box-shadow:0 10px 20px rgba(0,0,0,0.4)}.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.trackRow{display:grid;grid-template-columns:90px 1fr;border-top:1px solid #1E1A16;position:relative}
+.trackMeta{background:#15120F;padding:7px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;border-right:1px solid var(--line)}
+.tName{font-family:'JetBrains Mono',monospace;font-size:6.5px;color:var(--muted);text-align:center;line-height:1.15}.tName b{color:var(--text);font-size:7.5px;display:block}.tName i{font-style:normal;color:var(--amber);font-size:5.8px;display:block;margin-top:2px;line-height:1.15}
+.busLabel{font-family:'JetBrains Mono',monospace;font-size:6px;color:var(--bg);background:var(--bus);padding:2px 5px;border-radius:100px;margin-top:2px;font-weight:700;letter-spacing:.5px}
+.msRow{display:flex;gap:4px}.ms{width:21px;height:17px;font-size:7px;border-radius:5px;border:1px solid var(--line2);background:#0E0C0A;color:var(--muted);cursor:pointer;font-weight:bold}.ms.mOn{background:var(--rust);color:#fff}.ms.sOn{background:var(--peach);color:#000}
+.volControls{display:flex;align-items:center;padding:0 12px;background:#0A0908}
+.vol{width:100%;height:3px;accent-color:var(--peach);cursor:pointer}
+.masterBar{display:grid;grid-template-columns:90px 1fr;height:50px;background:linear-gradient(180deg,#1E1A16,#12100E);border-top:2px solid var(--amber)}
+.masterMeta{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:bold;color:var(--amber);display:flex;align-items:center;justify-content:center;border-right:1px solid var(--line)}
+.select{width:100%;background:#12100E;border:1px solid var(--line2);border-radius:11px;padding:11px 12px;color:var(--text);font-family:inherit;font-size:13px;outline:none}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(100px);background:var(--peach);color:#000;padding:10px 16px;border-radius:100px;font-size:11px;opacity:0;transition:.35s;z-index:99;font-weight:bold}.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 </style>
 </head>
 <body>
 <div class="app">
-<div class="h"><b style="font-family:Fraunces; font-size:18px; color:var(--peach)">Tapehead Studio</b><span id="engine-badge" style="font-family:'JetBrains Mono';font-size:7px;color:var(--amber);border:1px solid var(--line2);padding:2px 6px;border-radius:4px;">ENGINE: OFFLINE</span></div>
+<div class="h"><b style="font-family:Fraunces;font-size:18px;">Tapehead Studio</b><span id="engine-badge" style="font-family:'JetBrains Mono';font-size:7px;color:var(--amber);border:1px solid var(--line);padding:2px 6px;border-radius:4px;">ENGINE: OFF</span></div>
 <div class="tabsWrap"><div class="tabs"><div class="tb" id="tb-write" onclick="go('write')">Write Engine</div><div class="tb on" id="tb-studio" onclick="go('studio')">Studio Board</div><div class="tb" id="tb-lyrics" onclick="go('lyrics')">Lyric Composer</div></div></div>
 
-<!-- TAB 1: WRITE (HUM TO CHORD ENGINE) -->
+<!-- TAB 1: WRITE ENGINE (HUM TO CHORD) -->
 <div id="p-write" class="pn">
 <div class="card">
-    <h3 style="font-family:'Fraunces'; margin-bottom:4px; font-size:16px;">Vocal Hum-To-Chord Array</h3>
-    <p style="font-size:11px; color:var(--muted); margin-bottom:12px;">Hum steady frequencies into your microphone to calculate root signatures and auto-generate arrangements.</p>
+    <span style="font-family:'JetBrains Mono';font-size:8px;color:var(--amber)">GENRE HARMONIZATION CONFIG</span>
+    <select class="select" id="genre-select" style="margin-top:6px; margin-bottom:12px;">
+        <option value="afrobeats">Afrobeats (Major Pentatonic Roots)</option>
+        <option value="amapiano">Amapiano (Jazz Log-Bass Minor 7ths)</option>
+        <option value="dancehall">Dancehall (Diatonic Riddim Progression)</option>
+    </select>
     <div class="writerBox">
-        <button id="record-btn" class="writerBtn" style="background:var(--rust); color:#fff;">🎤 Start Recording Hum</button>
-        <div class="theory" id="hum-status" style="margin-top:5px; text-align:center;">Status: System Idle</div>
-        <div class="theory" id="hum-output" style="background:#12100E; text-align:center; font-family:'JetBrains Mono'; color:var(--peach);">Detected Pitches: --</div>
+        <button id="record-btn" class="writerBtn" style="background:var(--rust); color:white;">🎤 Access Mic & Capture Hum</button>
+        <div class="theory" id="hum-status" style="text-align:center; margin-top:4px;">Status: System Offline</div>
+        <div class="theory" id="hum-output" style="background:#050505; color:var(--peach); text-align:center; font-family:'JetBrains Mono'">Detected Vocal Chain: --</div>
     </div>
 </div>
 </div>
 
-<!-- TAB 2: STUDIO PANEL (KEYBOARD & CONSOLE MIXER) -->
+<!-- TAB 2: STUDIO PANEL (KEYBOARD & AFROBEATS CONSOLE MIXER) -->
 <div id="p-studio" class="pn on">
 <div class="card">
-    <div class="kbOuter"><div class="kb" id="kb"></div></div>
-    <div class="chordGrid" id="g1"></div><div class="chordGrid2" id="g2"></div>
-    <div class="theory" id="th">Tap piano keys above or trigger harmony variations. Signals map dynamically into the multi-channel mixing board below.</div>
+<div class="kbOuter"><div class="kb" id="kb"></div></div>
+<div class="chordGrid" id="g1"></div><div class="chordGrid2" id="g2"></div>
+<div class="theory" id="th">Tap piano keys or chord modifiers. Signals route dynamically down into targeted Afrobeats preset buses below.</div>
 </div>
 
 <div class="mixer">
-    <div class="mixHead">
-        <span style="font-family:'JetBrains Mono'; font-size:9px; color:var(--muted);">ROUTING: AFROBEATS PRESET BUSES</span>
-        <span style="font-family:'JetBrains Mono'; font-size:8px; color:var(--amber);">ANALOG COMPRESSION ON</span>
-    </div>
+    <div class="mixHead"><span style="font-family:'JetBrains Mono';font-size:8px;color:var(--muted)">CONSOLE MATRIX DESK</span><b style="font-family:'JetBrains Mono';font-size:7px;color:var(--amber)">VACUUM SATURATION ACTIVE</b></div>
     
-    <!-- Channel 1: Drums -->
+    <!-- Track 1: Drums -->
     <div class="trackRow" id="ch-drums">
         <div class="trackMeta">
-            <div class="tName"><b>DRUMS</b><i>Perch / Kick</i></div>
+            <div class="tName"><b>DRUMS</b><i>Perc / Kick</i></div>
             <span class="busLabel">BUS A</span>
             <div class="msRow"><button class="ms mute-btn">M</button></div>
         </div>
-        <div class="volControls">
-            <div class="volLabels"><span>PAN: L</span><span>CENTER</span><span>PAN: R</span></div>
-            <input type="range" class="vol fader-slider" min="0" max="1" step="0.01" value="0.6">
-        </div>
+        <div class="volControls"><input type="range" class="vol fader-slider" min="0" max="1" step="0.01" value="0.6"></div>
     </div>
 
-    <!-- Channel 2: Bass -->
+    <!-- Track 2: Bass -->
     <div class="trackRow" id="ch-bass">
         <div class="trackMeta">
             <div class="tName"><b>BASS</b><i>Sub 808 Line</i></div>
             <span class="busLabel">BUS A</span>
             <div class="msRow"><button class="ms mute-btn">M</button></div>
         </div>
-        <div class="volControls">
-            <div class="volLabels"><span>PAN: L</span><span>CENTER</span><span>PAN: R</span></div>
-            <input type="range" class="vol fader-slider" min="0" max="1" step="0.01" value="0.6">
-        </div>
+        <div class="volControls"><input type="range" class="vol fader-slider" min="0" max="1" step="0.01" value="0.6"></div>
     </div>
 
-    <!-- Channel 3: Keys -->
+    <!-- Track 3: Keys -->
     <div class="trackRow" id="ch-keys">
         <div class="trackMeta">
             <div class="tName"><b>KEYS</b><i>Chords Pad</i></div>
             <span class="busLabel">BUS B</span>
             <div class="msRow"><button class="ms mute-btn">M</button></div>
         </div>
-        <div class="volControls">
-            <div class="volLabels"><span>PAN: L</span><span>CENTER</span><span>PAN: R</span></div>
+        <div class="volControls"><input type="range" class="vol fader-slider" min="0" max="1" step="0.01" value="0.65"></div>
+    </div>
+
+    <!-- Track 4: Guitar -->
+    <div class="trackRow" id="ch-guitar">
+        <div class="trackMeta">
+            <div class="tName"><b>GUITAR</b><i>Muted Pluck</i></div>
+            <span class="busLabel">BUS B</span>
+            <div class="msRow"><button class="ms mute-btn">M</button></div>
+        </div>
