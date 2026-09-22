@@ -1,283 +1,1279 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complete Premium Studio Mixer & Multi-Engine DAW</title>
-    <style>
-        :root {
-            --bg-color: #1a1a1a;
-            --strip-color: #262626;
-            --accent-blue: #00adb5;
-            --fader-cap: #e1e1e1;
-            --accent-green: #5cb85c;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tapehead — Songwriting &amp; Production Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+<style>
+/* ---------- Tokens: light "day session" default, dark "night session" override ---------- */
+:root{
+  --bg:#F0E9D9;
+  --bg-grain:#E8DFC8;
+  --panel:#FBF8F0;
+  --panel-2:#E9E0C9;
+  --line:#D8CBA6;
+  --text:#2B2415;
+  --text-dim:#7C7156;
+  --brass:#B8623A;
+  --brass-bright:#9A4F2C;
+  --brass-ink:#FBF8F0;
+  --green:#4B6E42;
+  --red:#A2422A;
+  --shadow: 0 1px 0 rgba(43,36,21,0.05);
+  --radius-s: 3px;
+  --radius-m: 6px;
+  --font-display:'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:'IBM Plex Mono', 'SF Mono', Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15130D;
+    --bg-grain:#1A170F;
+    --panel:#1E1A12;
+    --panel-2:#262115;
+    --line:#3B3421;
+    --text:#EEE4CB;
+    --text-dim:#A5987A;
+    --brass:#E8AD8E;
+    --brass-bright:#F2C4A8;
+    --brass-ink:#1A1508;
+    --green:#8FB284;
+    --red:#D3805F;
+    --shadow: 0 1px 0 rgba(0,0,0,0.3);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15130D;
+  --bg-grain:#1A170F;
+  --panel:#1E1A12;
+  --panel-2:#262115;
+  --line:#3B3421;
+  --text:#EEE4CB;
+  --text-dim:#A5987A;
+  --brass:#E8AD8E;
+  --brass-bright:#F2C4A8;
+  --brass-ink:#1A1508;
+  --green:#8FB284;
+  --red:#D3805F;
+  --shadow: 0 1px 0 rgba(0,0,0,0.3);
+}
 
-        body {
-            background-color: #111;
-            color: #fff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-        }
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  font-size:15px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+body::before{
+  content:'';
+  position:fixed; inset:0; z-index:50; pointer-events:none;
+  opacity:0.05;
+  mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:140px 140px;
+}
+@media (prefers-reduced-motion:reduce), (prefers-contrast:more){
+  body::before{display:none;}
+}
+button{font-family:inherit;}
+input,textarea,select{font-family:inherit;color:inherit;}
+::selection{background:var(--brass); color:var(--brass-ink);}
+:focus-visible{outline:2px solid var(--brass); outline-offset:2px;}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+}
 
-        /* Engine Panel Layout Containers */
-        .studio-panel {
-            background: #222;
-            border: 2px solid #444;
-            padding: 20px;
-            border-radius: 8px;
-            width: 540px;
-            margin-bottom: 15px;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-        }
+/* ---------- App shell ---------- */
+.app{
+  display:grid;
+  grid-template-columns:248px 1fr;
+  min-height:100vh;
+}
+.sidebar{
+  border-right:1px solid var(--line);
+  background:var(--bg-grain);
+  padding:20px 16px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+.brand{
+  display:flex;
+  align-items:baseline;
+  gap:8px;
+}
+.brand-mark{
+  font-family:var(--font-display);
+  font-size:22px;
+  font-weight:600;
+  letter-spacing:-0.01em;
+}
+.brand-sub{
+  font-size:11px;
+  color:var(--text-dim);
+  font-family:var(--font-mono);
+}
+.new-song-btn{
+  border:1px solid var(--brass);
+  background:transparent;
+  color:var(--brass);
+  padding:9px 12px;
+  border-radius:var(--radius-m);
+  font-size:13.5px;
+  font-weight:600;
+  cursor:pointer;
+  transition:background .12s ease, color .12s ease;
+}
+.new-song-btn:hover{background:var(--brass); color:var(--brass-ink);}
+.song-search{
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius-m);
+  padding:7px 10px; font-size:12.5px; color:var(--text); width:100%;
+}
+.song-search::placeholder{color:var(--text-dim);}
+.song-list{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  overflow-y:auto;
+  flex:1;
+}
+.song-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:9px 10px;
+  border-radius:var(--radius-m);
+  cursor:pointer;
+  border:1px solid transparent;
+  color:var(--text);
+}
+.song-item:hover{background:var(--panel-2);}
+.song-item.active{background:var(--panel); border-color:var(--line); box-shadow:var(--shadow);}
+.song-item .name{
+  flex:1;
+  font-size:13.5px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.song-item .meta{
+  font-family:var(--font-mono);
+  font-size:10.5px;
+  color:var(--text-dim);
+}
+.song-item .del{
+  opacity:0;
+  background:none;border:none;color:var(--text-dim);cursor:pointer;
+  font-size:14px; padding:2px 4px; border-radius:3px;
+}
+.song-item:hover .del{opacity:1;}
+.song-item .del:hover{color:var(--red);}
+.song-item .dup{
+  opacity:0;
+  background:none;border:none;color:var(--text-dim);cursor:pointer;
+  font-size:13px; padding:2px 4px; border-radius:3px;
+}
+.song-item:hover .dup{opacity:1;}
+.song-item .dup:hover{color:var(--brass);}
+.sidebar-empty{color:var(--text-dim); font-size:12.5px; padding:8px 4px;}
+.sidebar-foot{
+  font-size:11.5px;
+  color:var(--text-dim);
+  border-top:1px solid var(--line);
+  padding-top:12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+}
+.theme-toggle{
+  background:none;border:1px solid var(--line); color:var(--text-dim);
+  border-radius:var(--radius-m); padding:5px 8px; cursor:pointer; font-size:12px;
+}
+.theme-toggle:hover{color:var(--text); border-color:var(--brass);}
 
-        .engine-title {
-            margin-top: 0;
-            color: var(--accent-blue);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-size: 16px;
-            margin-bottom: 12px;
-        }
+/* ---------- Main ---------- */
+main{display:flex; flex-direction:column; min-width:0;}
+header.top{
+  border-bottom:1px solid var(--line);
+  padding:16px 28px;
+  display:flex;
+  align-items:center;
+  gap:20px;
+  flex-wrap:wrap;
+  background:var(--bg);
+  position:sticky; top:0; z-index:5;
+}
+.title-input{
+  font-family:var(--font-display);
+  font-size:23px;
+  font-weight:500;
+  background:none;
+  border:none;
+  color:var(--text);
+  min-width:120px;
+  flex:1;
+}
+.title-input::placeholder{color:var(--text-dim);}
+.meta-fields{
+  display:flex; align-items:center; gap:2px; flex-wrap:wrap;
+  background:var(--panel); border:1px solid var(--line); border-radius:999px;
+  padding:6px 8px 6px 14px;
+}
+.meta-field{display:flex; align-items:center; gap:6px;}
+.meta-field label{font-size:11px; color:var(--text-dim); font-weight:500;}
+.meta-icon{font-size:12px; line-height:1;}
+.meta-sep{width:1px; align-self:stretch; background:var(--line); margin:0 8px;}
+.key-dot{
+  width:8px; height:8px; border-radius:50%; background:var(--brass);
+  display:inline-block; box-shadow:0 0 0 2px color-mix(in srgb, var(--brass) 25%, transparent);
+}
+@keyframes bpmPulse{
+  0%{ transform:scale(1); }
+  30%{ transform:scale(1.14); color:var(--brass); }
+  100%{ transform:scale(1); }
+}
+.bpm-pulse{ animation:bpmPulse .35s ease-out; }
+#bpmLockBtn.locked{ color:var(--brass); border-color:var(--brass); }
+.meta-field select, .meta-field input{
+  background:none;
+  border:none;
+  border-radius:var(--radius-s);
+  padding:5px 4px;
+  font-size:13px;
+  color:var(--text);
+  font-family:var(--font-mono);
+  width:auto;
+}
+.meta-field select{cursor:pointer;}
+.meta-field select:focus-visible, .meta-field input:focus-visible{background:var(--panel-2); outline:2px solid var(--brass);}
+#bpmInput{width:48px;}
+#keySelect{width:44px;}
+#modeSelect{width:64px;}
+#tsSelect{width:54px;}
+.meta-field .btn{padding:4px 8px; font-size:12px;}
+.tabs{display:flex; gap:4px; border:1px solid var(--line); border-radius:var(--radius-m); padding:3px; background:var(--panel);}
+.tab-btn{
+  border:none; background:none; padding:7px 16px; border-radius:4px; cursor:pointer;
+  font-size:13.5px; color:var(--text-dim); font-weight:500;
+}
+.tab-btn.active{background:var(--brass); color:var(--brass-ink);}
+.export-menu{position:relative;}
+.export-dropdown{
+  position:absolute; right:0; top:calc(100% + 6px); z-index:30;
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius-m);
+  box-shadow:0 8px 24px rgba(0,0,0,0.18); min-width:210px; padding:4px; display:flex; flex-direction:column;
+}
+.export-dropdown[hidden]{display:none;}
+.export-item{
+  background:none; border:none; text-align:left; padding:8px 10px; font-size:13px;
+  color:var(--text); cursor:pointer; border-radius:4px;
+}
+.export-item:hover:not(:disabled){background:var(--panel-2);}
+.export-item:disabled{color:var(--text-dim); cursor:default;}
 
-        .genre-select {
-            width: 100%;
-            background: #111;
-            border: 1px solid #444;
-            color: #fff;
-            padding: 8px 10px;
-            font-family: inherit;
-            font-size: 13px;
-            border-radius: 4px;
-            margin-bottom: 15px;
-            outline: none;
-        }
+.view{padding:26px 28px 60px; flex:1;}
+[hidden]{display:none !important;}
 
-        .action-btn {
-            padding: 12px 28px;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 14px;
-            transition: background 0.2s ease;
-            width: 80%;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+/* ---------- Write view ---------- */
+.write-grid{display:grid; grid-template-columns:1.35fr 1fr; gap:22px; align-items:start;}
+@media (max-width:900px){.write-grid{grid-template-columns:1fr;}}
 
-        .btn-red { background: #d9534f; }
-        .btn-blue { background: var(--accent-blue); }
+.card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius-m);
+  box-shadow:var(--shadow);
+}
+.card-head{
+  padding:12px 16px;
+  border-bottom:1px solid var(--line);
+  display:flex; align-items:center; justify-content:space-between; gap:8px;
+}
+.card-head h2{
+  font-family:var(--font-display); font-size:16px; font-weight:600; margin:0;
+}
+.card-body{padding:16px;}
 
-        .lyrics-textarea {
-            width: 100%;
-            height: 65px;
-            background: #111;
-            border: 1px solid #444;
-            color: #fff;
-            border-radius: 4px;
-            padding: 8px 12px;
-            font-family: inherit;
-            font-size: 13px;
-            resize: none;
-            margin-bottom: 12px;
-            outline: none;
-            box-sizing: border-box;
-        }
+textarea.lyrics{
+  width:100%;
+  min-height:440px;
+  resize:vertical;
+  border:none;
+  background:none;
+  color:var(--text);
+  font-family:var(--font-body);
+  font-size:15.5px;
+  line-height:1.75;
+  padding:0;
+}
+textarea.lyrics::placeholder{color:var(--text-dim);}
+.notes-field{
+  width:100%; border:none; background:none; color:var(--text-dim); font-size:12.5px;
+  border-top:1px solid var(--line); padding-top:10px; margin-top:8px; resize:none; min-height:44px;
+}
 
-        .status-box { margin-top: 12px; font-size: 13px; color: #aaa; }
-        .display-box { margin-top: 8px; font-size: 15px; font-weight: bold; color: #fff; }
-        .result-box { margin-top: 5px; font-size: 18px; font-weight: bold; color: var(--accent-blue); }
+.assist{display:flex; flex-direction:column; height:600px;}
+.assist .card-body{flex:1; display:flex; flex-direction:column; padding:12px; overflow:hidden;}
+.quick-actions{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px;}
+.qa-btn{
+  border:1px solid var(--line); background:var(--panel-2); color:var(--text);
+  padding:6px 10px; border-radius:14px; font-size:12px; cursor:pointer;
+}
+.qa-btn:hover{border-color:var(--brass); color:var(--brass);}
+.chat-log{flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:10px; padding:4px 2px;}
+.msg{max-width:92%; padding:9px 12px; border-radius:10px; font-size:13.8px; white-space:pre-wrap; line-height:1.55;}
+.msg.user{align-self:flex-end; background:var(--brass); color:var(--brass-ink); border-bottom-right-radius:2px;}
+.msg.assistant{align-self:flex-start; background:var(--panel-2); border:1px solid var(--line); border-bottom-left-radius:2px;}
+.msg.system-note{align-self:center; color:var(--text-dim); font-size:12px; background:none;}
+.chat-empty{color:var(--text-dim); font-size:13px; margin:auto; text-align:center; padding:20px;}
+.chat-input-row{display:flex; gap:8px; margin-top:10px; border-top:1px solid var(--line); padding-top:10px;}
+.chat-input-row textarea{
+  flex:1; resize:none; border:1px solid var(--line); border-radius:var(--radius-m); background:var(--bg);
+  padding:9px 10px; font-size:13.5px; color:var(--text); min-height:40px; max-height:120px;
+}
+.send-btn{
+  border:none; background:var(--brass); color:var(--brass-ink); border-radius:var(--radius-m);
+  padding:0 16px; font-size:13.5px; font-weight:600; cursor:pointer;
+}
+.send-btn:disabled{opacity:0.5; cursor:default;}
+.thinking{display:flex; gap:4px; align-items:center; padding:4px 2px; color:var(--text-dim); font-size:12.5px;}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--text-dim); animation:pulse 1.1s infinite ease-in-out;}
+.dot:nth-child(2){animation-delay:.15s;} .dot:nth-child(3){animation-delay:.3s;}
+@keyframes pulse{0%,80%,100%{opacity:.25;} 40%{opacity:1;}}
 
-        /* Mixer Console Chassis */
-        .mixer-console {
-            background-color: var(--bg-color);
-            border: 4px solid #333;
-            border-radius: 8px;
-            padding: 20px;
-            display: flex;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-        }
+/* ---------- Studio view ---------- */
+.studio-title{margin-bottom:22px;}
+.studio-title h1{font-family:var(--font-display); font-size:32px; font-weight:600; margin:0 0 4px;}
+.studio-title p{font-size:13.5px; color:var(--text-dim); margin:0;}
 
-        /* Vertical Channel Strip Layouts */
-        .channel-strip {
-            background-color: var(--strip-color);
-            width: 95px;
-            margin: 0 6px;
-            padding: 15px 5px;
-            border-radius: 4px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border-left: 1px solid #3a3a3a;
-            border-right: 1px solid #141414;
-        }
+.wizard-steps{display:flex; flex-direction:column; gap:0; margin-bottom:8px;}
+.wizard-step{display:flex; gap:16px; align-items:stretch;}
+.wizard-step .card{flex:1; min-width:0; margin-bottom:22px;}
+.wizard-marker{display:flex; flex-direction:column; align-items:center; width:34px; flex-shrink:0;}
+.wizard-circle{
+  width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  border:2px solid var(--line); background:var(--panel); color:var(--text-dim); font-weight:700; font-size:14px;
+  flex-shrink:0; transition:background .2s ease, border-color .2s ease, color .2s ease;
+}
+.wizard-circle.done{background:var(--brass); border-color:var(--brass); color:var(--brass-ink);}
+.wizard-line{flex:1; width:2px; background:var(--line); margin:4px 0; min-height:20px;}
+.wizard-line.done{background:var(--brass);}
+.prog-typical{font-size:12px; color:var(--text-dim); font-style:italic; margin-top:8px;}
+.jam-card{
+  margin-bottom:8px; border:1.5px solid var(--brass);
+  background:linear-gradient(160deg, color-mix(in srgb, var(--brass) 10%, var(--panel)), var(--panel));
+}
+.jam-mixer{display:flex; gap:22px; flex-wrap:wrap; margin:16px 0 4px;}
+.jam-channel{display:flex; flex-direction:column; gap:6px; flex:1; min-width:120px;}
+.jam-channel label{font-size:11.5px; font-weight:600; color:var(--text-dim);}
+.more-tools-label{
+  font-size:11.5px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase;
+  color:var(--text-dim); margin:6px 0 14px; padding-top:14px; border-top:1px solid var(--line);
+}
+.studio-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(320px,1fr)); gap:20px;}
+@media (max-width:640px){
+  .wizard-step{gap:10px;}
+  .wizard-marker{width:26px;}
+  .wizard-circle{width:26px; height:26px; font-size:12px;}
+}
+.knob-row{display:flex; align-items:center; gap:16px; flex-wrap:wrap;}
+.readout{
+  font-family:var(--font-mono); font-size:30px; font-weight:600; color:var(--brass);
+  letter-spacing:-0.02em;
+}
+.readout small{font-size:12px; color:var(--text-dim); font-weight:400; margin-left:4px;}
+.field-inline{display:flex; flex-direction:column; gap:3px;}
+.field-inline label{font-size:10.5px; color:var(--text-dim);}
+.slider{width:100%; accent-color:var(--brass);}
+.btn{
+  border:1px solid var(--line); background:var(--panel-2); color:var(--text);
+  padding:8px 14px; border-radius:var(--radius-m); font-size:13px; cursor:pointer; font-weight:500;
+}
+.btn:hover{border-color:var(--brass);}
+.btn.primary{background:var(--brass); color:var(--brass-ink); border-color:var(--brass);}
+.btn.danger:hover{border-color:var(--red); color:var(--red);}
+.btn:disabled{opacity:.45; cursor:default;}
+.pulse-dot{width:14px; height:14px; border-radius:50%; background:var(--panel-2); border:2px solid var(--line); transition:background .05s, border-color .05s;}
+.pulse-dot.on{background:var(--brass); border-color:var(--brass);}
+.pulse-dot.accent{background:var(--red); border-color:var(--red);}
 
-        .channel-name {
-            font-size: 11px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-            color: #aaa;
-            background: #111;
-            padding: 3px 8px;
-            border-radius: 3px;
-            width: 70px;
-            text-align: center;
-        }
+/* Spinning tape reel, used as an activity indicator */
+.reel-wrap{display:inline-flex; color:var(--text-dim);}
+.reel-wrap svg{display:block; transition:color .25s ease;}
+.reel-wrap.active{color:var(--brass);}
+.reel-wrap.active svg{animation:reelspin 1.6s linear infinite;}
+@keyframes reelspin{to{transform:rotate(360deg);}}
 
-        /* Rotary Pan Knob Styling */
-        .pan-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 9px;
-            color: #888;
-            margin-bottom: 20px;
-        }
+/* Piano keyboard */
+.piano{position:relative; height:118px; margin:14px 0; display:flex; user-select:none;}
+.pkey{
+  position:relative; flex:1; border:1px solid var(--line); border-left:none; background:var(--panel);
+  cursor:pointer; border-radius:0 0 5px 5px; display:flex; align-items:flex-end; justify-content:center;
+  padding-bottom:8px; font-family:var(--font-mono); font-size:10.5px; color:var(--text-dim);
+  transition:background .1s ease, color .1s ease;
+}
+.pkey:first-child{border-left:1px solid var(--line); border-radius:5px 0 5px 5px;}
+.pkey:hover{background:var(--panel-2);}
+.pkey.in-scale{color:var(--text); font-weight:600;}
+.pkey.root{background:var(--brass); color:var(--brass-ink); border-color:var(--brass); z-index:1;}
+.bkey{
+  position:absolute; top:0; width:8.6%; height:60%; background:#19140C; border:1px solid #0C0904;
+  border-top:none; border-radius:0 0 4px 4px; cursor:pointer; z-index:2;
+  display:flex; align-items:flex-end; justify-content:center; padding-bottom:6px;
+  font-family:var(--font-mono); font-size:9px; color:#B5A483;
+  transition:background .1s ease;
+}
+.bkey:hover{background:#292014;}
+.bkey.in-scale{box-shadow:inset 0 0 0 2px var(--brass);}
+.bkey.root{background:var(--brass); color:var(--brass-ink); box-shadow:none;}
 
-        .pan-slider {
-            width: 65px;
-            margin-top: 5px;
-        }
+.chord-list{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px;}
+.chord-chip{
+  border:1px solid var(--line); background:var(--panel-2); border-radius:var(--radius-m);
+  padding:8px 12px; cursor:pointer; text-align:center; min-width:56px;
+}
+.chord-chip:hover{border-color:var(--brass);}
+.chord-chip .rn{font-size:10px; color:var(--text-dim); display:block; font-family:var(--font-mono);}
+.chord-chip .name{font-family:var(--font-display); font-size:16px; font-weight:600;}
+.chord-chip.suggested{border-color:var(--brass);}
+#progressionResult{margin-top:10px;}
+#progressionResult .prog-note{font-size:12px; color:var(--text-dim); margin-top:8px; line-height:1.5;}
 
-        /* Vertical Fader Mechanical Groove Track Rail */
-        .fader-container {
-            height: 220px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            margin-bottom: 15px;
-        }
+.voice-empty{color:var(--text-dim); font-size:13px;}
 
-        .fader-slider {
-            -webkit-appearance: none;
-            appearance: none;
-            transform: rotate(-90deg);
-            width: 180px;
-            height: 6px;
-            background: #111;
-            border-radius: 3px;
-            outline: none;
-            cursor: pointer;
-        }
+.msg-actions{display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;}
+.msg-actions .qa-btn{font-size:11.5px; padding:5px 9px;}
 
-        /* Custom Fader Caps */
-        .fader-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 18px;
-            height: 30px;
-            background: var(--fader-cap);
-            border-radius: 2px;
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-            border-left: 2px solid #666;
-            border-right: 2px solid #666;
-        }
+.takes-list{margin-top:10px; display:flex; flex-direction:column; gap:6px;}
+.take-row{
+  display:flex; align-items:center; gap:8px; padding:8px 10px; border:1px solid var(--line);
+  border-radius:var(--radius-m); background:var(--panel-2);
+}
+.take-row.active{border-color:var(--brass);}
+.take-row .take-label{font-size:13px; font-weight:600; flex:1;}
+.mic-access-panel{
+  background:var(--panel-2); border:1px solid var(--line); border-radius:var(--radius-m);
+  padding:12px 14px; margin-bottom:14px;
+}
+.mic-access-row{display:flex; align-items:center; gap:8px; margin-bottom:10px;}
+.mic-status-dot{width:9px; height:9px; border-radius:50%; background:var(--text-dim); flex-shrink:0;}
+.mic-status-dot.granted{background:var(--green);}
+.mic-status-dot.denied{background:var(--red);}
+.take-row .take-time{font-family:var(--font-mono); font-size:11px; color:var(--text-dim);}
+.btn.recording-live{border-color:var(--red); color:var(--red);}
 
-        /* Global Control Function Switch Buttons */
-        .btn-group {
-            display: flex;
-            gap: 5px;
-            margin-bottom: 10px;
-        }
+.step-dots{display:flex; gap:4px; margin:14px 0; flex-wrap:wrap;}
+.step-dot{width:14px; height:14px; border-radius:3px; background:var(--panel-2); border:1px solid var(--line);}
+.step-dot.on{background:var(--brass); border-color:var(--brass);}
+.wizard-hint{
+  display:none; align-items:center; gap:10px; margin-top:12px; padding:9px 12px; flex-wrap:wrap;
+  background:color-mix(in srgb, var(--green) 14%, var(--panel-2)); border:1px solid var(--green);
+  border-radius:var(--radius-m); font-size:12.5px; color:var(--text);
+}
+.wizard-hint.show{display:flex;}
+.wizard-hint .btn{padding:6px 11px; font-size:12px;}
 
-        .mixer-btn {
-            background: #333;
-            border: 1px solid #444;
-            color: #fff;
-            font-size: 10px;
-            font-weight: bold;
-            padding: 4px 8px;
-            cursor: pointer;
-            border-radius: 2px;
-        }
+.perform-scroll-area{
+  margin-top:16px; height:min(60vh, 520px); overflow-y:auto; scroll-behavior:auto;
+  border:1px solid var(--line); border-radius:var(--radius-m); background:var(--bg);
+  padding:40px 24px;
+}
+.perform-lyrics{
+  font-family:var(--font-display); font-size:clamp(22px, 4vw, 34px); line-height:1.9;
+  text-align:center; color:var(--text); max-width:640px; margin:0 auto;
+}
+.perform-line{padding:2px 0;}
 
-        .mixer-btn.active-mute { background: #d9534f; }
-        .mixer-btn.active-solo { background: #f0ad4e; }
+canvas.wave{width:100%; height:96px; display:block; background:var(--bg); border:1px solid var(--line); border-radius:var(--radius-s);}
+.rec-controls{display:flex; align-items:center; gap:10px; margin:12px 0;}
+.rec-dot{width:11px;height:11px;border-radius:50%; background:var(--red); animation:recblink 1s infinite;}
+@keyframes recblink{0%,100%{opacity:1;}50%{opacity:.25;}}
+.status-line{font-size:12px; color:var(--text-dim); font-family:var(--font-mono);}
+.status-line.saved-pill{
+  display:inline-block; background:color-mix(in srgb, var(--green) 16%, var(--panel-2));
+  color:var(--green); border:1px solid var(--green); border-radius:11px; padding:3px 10px; font-family:var(--font-body);
+}
+.publish-streak{
+  margin-top:22px; padding:18px; text-align:center; border-radius:var(--radius-m);
+  background:linear-gradient(160deg, color-mix(in srgb, var(--brass) 20%, var(--panel-2)), var(--panel-2));
+  border:1px solid var(--brass); position:relative; overflow:hidden;
+}
+.publish-play-row{display:flex; justify-content:center; margin:18px 0 8px;}
+.publish-play-circle{
+  width:78px; height:78px; border-radius:50%; border:none; cursor:pointer;
+  background:var(--brass); color:var(--brass-ink); display:flex; align-items:center; justify-content:center;
+  box-shadow:0 6px 20px color-mix(in srgb, var(--brass) 35%, transparent);
+  transition:transform .15s ease;
+}
+.publish-play-circle:hover:not(:disabled){transform:scale(1.05);}
+.publish-play-circle:disabled{background:var(--panel-2); color:var(--text-dim); box-shadow:none; cursor:default;}
+.publish-mix-caption{text-align:center; font-size:12.5px; color:var(--text-dim); margin-bottom:6px;}
+.share-whatsapp{background:#25D366; color:#08210F; border-color:#25D366; display:flex; align-items:center; justify-content:center; gap:8px;}
+.share-whatsapp:hover{background:#1EBE59;}
+.publish-streak .streak-count{font-family:var(--font-display); font-size:26px; font-weight:600; margin-bottom:4px;}
+.publish-streak .streak-label{font-size:12.5px; color:var(--text-dim); margin-bottom:12px;}
+.confetti-piece{
+  position:absolute; top:-10px; width:7px; height:12px; opacity:0.9; pointer-events:none;
+  animation:confettiFall 1.1s ease-in forwards;
+}
+@keyframes confettiFall{
+  to{ transform:translateY(160px) rotate(360deg); opacity:0; }
+}
+.hint{font-size:12px; color:var(--text-dim); margin-top:10px; line-height:1.6;}
+.hint code{background:var(--panel-2); border:1px solid var(--line); border-radius:3px; padding:1px 5px; font-family:var(--font-mono); font-size:11.5px; color:var(--text);}
+.chord-lock-chip{
+  display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:14px;
+  background:var(--panel-2); border:1px solid var(--line); font-size:12px; color:var(--text-dim);
+  margin-bottom:12px; transition:background .2s ease, border-color .2s ease, color .2s ease;
+}
+.chord-lock-chip code{background:var(--panel); border:1px solid var(--line); border-radius:3px; padding:1px 5px; font-family:var(--font-mono); font-size:11px; color:var(--text);}
+.chord-lock-chip.locked{background:color-mix(in srgb, var(--green) 16%, var(--panel-2)); border-color:var(--green); color:var(--green);}
+.chord-lock-chip.locked code{color:var(--green); border-color:var(--green);}
+.chord-chip-label{font-size:11px; font-weight:600; letter-spacing:0.03em; text-transform:uppercase; color:var(--text-dim); margin-bottom:6px;}
+.chord-chip-row{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px;}
+.write-chord-chip{
+  background:var(--brass); color:var(--brass-ink); border:none; border-radius:8px;
+  padding:8px 14px; font-family:var(--font-mono); font-weight:600; font-size:13px; cursor:pointer;
+}
+.write-chord-chip:hover{background:var(--brass-bright);}
+.banner{
+  background:var(--panel-2); border:1px solid var(--line); border-radius:var(--radius-m);
+  padding:10px 14px; font-size:12.5px; color:var(--text-dim); margin-bottom:18px;
+  position:relative; overflow:hidden;
+}
 
-        /* Master Output Section Override */
-        .master-section {
-            border-left: 3px double #555;
-            margin-left: 15px;
-            padding-left: 15px;
-        }
-        
-        .master-section .channel-name {
-            color: var(--accent-blue);
-        }
-    </style>
+@media (max-width:860px){
+  .app{grid-template-columns:1fr;}
+  .sidebar{
+    flex-direction:row; align-items:center; overflow-x:auto; border-right:none; border-bottom:1px solid var(--line);
+    padding:12px 14px; gap:12px;
+  }
+  .song-list{flex-direction:row; flex:none;}
+  .song-item{white-space:nowrap;}
+  header.top{padding:12px 16px;}
+  .view{padding:18px 16px 48px;}
+}
+</style>
 </head>
 <body>
-
-    <!-- ENGINE MODULE 1: Hum to Chord Engine -->
-    <div class="studio-panel">
-        <h3 class="engine-title">1. Vocal Hum to Chord Engine</h3>
-        
-        <select class="genre-select" id="genre-select">
-            <optgroup label="African Harmonic Frameworks (7)">
-                <option value="afrobeats">Afrobeats (Major Pentatonic Mode)</option>
-                <option value="amapiano">Amapiano (Jazz Log-Drum Minor 7ths)</option>
-                <option value="highlife">Highlife (Diatonic Arpeggio Progressions)</option>
-                <option value="bongoflava">Bongo Flava (Smooth Afro R&B Inversions)</option>
-                <option value="gengetone">Gengetone (Street Rhythm Bass Clusters)</option>
-                <option value="coupedecale">Coupé-Décalé (Fast-Paced Polyphonic Tones)</option>
-                <option value="kwaito">Kwaito (Slow-Tempo Deep House Inversions)</option>
-            </optgroup>
-            <optgroup label="Western Harmonic Frameworks (7)">
-                <option value="pop">Pop (Classic Diatonic Anthems)</option>
-                <option value="hiphop">Hip-Hop (Trap/Boom-Bap Minor Sequences)</option>
-                <option value="synthwave">Synthwave (Vintage Retro 80s Intervals)</option>
-                <option value="rnb">R&B (Smooth Chromatic Major/Minor 9ths)</option>
-                <option value="rock">Rock (Heavy Root Power-Chords)</option>
-                <option value="house">House (Classic 4x4 Club Triad Sequences)</option>
-                <option value="jazz">Jazz (Complex Extended Modal Alterations)</option>
-            </optgroup>
-        </select>
-
-        <button id="record-btn" class="action-btn btn-red">🎤 Start Audio Engine & Hum</button>
-        <div class="status-box" id="status-display">Status: Offline (Click button to initialize Audio Context)</div>
-        <div class="display-box" id="output-display">Detected Melody: --</div>
-        <div class="result-box" id="chord-display">Generated Harmony: --</div>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark">Tapehead</span>
+      <span class="brand-sub">v1</span>
     </div>
-
-    <!-- ENGINE MODULE 2: Lyrics to Melody Engine -->
-    <div class="studio-panel">
-        <h3 class="engine-title">2. Lyrics-To-Melody Composer</h3>
-        <textarea id="lyric-text" class="lyrics-textarea" placeholder="Type or paste your lyrics text stanza line here... (e.g., 'Moving my feet on the studio floor')"></textarea>
-        <button id="lyric-btn" class="action-btn btn-blue">⚡ Compose & Play Lyric Melody</button>
-        <div class="status-box" id="lyric-status-display">Status: Awaiting Text Input</div>
+    <button class="new-song-btn" id="newSongBtn">+ New song</button>
+    <input type="search" id="songSearch" class="song-search" placeholder="Search songs…" aria-label="Search songs">
+    <div class="song-list" id="songList">
+      <div class="sidebar-empty">No songs yet — start one above.</div>
     </div>
+    <div class="sidebar-foot">
+      <span id="storageNote">Local session</span>
+      <button class="theme-toggle" id="themeToggle" title="Toggle light/dark" aria-label="Toggle light or dark theme">◐</button>
+    </div>
+  </aside>
 
-    <!-- 5-Channel Premium Studio Console Mixer Layout Frame -->
-    <div class="mixer-console">
-        
-        <!-- Track 1: Drums -->
-        <div class="channel-strip" id="ch-drums">
-            <div class="channel-name">Drums</div>
-            <div class="pan-container">PAN<input type="range" class="pan-slider" min="-1" max="1" step="0.1" value="0"></div>
-            <div class="fader-container"><input type="range" class="fader-slider" min="0" max="1" step="0.01" value="0.6"></div>
-            <div class="btn-group">
-                <button class="mixer-btn mute-btn">M</button>
-                <button class="mixer-btn solo-btn">S</button>
+  <main>
+    <header class="top">
+      <input class="title-input" id="titleInput" placeholder="Untitled song" value="Untitled song">
+      <div class="meta-fields">
+        <div class="meta-field">
+          <span class="key-dot" aria-hidden="true"></span>
+          <label for="keySelect">Key</label>
+          <button type="button" class="btn" id="transposeDown" title="Transpose down a semitone" aria-label="Transpose down a semitone">−</button>
+          <select id="keySelect"></select>
+          <select id="modeSelect" aria-label="Mode">
+            <option value="major">Major</option>
+            <option value="minor">Minor</option>
+          </select>
+          <button type="button" class="btn" id="transposeUp" title="Transpose up a semitone" aria-label="Transpose up a semitone">+</button>
+        </div>
+        <span class="meta-sep" aria-hidden="true"></span>
+        <div class="meta-field">
+          <span class="meta-icon" aria-hidden="true">🔔</span>
+          <label for="bpmInput">BPM</label>
+          <input type="number" id="bpmInput" min="30" max="260" value="96">
+          <button type="button" class="btn" id="bpmLockBtn" title="Lock BPM so tap tempo / metronome only preview a practice tempo, without changing the song" aria-label="Lock BPM">🔓</button>
+        </div>
+        <span class="meta-sep" aria-hidden="true"></span>
+        <div class="meta-field">
+          <span class="meta-icon" aria-hidden="true">🕐</span>
+          <label for="tsSelect">Time</label>
+          <select id="tsSelect">
+            <option>4/4</option><option>3/4</option><option>6/8</option><option>2/4</option>
+          </select>
+        </div>
+      </div>
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="write">Write</button>
+        <button class="tab-btn" data-tab="studio">Studio</button>
+        <button class="tab-btn" data-tab="perform">Perform</button>
+        <button class="tab-btn" data-tab="publish">Publish</button>
+      </div>
+      <div class="export-menu" id="exportMenu">
+        <button class="btn" id="exportMenuBtn" aria-haspopup="true" aria-expanded="false">Export ▾</button>
+        <div class="export-dropdown" id="exportDropdown" hidden>
+          <button class="export-item" data-export="pdf">Lyric PDF</button>
+          <button class="export-item" data-export="demo">Demo mix (~30s audio)</button>
+          <button class="export-item" data-export="melody-midi">Melody MIDI</button>
+          <button class="export-item" data-export="chords-midi">Chords MIDI</button>
+          <button class="export-item" data-export="video" disabled title="Not built yet">Lyrics video (coming soon)</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- WRITE VIEW -->
+    <section class="view" id="writeView">
+      <div class="banner" id="challengeBanner"></div>
+      <div class="write-grid">
+        <div class="card">
+          <div class="card-head">
+            <h2>Lyrics</h2>
+            <span class="status-line" id="saveStatus">—</span>
+          </div>
+          <div class="card-body">
+            <div class="chord-lock-chip" id="chordLockChip">
+              <span class="chip-text">Tip: type <code>[C - G - Am - F]</code> anywhere in your lyrics to lock that progression</span>
             </div>
+            <textarea class="lyrics" id="lyricsInput" aria-label="Song lyrics" placeholder="Verse 1&#10;Start writing here...&#10;&#10;Chorus&#10;..."></textarea>
+            <div class="status-line" id="lyricStats" style="margin-top:6px;"></div>
+            <div class="chord-chip-label" id="writeChordChipsLabel">Chords</div>
+            <div class="chord-chip-row" id="writeChordChips"></div>
+            <textarea class="notes-field" id="notesInput" aria-label="Notes" placeholder="Notes to self — arrangement ideas, references, working title for the bridge..."></textarea>
+            <div class="knob-row" style="margin-top:10px; border-top:1px solid var(--line); padding-top:10px;">
+              <button class="btn" id="exportPdfBtn">Export lyric PDF</button>
+              <button class="btn record-mirror-btn" id="memoBtn" data-idle-label="🎙 Record voice memo">🎙 Record voice memo</button>
+              <span class="status-line" id="exportStatus"></span>
+            </div>
+            <div class="hint">Recording here jumps to Studio → Recorder and shares its mic permission — manage that from the Recorder card if it's not working.</div>
+          </div>
         </div>
 
-        <!-- Track 2: Bass -->
-        <div class="channel-strip" id="ch-bass">
-            <div class="channel-name">Bass</div>
-            <div class="pan-container">PAN<input type="range" class="pan-slider" min="-1" max="1" step="0.1" value="-0.2"></div>
-            <div class="fader-container"><input type="range" class="fader-slider" min="0" max="1" step="0.01" value="0.6"></div>
-            <div class="btn-group">
-                <button class="mixer-btn mute-btn">M</button>
+        <div class="card assist">
+          <div class="card-head">
+            <h2>Co-writer</h2>
+          </div>
+          <div class="card-body">
+            <div class="knob-row" style="margin-bottom:10px;">
+              <div class="field-inline" style="flex:1; min-width:120px;">
+                <label for="lyricLangSelect">Language</label>
+                <select id="lyricLangSelect">
+                  <option value="English">English</option>
+                  <option value="Luganda">Luganda</option>
+                  <option value="Swahili">Swahili</option>
+                  <option value="Yoruba">Yoruba</option>
+                  <option value="Igbo">Igbo</option>
+                  <option value="Hausa">Hausa</option>
+                  <option value="Nigerian Pidgin">Nigerian Pidgin</option>
+                  <option value="Amharic">Amharic</option>
+                  <option value="Twi">Twi</option>
+                  <option value="Zulu">Zulu</option>
+                  <option value="Xhosa">Xhosa</option>
+                  <option value="Afrikaans">Afrikaans</option>
+                  <option value="Somali">Somali</option>
+                  <option value="Spanish">Spanish</option>
+                  <option value="French">French</option>
+                  <option value="Portuguese">Portuguese</option>
+                  <option value="Arabic">Arabic</option>
+                  <option value="Hindi">Hindi</option>
+                  <option value="Mixed">Mixed (English + local)</option>
+                </select>
+              </div>
+              <div class="field-inline" style="flex:1; min-width:140px;">
+                <label for="vibeSelect">Vibe</label>
+                <select id="vibeSelect">
+                  <option value="">No particular vibe</option>
+                  <option>Heartbreak</option>
+                  <option>Hustle</option>
+                  <option>Worship</option>
+                  <option>Party</option>
+                  <option>Love</option>
+                  <option>Motivation</option>
+                  <option>Nostalgia</option>
+                  <option>Celebration</option>
+                  <option>Lugaflow</option>
+                  <option>Afrobeats</option>
+                  <option>Afrobeat (Classic)</option>
+                  <option>Amapiano</option>
+                  <option>Highlife</option>
+                  <option>Bongo Flava</option>
+                  <option>Gqom</option>
+                  <option>Dancehall</option>
+                  <option>Reggae</option>
+                  <option>Soca</option>
+                  <option>Reggaeton</option>
+                  <option>Hip-Hop</option>
+                  <option>R&amp;B</option>
+                  <option>Afro-gospel</option>
+                  <option>Gospel</option>
+                  <option>Lo-fi / Chill</option>
+                </select>
+              </div>
+            </div>
+            <div class="quick-actions">
+              <button class="qa-btn" data-qa="verse">Write Verse</button>
+              <button class="qa-btn" data-qa="chorus">Write Chorus</button>
+              <button class="qa-btn" data-qa="finish-line">Finish line</button>
+              <button class="qa-btn" data-qa="rhymes">Rhyme</button>
+              <button class="qa-btn" data-qa="feedback">Fix</button>
+            </div>
+            <div class="chat-log" id="chatLog">
+              <div class="chat-empty">Highlight a word before asking for rhymes, place your cursor at the end of a line before "Finish this line", or just pick a vibe and language and generate a full verse + chorus.</div>
+            </div>
+            <div class="chat-input-row">
+              <textarea id="chatInput" placeholder="Ask your co-writer..."></textarea>
+              <button class="send-btn" id="sendBtn">Send</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STUDIO VIEW -->
+    <section class="view" id="studioView" hidden>
+      <div class="studio-title">
+        <h1>Studio</h1>
+        <p>Build your song in 3 steps</p>
+      </div>
+
+      <div class="wizard-steps">
+        <div class="wizard-step">
+          <div class="wizard-marker">
+            <div class="wizard-circle" id="flowCircle1">1</div>
+            <div class="wizard-line" id="flowLine1"></div>
+          </div>
+          <div class="card" id="keyChordsCard">
+            <div class="card-head"><h2>Step 1 · Key &amp; chords</h2></div>
+            <div class="card-body">
+              <div class="piano" id="keyStrip"></div>
+              <div class="chord-list" id="chordList"></div>
+              <div class="hint">Tap a key to hear the note, tap a chord to hear it played. Diatonic to the song's current key and mode.</div>
+              <div id="lockedProgression"></div>
+              <div class="knob-row" style="margin-top:14px; border-top:1px solid var(--line); padding-top:12px;">
+                <div class="field-inline" style="flex:1; min-width:180px;">
+                  <label for="progressionStyle">Progression style</label>
+                  <select id="progressionStyle">
+                    <optgroup label="African styles">
+                      <option>Lugaflow 🇺🇬</option>
+                      <option>Afrobeats (NG) 🇳🇬</option>
+                      <option>Amapiano (SA) 🇿🇦</option>
+                      <option>Bongo (TZ) 🇹🇿</option>
+                      <option>Gengetone (KE) 🇰🇪</option>
+                      <option>Afro-Fusion (Global) 🌍</option>
+                    </optgroup>
+                    <optgroup label="More styles">
+                      <option>Highlife</option>
+                      <option>Gqom</option>
+                      <option>Gospel 6/8</option>
+                      <option>Dancehall riddim</option>
+                      <option>Reggae</option>
+                      <option>Soca</option>
+                      <option>Reggaeton</option>
+                      <option>Hip-Hop / Trap</option>
+                      <option>Neo-Soul R&amp;B</option>
+                      <option>Afro-gospel ballad</option>
+                      <option>Uplifting pop</option>
+                      <option>Sad R&amp;B</option>
+                      <option>Lo-fi Chill</option>
+                    </optgroup>
+                  </select>
+                </div>
+              </div>
+              <div class="prog-typical" id="progTypical"></div>
+              <button class="btn primary" id="suggestProgression" style="width:100%; margin-top:10px;">Use this progression</button>
+              <div id="progressionResult"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wizard-step">
+          <div class="wizard-marker">
+            <div class="wizard-circle" id="flowCircle2">2</div>
+            <div class="wizard-line" id="flowLine2"></div>
+          </div>
+          <div class="card" id="beatMakerCard">
+            <div class="card-head">
+              <h2>Step 2 · Beat maker</h2>
+              <span class="reel-wrap" id="beatReel">
+                <svg viewBox="0 0 40 40" width="26" height="26" aria-hidden="true"><circle cx="20" cy="20" r="16.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="20" cy="20" r="3.6" fill="currentColor"/><line x1="20" y1="6" x2="20" y2="11.5" stroke="currentColor" stroke-width="2"/><line x1="20" y1="28.5" x2="20" y2="34" stroke="currentColor" stroke-width="2"/><line x1="6" y1="20" x2="11.5" y2="20" stroke="currentColor" stroke-width="2"/><line x1="28.5" y1="20" x2="34" y2="20" stroke="currentColor" stroke-width="2"/></svg>
+              </span>
+            </div>
+            <div class="card-body">
+              <div class="knob-row">
+                <button class="btn primary" id="beatToggle">Make beat</button>
+                <span class="status-line" id="beatStatus">Uses the progression style above + song BPM</span>
+              </div>
+              <div class="step-dots" id="stepDots"></div>
+              <div class="hint">A quick drum + bass sketch in the chosen style and the song's tempo — enough to write against, not a final mix.</div>
+              <div class="wizard-hint" id="beatWizardHint"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wizard-step">
+          <div class="wizard-marker">
+            <div class="wizard-circle" id="flowCircle3">3</div>
+          </div>
+          <div class="card" id="demoMixCard">
+            <div class="card-head"><h2>Step 3 · Demo mix</h2></div>
+            <div class="card-body">
+              <div class="knob-row">
+                <button class="btn primary" id="demoBtn">Render ~30s demo</button>
+                <span class="status-line" id="demoStatus">Beat + chords + melody, mixed down</span>
+              </div>
+              <div class="hint">Combines the beat maker, your locked or suggested chords, and the melody sketch into one short audio clip you can download and share. Audio only — a full vertical video export isn't something this page can safely build (that needs real video-encoding infrastructure).</div>
+              <div class="wizard-hint" id="demoWizardHint"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card jam-card" id="jamCard">
+        <div class="card-head">
+          <h2>Jam session</h2>
+          <span class="reel-wrap" id="jamReel">
+            <svg viewBox="0 0 40 40" width="26" height="26" aria-hidden="true"><circle cx="20" cy="20" r="16.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="20" cy="20" r="3.6" fill="currentColor"/><line x1="20" y1="6" x2="20" y2="11.5" stroke="currentColor" stroke-width="2"/><line x1="20" y1="28.5" x2="20" y2="34" stroke="currentColor" stroke-width="2"/><line x1="6" y1="20" x2="11.5" y2="20" stroke="currentColor" stroke-width="2"/><line x1="28.5" y1="20" x2="34" y2="20" stroke="currentColor" stroke-width="2"/></svg>
+          </span>
+        </div>
+        <div class="card-body">
+          <div class="knob-row">
+            <button class="btn primary" id="jamToggle">▶ Jam</button>
+            <span class="status-line" id="jamStatus">Plays your beat, chords, and melody together on a loop</span>
+          </div>
+          <div class="jam-mixer">
+            <div class="jam-channel">
+              <label for="jamBeatVol">Beat</label>
+              <input type="range" class="slider" id="jamBeatVol" min="0" max="100" value="80">
+            </div>
+            <div class="jam-channel">
+              <label for="jamChordVol">Chords</label>
+              <input type="range" class="slider" id="jamChordVol" min="0" max="100" value="60">
+            </div>
+            <div class="jam-channel">
+              <label for="jamMelodyVol">Melody</label>
+              <input type="range" class="slider" id="jamMelodyVol" min="0" max="100" value="70">
+            </div>
+          </div>
+          <div class="hint">A live mixer for everything you've built in Steps 1–3: the beat, your locked or suggested chord progression, and the melody sketch (if you've generated one), all looping together so you can balance them by ear before rendering a demo. The Beat fader also controls Beat Maker's volume outside of jamming.</div>
+        </div>
+      </div>
+
+      <div class="more-tools-label">More tools</div>
+      <div class="studio-grid">
+
+        <div class="card" id="metronomeCard">
+          <div class="card-head">
+            <h2>Metronome</h2>
+            <span class="reel-wrap" id="metroReel">
+              <svg viewBox="0 0 40 40" width="26" height="26" aria-hidden="true"><circle cx="20" cy="20" r="16.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="20" cy="20" r="3.6" fill="currentColor"/><line x1="20" y1="6" x2="20" y2="11.5" stroke="currentColor" stroke-width="2"/><line x1="20" y1="28.5" x2="20" y2="34" stroke="currentColor" stroke-width="2"/><line x1="6" y1="20" x2="11.5" y2="20" stroke="currentColor" stroke-width="2"/><line x1="28.5" y1="20" x2="34" y2="20" stroke="currentColor" stroke-width="2"/></svg>
+            </span>
+          </div>
+          <div class="card-body">
+            <div class="knob-row">
+              <div class="readout" id="metroBpmReadout">96<small>BPM</small></div>
+              <div class="pulse-dot" id="metroPulse"></div>
+              <button class="btn primary" id="metroToggle">Start</button>
+              <button class="btn" id="tapTempo">Tap tempo</button>
+            </div>
+            <div style="margin-top:14px;">
+              <label class="field-inline"><span>Tempo</span>
+                <input type="range" class="slider" id="metroBpmSlider" min="40" max="220" value="96">
+              </label>
+            </div>
+            <div class="hint">Follows the song's key/BPM fields above. First beat of each bar is accented.</div>
+          </div>
+        </div>
+
+        <div class="card" id="humCard">
+          <div class="card-head">
+            <h2>Hum to chords</h2>
+            <span class="reel-wrap" id="humReel">
+              <svg viewBox="0 0 40 40" width="26" height="26" aria-hidden="true"><circle cx="20" cy="20" r="16.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="20" cy="20" r="3.6" fill="currentColor"/><line x1="20" y1="6" x2="20" y2="11.5" stroke="currentColor" stroke-width="2"/><line x1="20" y1="28.5" x2="20" y2="34" stroke="currentColor" stroke-width="2"/><line x1="6" y1="20" x2="11.5" y2="20" stroke="currentColor" stroke-width="2"/><line x1="28.5" y1="20" x2="34" y2="20" stroke="currentColor" stroke-width="2"/></svg>
+            </span>
+          </div>
+          <div class="card-body">
+            <div class="knob-row">
+              <button class="btn primary" id="humBtn">Record hum (6s)</button>
+              <span class="status-line" id="humStatus">Hum a melody, we'll guess the key</span>
+            </div>
+            <div id="humResult" style="margin-top:10px;"></div>
+            <div class="hint">Analyzes pitch right in your browser — nothing is uploaded. Works best with a clear, sustained hum and little background noise. Uses the same mic permission as Recorder — manage it from the Recorder card below if needed.</div>
+          </div>
+        </div>
+
+        <div class="card" id="melodyCard">
+          <div class="card-head"><h2>Melody sketch</h2></div>
+          <div class="card-body">
+            <div class="knob-row">
+              <button class="btn primary" id="genMelody">Generate from lyrics</button>
+              <span class="status-line" id="melodyStatus">—</span>
+            </div>
+            <div id="melodyLines" style="margin-top:10px;"></div>
+            <div class="hint">Chord-aware — it knows your locked or suggested progression and favors notes that actually fit, with real phrasing and rhythm instead of one flat note per syllable. Still a scratch sketch to build from, not a finished vocal.</div>
+            <div class="wizard-hint" id="melodyWizardHint"></div>
+          </div>
+        </div>
+
+
+        <div class="card" id="recorderCard">
+          <div class="card-head">
+            <h2>Recorder</h2>
+            <span class="reel-wrap" id="recReel">
+              <svg viewBox="0 0 40 40" width="26" height="26" aria-hidden="true"><circle cx="20" cy="20" r="16.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="20" cy="20" r="3.6" fill="currentColor"/><line x1="20" y1="6" x2="20" y2="11.5" stroke="currentColor" stroke-width="2"/><line x1="20" y1="28.5" x2="20" y2="34" stroke="currentColor" stroke-width="2"/><line x1="6" y1="20" x2="11.5" y2="20" stroke="currentColor" stroke-width="2"/><line x1="28.5" y1="20" x2="34" y2="20" stroke="currentColor" stroke-width="2"/></svg>
+            </span>
+          </div>
+          <div class="card-body">
+            <div class="mic-access-panel" id="micAccessPanel">
+              <div class="mic-access-row">
+                <span class="mic-status-dot" id="micStatusDot" aria-hidden="true"></span>
+                <span class="status-line" id="micStatusLine">Microphone access not yet requested</span>
+              </div>
+              <button class="btn primary" id="enableMicBtn">Enable microphone</button>
+              <div class="hint" style="margin-top:6px;">Covers the mic for Recorder, Hum to Chords, and voice memos — one grant, used everywhere. It's plain browser permission, nothing Tapehead-specific to configure.</div>
+            </div>
+            <canvas class="wave" id="waveCanvas"></canvas>
+            <div class="rec-controls">
+              <button class="btn primary" id="recToggle">Record</button>
+              <button class="btn" id="playToggle" disabled>Play</button>
+              <button class="btn" id="playWithBeatBtn" disabled>Play with beat</button>
+              <button class="btn" id="saveTake" disabled>Save take</button>
+              <span class="status-line" id="recStatus">Idle</span>
+            </div>
+            <div class="knob-row" style="margin-top:6px;">
+              <label class="field-inline" style="flex:1; min-width:140px;"><span>Playback gain</span>
+                <input type="range" class="slider" id="gainSlider" min="0" max="200" value="100">
+              </label>
+              <label class="field-inline" style="flex:1; min-width:140px;"><span>Room / reverb</span>
+                <input type="range" class="slider" id="reverbSlider" min="0" max="100" value="15">
+              </label>
+              <label class="field-inline" style="flex:1; min-width:140px;"><span>Speed</span>
+                <input type="range" class="slider" id="rateSlider" min="60" max="140" value="100">
+              </label>
+            </div>
+            <div class="hint" id="micHint">Recording uses your microphone — your browser will ask permission the first time.</div>
+            <div class="hint" style="margin-top:10px;">Every recording is kept as its own take this session — play them back to back to A/B your options.</div>
+            <div class="takes-list" id="takesList"></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PERFORM VIEW -->
+    <section class="view" id="performView" hidden>
+      <div class="card" style="max-width:900px; margin:0 auto;">
+        <div class="card-head">
+          <h2>Performance view</h2>
+          <span class="status-line" id="performStatus">Auto-scrolling lyrics, timed for singing along</span>
+        </div>
+        <div class="card-body">
+          <div class="knob-row">
+            <button class="btn primary" id="performPlayBtn">Start scroll</button>
+            <button class="btn" id="performResetBtn">Reset</button>
+            <button class="btn record-mirror-btn" id="performRecordBtn" data-idle-label="🎙 Record while performing">🎙 Record while performing</button>
+          </div>
+          <div class="knob-row" style="margin-top:10px;">
+            <label class="field-inline" style="flex:1; min-width:200px;">
+              <span>Scroll duration: <span id="performDurationLabel">60s</span></span>
+              <input type="range" class="slider" id="performDuration" min="20" max="240" value="60">
+            </label>
+          </div>
+          <div class="perform-scroll-area" id="performScrollArea">
+            <div class="perform-lyrics" id="performLyrics"></div>
+          </div>
+          <div class="hint">Duration defaults from your lyric line count — drag the slider to match your own pace, then hit Start scroll and sing along. The record button captures a take the same way the Studio recorder does, and shares the same mic permission — manage it from the Recorder card in Studio if you run into trouble.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PUBLISH VIEW -->
+    <section class="view" id="publishView" hidden>
+      <div class="card" style="max-width:560px; margin:0 auto;">
+        <div class="card-body">
+          <div class="studio-title" style="margin-bottom:18px;">
+            <h1>Publish</h1>
+            <p>Final demo</p>
+          </div>
+
+          <canvas class="wave" id="publishWaveCanvas" style="height:110px;"></canvas>
+          <div class="publish-play-row">
+            <button class="publish-play-circle" id="publishPlayBtn" disabled aria-label="Play final demo">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </div>
+          <div class="publish-mix-caption" id="publishMixCaption">No demo rendered yet</div>
+          <div class="rec-controls" style="justify-content:center;">
+            <button class="btn" id="publishRerenderBtn">Render in Studio</button>
+            <span class="status-line" id="publishStatus"></span>
+          </div>
+
+          <div class="knob-row" style="margin-top:20px; border-top:1px solid var(--line); padding-top:16px; flex-direction:column; align-items:stretch;">
+            <button class="btn share-whatsapp" id="shareWhatsappBtn">
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.78 14.1c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.12-.42-.14-.96-.31-1.65-.6-2.9-1.25-4.79-4.17-4.94-4.36-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.01-2.41.27-.29.58-.36.78-.36.2 0 .39 0 .56.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.14.12.31.02.5-.09.2-.14.31-.28.48-.14.16-.29.36-.42.49-.14.14-.28.29-.12.56.16.28.72 1.19 1.55 1.93 1.06.95 1.96 1.24 2.24 1.38.28.14.44.12.6-.07.16-.2.68-.8.87-1.07.18-.28.36-.23.61-.14.24.09 1.56.74 1.83.87.27.14.45.2.51.32.07.11.07.66-.17 1.34z"/></svg>
+              Share to WhatsApp
+            </button>
+            <button class="btn" id="shareBtn" style="margin-top:8px;">Share (all apps)</button>
+            <button class="btn" id="publishPdfBtn" style="margin-top:8px;">📄 Export lyric PDF</button>
+          </div>
+          <div class="hint" id="shareHint">"Share to WhatsApp" sends your title, lyrics, and demo (if rendered) straight into WhatsApp's compose screen. "Share (all apps)" opens your device's native share sheet — TikTok, Messages, whatever else you have installed. There's no direct web API for a branded "share to TikTok" button, so this is the honest version of that.</div>
+
+          <div class="publish-streak" id="publishStreak"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ========================= Constants / music theory ========================= */
+const NOTE_NAMES = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+const MAJOR_INTERVALS = [0,2,4,5,7,9,11];
+const MINOR_INTERVALS = [0,2,3,5,7,8,10];
+const MAJOR_QUALITY = ['maj','min','min','maj','maj','min','dim'];
+const MINOR_QUALITY = ['min','dim','maj','min','min','maj','maj'];
+const ROMAN_MAJOR = ['I','ii','iii','IV','V','vi','vii°'];
+const ROMAN_MINOR = ['i','ii°','III','iv','v','VI','VII'];
+// Krumhansl-Kessler key profiles, used to correlate a pitch-class histogram against all 24 keys
+const KK_MAJOR_PROFILE = [6.35,2.23,3.48,2.33,4.38,4.09,2.52,5.19,2.39,3.66,2.29,2.88];
+const KK_MINOR_PROFILE = [6.33,2.68,3.52,5.38,2.60,3.53,2.54,4.75,3.98,2.69,3.34,3.17];
+
+function midiToFreq(midi){ return 440 * Math.pow(2, (midi-69)/12); }
+
+/* Per-key accent color: walks the circle of fifths to a hue, so each key
+   gives the whole app a distinct (but still analog/earthy) tint. */
+const CIRCLE_OF_FIFTHS = ['C','G','D','A','E','B','F#','C#','G#','D#','A#','F'];
+function isDarkTheme(){
+  const attr = document.documentElement.getAttribute('data-theme');
+  if(attr) return attr==='dark';
+  return !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+}
+function applyKeyAccent(){
+  const idx = CIRCLE_OF_FIFTHS.indexOf(current.key);
+  // narrowed to a coral/peach/amber family (8deg..41deg) instead of a full rainbow —
+  // keys still visibly differ, but the app always reads as "coral", matching the brand
+  const hue = 8 + (idx<0?0:idx) * 3;
+  const dark = isDarkTheme();
+  const s = dark?58:52, l1 = dark?76:42, l2 = dark?84:33;
+  document.documentElement.style.setProperty('--brass', 'hsl('+hue+'deg '+s+'% '+l1+'%)');
+  document.documentElement.style.setProperty('--brass-bright', 'hsl('+hue+'deg '+(s+6)+'% '+l2+'%)');
+}
+function transposeKey(delta){
+  const idx = NOTE_NAMES.indexOf(current.key);
+  const newIdx = (((idx<0?0:idx)+delta) % 12 + 12) % 12;
+  current.key = NOTE_NAMES[newIdx];
+  document.getElementById('keySelect').value = current.key;
+  applyKeyAccent(); renderKeyStrip(); renderChords(); detectLockedProgression();
+  scheduleSave();
+  renderSongList();
+}
+function qualityIntervals(q){
+  if(q==='maj') return [0,4,7];
+  if(q==='min') return [0,3,7];
+  return [0,3,6]; // dim
+}
+function diatonicChords(keyIndex, mode){
+  const intervals = mode==='major' ? MAJOR_INTERVALS : MINOR_INTERVALS;
+  const qualities = mode==='major' ? MAJOR_QUALITY : MINOR_QUALITY;
+  const romans = mode==='major' ? ROMAN_MAJOR : ROMAN_MINOR;
+  const out = [];
+  for(let deg=0; deg<7; deg++){
+    const rootPc = (keyIndex + intervals[deg]) % 12;
+    const q = qualities[deg];
+    const name = NOTE_NAMES[rootPc] + (q==='min' ? 'm' : q==='dim' ? 'dim' : '');
+    const rootMidi = 60 + intervals[deg] + keyIndex; // base near middle C
+    const midis = qualityIntervals(q).map(iv => rootMidi + iv);
+    out.push({roman: romans[deg], name, midis});
+  }
+  return out;
+}
+
+/* ========================= Audio engine ========================= */
+let audioCtx = null;
+function ctx(){
+  if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+  if(audioCtx.state==='suspended') audioCtx.resume();
+  return audioCtx;
+}
+let masterGainNode = null, masterCompressor = null;
+function masterBus(){
+  const c = ctx();
+  if(!masterGainNode){
+    masterGainNode = c.createGain(); masterGainNode.gain.value = 1;
+    // a gentle bus compressor — several voices (kick, bass, pad chords, lead
+    // melody) can genuinely stack past 0dB and hard-clip on a downbeat
+    // without this; it also just glues a multi-voice mix together
+    masterCompressor = c.createDynamicsCompressor();
+    masterCompressor.threshold.value = -14;
+    masterCompressor.knee.value = 20;
+    masterCompressor.ratio.value = 3.5;
+    masterCompressor.attack.value = 0.006;
+    masterCompressor.release.value = 0.15;
+    masterGainNode.connect(masterCompressor);
+    masterCompressor.connect(c.destination);
+  }
+  return masterGainNode;
+}
+/* Jam Session mixer buses — the beat channel is used any time the Beat Maker
+   plays (standalone or during a jam), so its fader is always meaningful;
+   the chord/melody channels are only used by the live jam loop below, not by
+   one-off preview clicks elsewhere in the app, so those stay at a fixed,
+   predictable volume regardless of the mixer. */
+let jamBeatGain=null, jamChordGain=null, jamMelodyGain=null;
+function getJamBeatGain(){
+  if(!jamBeatGain){ jamBeatGain = ctx().createGain(); jamBeatGain.gain.value = 0.8; jamBeatGain.connect(masterBus()); }
+  return jamBeatGain;
+}
+function getJamChordGain(){
+  if(!jamChordGain){ jamChordGain = ctx().createGain(); jamChordGain.gain.value = 0.6; jamChordGain.connect(masterBus()); }
+  return jamChordGain;
+}
+function getJamMelodyGain(){
+  if(!jamMelodyGain){ jamMelodyGain = ctx().createGain(); jamMelodyGain.gain.value = 0.7; jamMelodyGain.connect(masterBus()); }
+  return jamMelodyGain;
+}
+/* Shared reverb send — gives the lead and pad voices some space instead of
+   sounding like dry, isolated beeps. Fixed-level send (not per-channel), so
+   it always feeds masterBus() directly regardless of which mixer fader is
+   driving the dry signal. */
+let sharedReverbConvolver = null, sharedReverbSend = null;
+function getReverbSend(){
+  if(!sharedReverbConvolver){
+    const c = ctx();
+    sharedReverbConvolver = c.createConvolver();
+    sharedReverbConvolver.buffer = impulseResponse(2.0, 2.3);
+    sharedReverbSend = c.createGain();
+    sharedReverbSend.gain.value = 1;
+    sharedReverbSend.connect(sharedReverbConvolver);
+    sharedReverbConvolver.connect(masterBus());
+  }
+  return sharedReverbSend;
+}
+/* Lead voice — used for the melody sketch (previews, jam, demo mix). Two
+   slightly detuned oscillators for body, a lowpass filter to tame harshness,
+   gentle vibrato so it doesn't sound robotic, a real attack/release envelope
+   instead of a sharp pluck, and a touch of reverb for polish. */
+function playLead(midi, when, dur, gainVal, dest){
+  const c = ctx();
+  const freq = midiToFreq(midi);
+  const osc1 = c.createOscillator(), osc2 = c.createOscillator();
+  osc1.type = 'sawtooth'; osc2.type = 'sawtooth';
+  osc1.frequency.value = freq; osc2.frequency.value = freq;
+  osc1.detune.value = -7; osc2.detune.value = 7;
+  const vibrato = c.createOscillator(); vibrato.type='sine'; vibrato.frequency.value = 5.2;
+  const vibratoGain = c.createGain(); vibratoGain.gain.value = 4; // cents of wobble, subtle
+  vibrato.connect(vibratoGain); vibratoGain.connect(osc1.detune); vibratoGain.connect(osc2.detune);
+  const filt = c.createBiquadFilter(); filt.type='lowpass'; filt.frequency.value = 2600; filt.Q.value = 0.7;
+  const g = c.createGain();
+  const peak = gainVal || 0.16;
+  const attack = Math.min(0.035, dur*0.3), release = Math.min(0.18, dur*0.5);
+  g.gain.setValueAtTime(0.0001, when);
+  g.gain.exponentialRampToValueAtTime(peak, when+attack);
+  g.gain.setValueAtTime(peak, Math.max(when+attack, when+dur-release));
+  g.gain.exponentialRampToValueAtTime(0.0001, when+dur);
+  const wetSend = c.createGain(); wetSend.gain.value = 0.22;
+  osc1.connect(filt); osc2.connect(filt); filt.connect(g);
+  g.connect(dest || masterBus());
+  g.connect(wetSend); wetSend.connect(getReverbSend());
+  const stopAt = when+dur+0.1;
+  osc1.start(when); osc1.stop(stopAt); osc2.start(when); osc2.stop(stopAt);
+  vibrato.start(when); vibrato.stop(stopAt);
+}
+/* Pad voice — used for chord playback outside quick piano-key clicks (chord
+   progression preview, jam chords, demo mix chords). Slower attack so
+   chords bloom in rather than stab, warm filtering, and reverb send. */
+function playPadChord(midis, when, dur, gainVal, dest){
+  const c = ctx();
+  const g = c.createGain();
+  const peak = gainVal || 0.11;
+  const attack = Math.min(0.12, dur*0.25), release = Math.min(0.4, dur*0.4);
+  g.gain.setValueAtTime(0.0001, when);
+  g.gain.exponentialRampToValueAtTime(peak, when+attack);
+  g.gain.setValueAtTime(peak, Math.max(when+attack, when+dur-release));
+  g.gain.exponentialRampToValueAtTime(0.0001, when+dur);
+  const filt = c.createBiquadFilter(); filt.type='lowpass'; filt.frequency.value = 1800; filt.Q.value = 0.5;
+  const wetSend = c.createGain(); wetSend.gain.value = 0.3;
+  filt.connect(g); g.connect(dest || masterBus()); g.connect(wetSend); wetSend.connect(getReverbSend());
+  const stopAt = when+dur+0.15;
+  midis.forEach((m,i)=>{
+    const osc = c.createOscillator();
+    osc.type = i===0 ? 'triangle' : 'sine'; // root a little brighter than the upper voices
+    osc.frequency.value = midiToFreq(m);
+    osc.detune.value = (i-1)*4;
+    osc.connect(filt);
+    osc.start(when); osc.stop(stopAt);
+  });
+}
+function playTone(midi, when, dur, gainVal, dest){
+  const c = ctx();
+  const osc = c.createOscillator();
+  const g = c.createGain();
+  osc.type = 'triangle';
+  osc.frequency.value = midiToFreq(midi);
+  const t0 = when;
+  g.gain.setValueAtTime(0.0001, t0);
+  g.gain.exponentialRampToValueAtTime(gainVal||0.18, t0+0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001, t0+dur);
+  osc.connect(g); g.connect(dest || masterBus());
+  osc.start(t0); osc.stop(t0+dur+0.05);
+}
+function playPadChordNow(midis, dest, dur){
+  playPadChord(midis, ctx().currentTime, dur||1.1, 0.11, dest);
+}
+function playChord(midis, dest){
+  const c = ctx();
+  const now = c.currentTime;
+  midis.forEach((m,i)=> playTone(m, now+i*0.012, 0.9, 0.14, dest));
+}
+function playClick(when, accent){
+  const c = ctx();
+  const osc = c.createOscillator();
+  const g = c.createGain();
+  osc.type='square';
+  osc.frequency.value = accent ? 1500 : 1000;
+  g.gain.setValueAtTime(0.0001, when);
+  g.gain.exponentialRampToValueAtTime(accent?0.5:0.32, when+0.002);
+  g.gain.exponentialRampToValueAtTime(0.0001, when+0.045);
+  osc.connect(g); g.connect(masterBus());
+  osc.start(when); osc.stop(when+0.06);
+}
+
+/* ========================= Metronome ========================= */
+const Metronome = {
+  running:false, bpm:96, beatsPerBar:4, nextTime:0, beatCount:0, timer:null, lookahead:25, scheduleAhead:0.12,
+  start(){
+    if(this.running) return;
+    this.running = true;
+    const c = ctx();
+    this.nextTime = c.currentTime + 0.06;
+    this.beatCount = 0;
+    this.timer = setInterval(()=>this._tick(), this.lookahead);
+    document.getElementById('metroToggle').textContent = 'Stop';
+    document.getElementById('metroReel').classList.add('active');
+  },
+  stop(){
+    this.running = false;
+    clearInterval(this.timer);
+    document.getElementById('metroToggle').textContent = 'Start';
+    document.getElementById('metroPulse').classList.remove('on','accent');
+    document.getElementById('metroReel').classList.remove('active');
+  },
+  _tick(){
+    const c = ctx();
+    while(this.nextTime < c.currentTime + this.scheduleAhead){
+      const accent = this.beatCount % this.beatsPerBar === 0;
+      playClick(this.nextTime, accent);
+      const delay = M
