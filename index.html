@@ -1,151 +1,282 @@
-let micStream;
-let analyser;
-let isRecording = false;
-let detectedMelody = [];
-
-// Mapping mathematical frequencies to Western Musical Notation scale steps
-const NOTE_STRINGS = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-
-document.getElementById('record-btn').addEventListener('click', async () => {
-    if (!audioCtx) initAudioEngine(); // Secure audio context running instance
-    
-    if (!isRecording) {
-        // Request target microphone peripheral stream access from user browser
-        try {
-            micStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
-            setupMicrophoneProcessing(micStream);
-            
-            isRecording = true;
-            detectedMelody = [];
-            document.getElementById('record-btn').innerText = "Stop & Generate Track";
-            document.getElementById('record-btn').style.background = "#5cb85c";
-            document.getElementById('status-display').innerText = "Status: Listening closely to voice pitch...";
-            
-            // Loop calculation loop frames
-            analyzePitchLoop();
-        } catch (err) {
-            alert("Microphone configuration access blocked or unsupported: " + err);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Premium Studio Mixer & Hum-to-Chord Engine</title>
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --strip-color: #262626;
+            --accent-blue: #00adb5;
+            --fader-cap: #e1e1e1;
         }
-    } else {
-        // Halting detection processing tracking
-        isRecording = false;
-        micStream.getTracks().forEach(track => track.stop());
-        document.getElementById('record-btn').innerText = "🎤 Start Humming";
-        document.getElementById('record-btn').style.background = "#d9534f";
-        document.getElementById('status-display').innerText = "Status: Processing complete timeline...";
+
+        body {
+            background-color: #111;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Hum Engine UI Panel */
+        .hum-engine-panel {
+            background: #222;
+            border: 2px solid #444;
+            padding: 20px;
+            border-radius: 8px;
+            width: 540px;
+            margin-bottom: 25px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        .engine-title {
+            margin-top: 0;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 16px;
+        }
+
+        #record-btn {
+            padding: 12px 28px;
+            background: #d9534f;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            transition: background 0.2s ease;
+        }
+
+        #status-display { margin-top: 15px; font-size: 13px; color: #aaa; }
+        #output-display { margin-top: 10px; font-size: 16px; font-weight: bold; color: #fff; }
+        #chord-display { margin-top: 5px; font-size: 20px; font-weight: bold; color: var(--accent-blue); }
+
+        /* Mixer Console Chassis */
+        .mixer-console {
+            background-color: var(--bg-color);
+            border: 4px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        /* Vertical Channel Strip */
+        .channel-strip {
+            background-color: var(--strip-color);
+            width: 95px;
+            margin: 0 6px;
+            padding: 15px 5px;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-left: 1px solid #3a3a3a;
+            border-right: 1px solid #141414;
+        }
+
+        .channel-name {
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            color: #aaa;
+            background: #111;
+            padding: 3px 8px;
+            border-radius: 3px;
+            width: 70px;
+            text-align: center;
+        }
+
+        /* Rotary Pan Knob Styling */
+        .pan-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 9px;
+            color: #888;
+            margin-bottom: 20px;
+        }
+
+        .pan-slider {
+            width: 65px;
+            margin-top: 5px;
+        }
+
+        /* Vertical Fader Groove */
+        .fader-container {
+            height: 220px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .fader-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            transform: rotate(-90deg);
+            width: 180px;
+            height: 6px;
+            background: #111;
+            border-radius: 3px;
+            outline: none;
+        }
+
+        /* Custom Fader Cap */
+        .fader-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 30px;
+            background: var(--fader-cap);
+            border-radius: 2px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            border-left: 2px solid #666;
+            border-right: 2px solid #666;
+        }
+
+        /* Global Control Buttons */
+        .btn-group {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .mixer-btn {
+            background: #333;
+            border: 1px solid #444;
+            color: #fff;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 4px 8px;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+
+        .mixer-btn.active-mute { background: #d9534f; }
+        .mixer-btn.active-solo { background: #f0ad4e; }
+
+        /* Master Section Override */
+        .master-section {
+            border-left: 3px double #555;
+            margin-left: 15px;
+            padding-left: 15px;
+        }
         
-        generateHarmonicChords(detectedMelody);
-    }
-});
+        .master-section .channel-name {
+            color: var(--accent-blue);
+        }
+    </style>
+</head>
+<body>
 
-function setupMicrophoneProcessing(stream) {
-    const source = audioCtx.createMediaStreamSource(stream);
-    analyser = audioCtx.createAnalyser();
-    analyser.fftSize = 2048;
-    source.connect(analyser);
-}
+    <!-- Hum Engine Component Interface -->
+    <div class="hum-engine-panel">
+        <h3 class="engine-title">Vocal Hum to Chord & Melody Studio</h3>
+        <button id="record-btn">🎤 Start Audio Engine & Hum</button>
+        <div id="status-display">Status: Offline (Click button to initialize Audio Context)</div>
+        <div id="output-display">Detected Melody: --</div>
+        <div id="chord-display">Generated Harmony: --</div>
+    </div>
 
-function analyzePitchLoop() {
-    if (!isRecording) return;
-
-    const bufferLength = analyser.fftSize;
-    const dataArray = new Float32Array(bufferLength);
-    analyser.getFloatTimeDomainData(dataArray);
-
-    // Call Autocorrelation tool logic to isolate raw vocal pitch spikes
-    let frequency = autoCorrelate(dataArray, audioCtx.sampleRate);
-
-    if (frequency !== -1 && frequency > 80 && frequency < 600) { // Limit limits to normal human vocal ranges
-        let noteNum = 12 * (Math.log(frequency / 440) / Math.log(2)) + 69;
-        let roundedNote = Math.round(noteNum);
-        let noteName = NOTE_STRINGS[roundedNote % 12];
+    <!-- 5-Channel Studio Mixer Component Interface -->
+    <div class="mixer-console">
         
-        // Prevent duplicate spam buffers inside the timeline array
-        if (detectedMelody.length === 0 || detectedMelody[detectedMelody.length - 1] !== noteName) {
-            detectedMelody.push(noteName);
-            document.getElementById('output-display').innerText = `Detected Notes: ${detectedMelody.slice(-6).join(" → ")}`;
-        }
-    }
+        <!-- Drums Track -->
+        <div class="channel-strip" id="ch-drums">
+            <div class="channel-name">Drums</div>
+            <div class="pan-container">PAN<input type="range" class="pan-slider" min="-1" max="1" step="0.1" value="0"></div>
+            <div class="fader-container"><input type="range" class="fader-slider" min="0" max="1" step="0.01" value="0.6"></div>
+            <div class="btn-group">
+                <button class="mixer-btn mute-btn">M</button>
+                <button class="mixer-btn solo-btn">S</button>
+            </div>
+        </div>
 
-    requestAnimationFrame(analyzePitchLoop);
-}
+        <!-- Bass Track -->
+        <div class="channel-strip" id="ch-bass">
+            <div class="channel-name">Bass</div>
+            <div class="pan-container">PAN<input type="range" class="pan-slider" min="-1" max="1" step="0.1" value="-0.2"></div>
+            <div class="fader-container"><input type="range" class="fader-slider" min="0" max="1" step="0.01" value="0.6"></div>
+            <div class="btn-group">
+                <button class="mixer-btn mute-btn">M</button>
+                <button class="mixer-btn solo-btn">S</button>
+            </div>
+        </div>
 
-// Basic time-domain fundamental auto-correlation algorithm engine
-function autoCorrelate(buffer, sampleRate) {
-    let SIZE = buffer.length;
-    let r = new Float32Array(SIZE);
-    
-    for (let i = 0; i < SIZE; i++) {
-        for (let j = 0; j < SIZE - i; j++) {
-            r[i] += buffer[j] * buffer[j + i];
-        }
-    }
+        <!-- Keys Track -->
+        <div class="channel-strip" id="ch-keys">
+            <div class="channel-name">Keys</div>
+            <div class="pan-container">PAN<input type="range" class="pan-slider" min="-1" max="1" step="0.1" value="-0.5"></div>
+            <div class="fader-container"><input type="range" class="fader-slider" min="0" max="1" step="0.01" value="0.7"></div>
+            <div class="btn-group">
+                <button class="mixer-btn mute-btn">M</button>
+                <button class="mixer-btn solo-btn">S</button>
+            </div>
+        </div>
 
-    // Find the primary baseline inflection crest
-    let d = 0;
-    while (r[d] > r[d + 1]) d++;
-    
-    let maxVal = -1;
-    let maxPeriod = -1;
-    
-    for (let i = d; i < SIZE; i++) {
-        if (r[i] > maxVal && r[i] > r[i - 1] && r[i] > r[i + 1]) {
-            maxVal = r[i];
-            maxPeriod = i;
-            break;
-        }
-    }
+        <!-- Guitar Track -->
+        <div class="channel-strip" id="ch-guitar">
+            <div class="channel-name">Guitar</div>
+            <div class="pan-container">PAN<input type="range" class="pan-slider" min="-1" max="1" step="0.1" value="0.5"></div>
+            <div class="fader-container"><input type="range" class="fader-slider" min="0" max="1" step="0.01" value="0.5"></div>
+            <div class="btn-group">
+                <button class="mixer-btn mute-btn">M</button>
+                <button class="mixer-btn solo-btn">S</button>
+            </div>
+        </div>
 
-    if (maxPeriod !== -1) {
-        return sampleRate / maxPeriod;
-    }
-    return -1;
-}
+        <!-- Vocals Track -->
+        <div class="channel-strip" id="ch-vocals">
+            <div class="channel-name">Vocals</div>
+            <div class="pan-container">PAN<input type="range" class="pan-slider" min="-1" max="1" step="0.1" value="0"></div>
+            <div class="fader-container"><input type="range" class="fader-slider" min="0" max="1" step="0.01" value="0.8"></div>
+            <div class="btn-group">
+                <button class="mixer-btn mute-btn">M</button>
+                <button class="mixer-btn solo-btn">S</button>
+            </div>
+        </div>
 
-// The Backing Harmonizer Rule Engine
-function generateHarmonicChords(melodyArray) {
-    if (melodyArray.length === 0) {
-        document.getElementById('chord-display').innerText = "Generated Chords: No input heard.";
-        return;
-    }
+        <!-- Master Mixing Output Bus -->
+        <div class="channel-strip master-section" id="ch-master">
+            <div class="channel-name">Master</div>
+            <div class="pan-container" style="visibility:hidden">PAN<input type="range" class="pan-slider"></div>
+            <div class="fader-container"><input type="range" class="fader-slider" min="0" max="1" step="0.01" value="0.8"></div>
+        </div>
+    </div>
 
-    // Modal matching lookup table assigning chords built around core signature melodies
-    const chordRules = {
-        "C": ["C Major", "A minor", "F Major"],
-        "D": ["G Major", "D Major", "B minor"],
-        "E": ["C Major", "A minor", "E minor"],
-        "F": ["F Major", "D minor", "Bb Major"],
-        "G": ["C Major", "G Major", "E minor"],
-        "A": ["F Major", "A minor", "D minor"],
-        "B": ["G Major", "E minor", "B minor"]
-    };
+    <!-- Application Script Logic Controller -->
+    <script>
+        let audioCtx;
+        let masterGain;
+        let micStream;
+        let analyser;
+        let isRecording = false;
+        let detectedMelody = [];
+        const channels = {};
 
-    let generatedChords = [];
-    
-    // Sample sequence mapping key notes inside time points to form progressions
-    let sampleSelections = melodyArray.filter((v, i) => i % 2 === 0).slice(0, 4);
+        const NOTE_STRINGS = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+        
+        // Target base oscillator rules mapped out for dummy track background feedback simulation
+        const instruments = [
+            { id: 'ch-drums', freq: 55, type: 'triangle' },  // Deep Kick rumble simulation
+            { id: 'ch-bass', freq: 110, type: 'sawtooth' }, // Bass accompaniment line
+            { id: 'ch-keys', freq: 261.63, type: 'sine' },  // Keys pad foundation
+            { id: 'ch-guitar', freq: 329.63, type: 'square' },// Mid-range picking texture
+            { id: 'ch-vocals', freq: 440, type: 'sine' }     // Voice center frequency
+        ];
 
-    sampleSelections.forEach(note => {
-        // Clean sharp signs for base lookup simplicity mapping rules
-        let baseNote = note.replace("#", "");
-        let potentialChords = chordRules[baseNote] || ["C Major"];
-        // Randomly pick an appropriate diatonic progression match rule variation
-        let selectedChord = potentialChords[Math.floor(Math.random() * potentialChords.length)];
-        generatedChords.push(selectedChord);
-    });
-
-    document.getElementById('chord-display').innerText = `Generated Progression: ${generatedChords.join(" → ")}`;
-    
-    // Send tracking data straight into mixing slots
-    injectGeneratedDataToMixer(melodyArray, generatedChords);
-}
-
-function injectGeneratedDataToMixer(melody, chords) {
-    document.getElementById('status-display').innerText = "Status: Generated tracks successfully routed directly into console channel strips!";
-    // This hooks directly into the synthesized audio nodes we engineered in step one, 
-    // replacing the continuous test hum tones with the structured musical patterns.
-    if(channels['ch-keys']) {
-         // Auto-adjust channel parameters dynamically
-         channels['ch-keys'].baseVolume = 0.6;
-    }
-}
