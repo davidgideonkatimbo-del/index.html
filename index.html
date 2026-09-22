@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complete Premium Studio Mixer & Hum-to-Chord Engine</title>
+    <title>Complete Premium Studio Mixer & Multi-Engine DAW</title>
     <style>
         :root {
             --bg-color: #1a1a1a;
             --strip-color: #262626;
             --accent-blue: #00adb5;
             --fader-cap: #e1e1e1;
+            --accent-green: #5cb85c;
         }
 
         body {
@@ -25,14 +26,14 @@
             padding: 20px;
         }
 
-        /* Hum Engine UI Panel */
-        .hum-engine-panel {
+        /* Engine Panel Layout Containers */
+        .studio-panel {
             background: #222;
             border: 2px solid #444;
             padding: 20px;
             border-radius: 8px;
             width: 540px;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             text-align: center;
             box-shadow: 0 10px 25px rgba(0,0,0,0.4);
         }
@@ -43,11 +44,24 @@
             text-transform: uppercase;
             letter-spacing: 1.5px;
             font-size: 16px;
+            margin-bottom: 12px;
         }
 
-        #record-btn {
+        .genre-select {
+            width: 100%;
+            background: #111;
+            border: 1px solid #444;
+            color: #fff;
+            padding: 8px 10px;
+            font-family: inherit;
+            font-size: 13px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            outline: none;
+        }
+
+        .action-btn {
             padding: 12px 28px;
-            background: #d9534f;
             color: white;
             border: none;
             border-radius: 4px;
@@ -55,11 +69,33 @@
             font-weight: bold;
             font-size: 14px;
             transition: background 0.2s ease;
+            width: 80%;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        #status-display { margin-top: 15px; font-size: 13px; color: #aaa; }
-        #output-display { margin-top: 10px; font-size: 16px; font-weight: bold; color: #fff; }
-        #chord-display { margin-top: 5px; font-size: 20px; font-weight: bold; color: var(--accent-blue); }
+        .btn-red { background: #d9534f; }
+        .btn-blue { background: var(--accent-blue); }
+
+        .lyrics-textarea {
+            width: 100%;
+            height: 65px;
+            background: #111;
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-family: inherit;
+            font-size: 13px;
+            resize: none;
+            margin-bottom: 12px;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .status-box { margin-top: 12px; font-size: 13px; color: #aaa; }
+        .display-box { margin-top: 8px; font-size: 15px; font-weight: bold; color: #fff; }
+        .result-box { margin-top: 5px; font-size: 18px; font-weight: bold; color: var(--accent-blue); }
 
         /* Mixer Console Chassis */
         .mixer-console {
@@ -71,7 +107,7 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         }
 
-        /* Vertical Channel Strip */
+        /* Vertical Channel Strip Layouts */
         .channel-strip {
             background-color: var(--strip-color);
             width: 95px;
@@ -114,7 +150,7 @@
             margin-top: 5px;
         }
 
-        /* Vertical Fader Groove */
+        /* Vertical Fader Mechanical Groove Track Rail */
         .fader-container {
             height: 220px;
             display: flex;
@@ -133,9 +169,10 @@
             background: #111;
             border-radius: 3px;
             outline: none;
+            cursor: pointer;
         }
 
-        /* Custom Fader Cap */
+        /* Custom Fader Caps */
         .fader-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
@@ -149,7 +186,7 @@
             border-right: 2px solid #666;
         }
 
-        /* Global Control Buttons */
+        /* Global Control Function Switch Buttons */
         .btn-group {
             display: flex;
             gap: 5px;
@@ -170,7 +207,7 @@
         .mixer-btn.active-mute { background: #d9534f; }
         .mixer-btn.active-solo { background: #f0ad4e; }
 
-        /* Master Section Override */
+        /* Master Output Section Override */
         .master-section {
             border-left: 3px double #555;
             margin-left: 15px;
@@ -184,19 +221,49 @@
 </head>
 <body>
 
-    <!-- Hum Engine Component Interface -->
-    <div class="hum-engine-panel">
-        <h3 class="engine-title">Vocal Hum to Chord & Melody Studio</h3>
-        <button id="record-btn">🎤 Start Audio Engine & Hum</button>
-        <div id="status-display">Status: Offline (Click button to initialize Audio Context)</div>
-        <div id="output-display">Detected Melody: --</div>
-        <div id="chord-display">Generated Harmony: --</div>
+    <!-- ENGINE MODULE 1: Hum to Chord Engine -->
+    <div class="studio-panel">
+        <h3 class="engine-title">1. Vocal Hum to Chord Engine</h3>
+        
+        <select class="genre-select" id="genre-select">
+            <optgroup label="African Harmonic Frameworks (7)">
+                <option value="afrobeats">Afrobeats (Major Pentatonic Mode)</option>
+                <option value="amapiano">Amapiano (Jazz Log-Drum Minor 7ths)</option>
+                <option value="highlife">Highlife (Diatonic Arpeggio Progressions)</option>
+                <option value="bongoflava">Bongo Flava (Smooth Afro R&B Inversions)</option>
+                <option value="gengetone">Gengetone (Street Rhythm Bass Clusters)</option>
+                <option value="coupedecale">Coupé-Décalé (Fast-Paced Polyphonic Tones)</option>
+                <option value="kwaito">Kwaito (Slow-Tempo Deep House Inversions)</option>
+            </optgroup>
+            <optgroup label="Western Harmonic Frameworks (7)">
+                <option value="pop">Pop (Classic Diatonic Anthems)</option>
+                <option value="hiphop">Hip-Hop (Trap/Boom-Bap Minor Sequences)</option>
+                <option value="synthwave">Synthwave (Vintage Retro 80s Intervals)</option>
+                <option value="rnb">R&B (Smooth Chromatic Major/Minor 9ths)</option>
+                <option value="rock">Rock (Heavy Root Power-Chords)</option>
+                <option value="house">House (Classic 4x4 Club Triad Sequences)</option>
+                <option value="jazz">Jazz (Complex Extended Modal Alterations)</option>
+            </optgroup>
+        </select>
+
+        <button id="record-btn" class="action-btn btn-red">🎤 Start Audio Engine & Hum</button>
+        <div class="status-box" id="status-display">Status: Offline (Click button to initialize Audio Context)</div>
+        <div class="display-box" id="output-display">Detected Melody: --</div>
+        <div class="result-box" id="chord-display">Generated Harmony: --</div>
     </div>
 
-    <!-- 5-Channel Studio Mixer Component Interface -->
+    <!-- ENGINE MODULE 2: Lyrics to Melody Engine -->
+    <div class="studio-panel">
+        <h3 class="engine-title">2. Lyrics-To-Melody Composer</h3>
+        <textarea id="lyric-text" class="lyrics-textarea" placeholder="Type or paste your lyrics text stanza line here... (e.g., 'Moving my feet on the studio floor')"></textarea>
+        <button id="lyric-btn" class="action-btn btn-blue">⚡ Compose & Play Lyric Melody</button>
+        <div class="status-box" id="lyric-status-display">Status: Awaiting Text Input</div>
+    </div>
+
+    <!-- 5-Channel Premium Studio Console Mixer Layout Frame -->
     <div class="mixer-console">
         
-        <!-- Drums Track -->
+        <!-- Track 1: Drums -->
         <div class="channel-strip" id="ch-drums">
             <div class="channel-name">Drums</div>
             <div class="pan-container">PAN<input type="range" class="pan-slider" min="-1" max="1" step="0.1" value="0"></div>
@@ -207,76 +274,10 @@
             </div>
         </div>
 
-        <!-- Bass Track -->
+        <!-- Track 2: Bass -->
         <div class="channel-strip" id="ch-bass">
             <div class="channel-name">Bass</div>
             <div class="pan-container">PAN<input type="range" class="pan-slider" min="-1" max="1" step="0.1" value="-0.2"></div>
             <div class="fader-container"><input type="range" class="fader-slider" min="0" max="1" step="0.01" value="0.6"></div>
             <div class="btn-group">
                 <button class="mixer-btn mute-btn">M</button>
-                <button class="mixer-btn solo-btn">S</button>
-            </div>
-        </div>
-
-        <!-- Keys Track -->
-        <div class="channel-strip" id="ch-keys">
-            <div class="channel-name">Keys</div>
-            <div class="pan-container">PAN<input type="range" class="pan-slider" min="-1" max="1" step="0.1" value="-0.5"></div>
-            <div class="fader-container"><input type="range" class="fader-slider" min="0" max="1" step="0.01" value="0.7"></div>
-            <div class="btn-group">
-                <button class="mixer-btn mute-btn">M</button>
-                <button class="mixer-btn solo-btn">S</button>
-            </div>
-        </div>
-
-        <!-- Guitar Track -->
-        <div class="channel-strip" id="ch-guitar">
-            <div class="channel-name">Guitar</div>
-            <div class="pan-container">PAN<input type="range" class="pan-slider" min="-1" max="1" step="0.1" value="0.5"></div>
-            <div class="fader-container"><input type="range" class="fader-slider" min="0" max="1" step="0.01" value="0.5"></div>
-            <div class="btn-group">
-                <button class="mixer-btn mute-btn">M</button>
-                <button class="mixer-btn solo-btn">S</button>
-            </div>
-        </div>
-
-        <!-- Vocals Track -->
-        <div class="channel-strip" id="ch-vocals">
-            <div class="channel-name">Vocals</div>
-            <div class="pan-container">PAN<input type="range" class="pan-slider" min="-1" max="1" step="0.1" value="0"></div>
-            <div class="fader-container"><input type="range" class="fader-slider" min="0" max="1" step="0.01" value="0.8"></div>
-            <div class="btn-group">
-                <button class="mixer-btn mute-btn">M</button>
-                <button class="mixer-btn solo-btn">S</button>
-            </div>
-        </div>
-
-        <!-- Master Mixing Output Bus -->
-        <div class="channel-strip master-section" id="ch-master">
-            <div class="channel-name">Master</div>
-            <div class="pan-container" style="visibility:hidden">PAN<input type="range" class="pan-slider"></div>
-            <div class="fader-container"><input type="range" class="fader-slider" min="0" max="1" step="0.01" value="0.8"></div>
-        </div>
-    </div>
-
-    <!-- Application Script Logic Controller -->
-    <script>
-        let audioCtx;
-        let masterGain;
-        let micStream;
-        let analyser;
-        let isRecording = false;
-        let detectedMelody = [];
-        const channels = {};
-
-        const NOTE_STRINGS = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-        
-        // Target base oscillator rules mapped out for dummy track background feedback simulation
-        const instruments = [
-            { id: 'ch-drums', freq: 55, type: 'triangle' },  // Deep Kick rumble simulation
-            { id: 'ch-bass', freq: 110, type: 'sawtooth' }, // Bass accompaniment line
-            { id: 'ch-keys', freq: 261.63, type: 'sine' },  // Keys pad foundation
-            { id: 'ch-guitar', freq: 329.63, type: 'square' },// Mid-range picking texture
-            { id: 'ch-vocals', freq: 440, type: 'sine' }     // Voice center frequency
-        ];
-
