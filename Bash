@@ -1,0 +1,9 @@
+mkdir tapehead-mobile && cd tapehead-mobile
+npm init -y
+npm install @capacitor/core @capacitor/cli @capacitor/android
+
+# put your checked index.html in www/
+mkdir www
+# copy the premium mobile code I just sent as www/index.html
+
+# add PWA manifest
