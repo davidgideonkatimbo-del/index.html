@@ -1,0 +1,7 @@
+{
+  "appId": "com.tapehead.studio",
+  "appName": "Tapehead",
+  "webDir": "www",
+  "server": {"androidScheme":"https"},
+  "android": {"allowMixedContent": false}
+}
