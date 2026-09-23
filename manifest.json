@@ -1,0 +1,11 @@
+{
+  "name": "Tapehead — Mobile Premium Mixer",
+  "short_name": "Tapehead",
+  "description": "Mobile-first songwriting and premium mixer PWA.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0A0A0C",
+  "theme_color": "#0A0A0C",
+  "icons": []
+}
