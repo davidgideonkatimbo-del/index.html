@@ -1,5 +1,5 @@
 /* Tapehead Pro — network-first updates */
-const CACHE = 'tapehead-v5';
+const CACHE = 'tapehead-v7';
 const ASSETS = [
   './',
   './index.html',
