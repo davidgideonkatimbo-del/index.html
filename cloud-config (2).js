@@ -1,7 +1,3 @@
-/* Tapehead Pro — Phase C cloud config
-   Project connected. Run supabase-schema.sql + supabase-social.sql in SQL Editor if not already.
-   Storage bucket (optional): vocals
-*/
 window.TAPEHEAD_CLOUD = {
   enabled: true,
   supabaseUrl: 'https://dswhlqropbraofcrsdcj.supabase.co',
