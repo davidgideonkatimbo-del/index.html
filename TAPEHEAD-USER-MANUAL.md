@@ -1,6 +1,5 @@
 # Tapehead User Manual
 
-*Draft for editing — also available in-app under Menu → Help*
 
 ---
 
@@ -105,6 +104,6 @@ Write is your lyric desk.
 
 ## Closing
 
-This manual is a living draft — edit it as Tapehead grows.
+This manual is a living draft — it will be edited as Tapehead grows.
 
 — **Deon** · Founder, Tapehead
