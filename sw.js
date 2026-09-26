@@ -1,5 +1,5 @@
-/* Tapehead Pro SW v10 — always prefer network for app shell */
-const CACHE = 'tapehead-v38';
+/* Tapehead Pro SW v39 — always prefer network for app shell */
+const CACHE = 'tapehead-v39';
 
 self.addEventListener('install', (e) => {
   self.skipWaiting();

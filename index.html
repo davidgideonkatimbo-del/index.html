@@ -642,12 +642,20 @@ body.menu-open .sidebar,body.menu-open .sidebar-overlay{pointer-events:auto}
 
 </style>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="cloud-config.js"></script>
-
+<!-- Cloud: SDK + config (inline = works even if cloud-config.js 404s on GitHub) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
 <script>
-window.TAPEHEAD_CLOUD = window.TAPEHEAD_CLOUD || { enabled: false, supabaseUrl: '', supabaseAnonKey: '' };
+/* Default cloud config — also load cloud-config.js after to override if present */
+window.TAPEHEAD_CLOUD = {
+  enabled: true,
+  supabaseUrl: 'https://dswhlqropbraofcrsdcj.supabase.co',
+  supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRzd2hscXJvcGJyYW9mY3JzZGNqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAyNjk1NjcsImV4cCI6MjEwNTg0NTU2N30.Le4_PkJw0BkCQndBc2fFblcxl_iiEcVdtoYVAwXPuiI',
+  currency: 'USD',
+  provider: 'flutterwave'
+};
 </script>
+<script src="cloud-config.js" onerror="console.warn('[Tapehead] cloud-config.js not found — using inline config')"></script>
+
 
 
 </head>
@@ -1572,18 +1580,36 @@ const Cloud = {
 
   init() {
     const cfg = window.TAPEHEAD_CLOUD || {};
-    if (cfg.enabled && cfg.supabaseUrl && cfg.supabaseAnonKey && window.supabase) {
+    const lib = window.supabase || window.supabaseJs || null;
+    const create = lib && (lib.createClient || (lib.default && lib.default.createClient));
+    console.log('[Tapehead] Cloud init check', {
+      enabled: !!cfg.enabled,
+      hasUrl: !!cfg.supabaseUrl,
+      hasKey: !!cfg.supabaseAnonKey,
+      hasLib: !!lib,
+      hasCreate: !!create
+    });
+    if (cfg.enabled && cfg.supabaseUrl && cfg.supabaseAnonKey && create) {
       try {
-        this.sb = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey);
+        this.sb = create.call(lib, cfg.supabaseUrl, cfg.supabaseAnonKey);
         this.mode = 'cloud';
         console.log('[Tapehead] Cloud mode (Phase C)');
+        try { updateCloudBadge(); } catch (e) {}
         return true;
       } catch (e) {
         console.warn('[Tapehead] Cloud init failed, local mode', e);
       }
+    } else {
+      console.warn('[Tapehead] Local mode — missing', {
+        enabled: cfg.enabled,
+        url: cfg.supabaseUrl ? 'ok' : 'missing',
+        key: cfg.supabaseAnonKey ? 'ok' : 'missing',
+        sdk: create ? 'ok' : 'missing'
+      });
     }
     this.mode = 'local';
-    console.log('[Tapehead] Local mode');
+    this.sb = null;
+    try { updateCloudBadge(); } catch (e) {}
     return false;
   },
 
@@ -6103,7 +6129,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     window.location.reload();
   });
   window.addEventListener('load', function () {
-    navigator.serviceWorker.register('./sw.js?v=3876544322100988776544332100098765543210').then(function (reg) {
+    navigator.serviceWorker.register('./sw.js?v=39876544322100988776544332100098765543210').then(function (reg) {
       reg.update();
       setInterval(function () { reg.update(); }, 30 * 1000);
       if (reg.waiting) reg.waiting.postMessage({ type: 'SKIP_WAITING' });

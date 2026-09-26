@@ -1,3 +1,6 @@
+-- Run this in Supabase SQL Editor if you already applied the base schema
+
+
 -- ── Social: Follows + Private Messages ──
 create table if not exists public.follows (
   follower_id uuid not null references public.profiles(id) on delete cascade,
