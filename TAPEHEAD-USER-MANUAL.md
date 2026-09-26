@@ -5,11 +5,11 @@
 
 ## Welcome to Tapehead
 
-Your mobile studio for lyrics, beats, vocals, and sharing — so no idea has to disappear.
+Your mobile studio for lyrics, beats, vocals, and sharing - so no idea has to disappear.
 
 ## The story behind Tapehead
 
-So many artists hum a melody on the walk home, write a line in Notes, or freestyle a hook — and by morning it’s gone. Ideas live for a moment, then get buried under everyday noise.
+So many artists hum a melody on the walk home, write a line in Notes, or freestyle a hook - and by morning it’s gone. Ideas live for a moment, then get buried under everyday noise.
 
 **Tapehead** was built to catch those moments: the hum, the first lines, the half-finished verse, the beat in your head — and turn them into a real session you can finish, mix, and share.
 
